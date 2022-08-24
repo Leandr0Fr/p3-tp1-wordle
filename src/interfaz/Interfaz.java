@@ -18,6 +18,11 @@ public class Interfaz {
 	private int posLetra = 0;
 	private int posFila = 0;
 	private LogicGame game;
+	private enum estadosLetra{verde,amarillo,gris};
+
+	private Color verde = new Color(106, 170, 100);
+	private Color amarillo = new Color(201, 180, 88);
+	private Color gris = new Color(120, 124, 126);
 	/**
 	 * Launch the application.
 	 */
@@ -126,6 +131,14 @@ public class Interfaz {
 		for (int i = 0; i < tablero[posFila].length; i++) {
 			palabraEnviada[i] = tablero[posFila][i].getText().charAt(0);
 		}
+		
+		// ### PRUEBA COLOREAR
+		estadosLetra[] resultado = {estadosLetra.amarillo, estadosLetra.amarillo, estadosLetra.gris, estadosLetra.verde, estadosLetra.verde};
+		colorearLetras(resultado);
+		
+		
+		// ### PRUEBA COLOREAR
+
 		if (game.terminarIntento(palabraEnviada)) {
 			//GANASTE!!!
 		}
@@ -137,13 +150,6 @@ public class Interfaz {
 		posLetra = 0;
 		
 	}
-
-	private boolean esTeclaValida(KeyEvent e) {
-		//ascii 65 - 90 (209 = Ñ | 241 ñ) 97 - 122
-		return e.getKeyChar() == 10 || e.getKeyChar() == 8 || e.getKeyChar() == 209 || e.getKeyChar() == 241 ||
-			  e.getKeyChar() >= 65 && e.getKeyChar() <= 90
-			  || e.getKeyChar() >= 97 && e.getKeyChar() <= 122;
-	}
 	
 	private void colocarLetra(KeyEvent e) {
 		
@@ -154,6 +160,48 @@ public class Interfaz {
 		tablero[posFila][posLetra].setText("" + letra);
 		posLetra += posLetra != tablero[0].length - 1 ? 1 : 0;
 		
+	}
+	
+	private void colorearLetras(estadosLetra[] resultados){
+		for (int i = 0; i < tablero[0].length; i++) {
+			
+			if (resultados[i] == estadosLetra.verde)
+				colorearVerde(tablero[posFila][i]);
+
+			else if (resultados[i] == estadosLetra.amarillo)
+				colorearAmarillo(tablero[posFila][i]);
+
+			else if (resultados[i] == estadosLetra.gris)
+				colorearGris(tablero[posFila][i]);
+			
+		}
+		
+	}
+
+	private void colorearVerde(JLabel celda) {
+		celda.setBackground(verde);
+		colorearTextoBlanco(celda);
+	}
+
+	private void colorearAmarillo(JLabel celda) {
+		celda.setBackground(amarillo);
+		colorearTextoBlanco(celda);
+	}
+
+	private void colorearGris(JLabel celda) {
+		celda.setBackground(gris);
+		colorearTextoBlanco(celda);
+	}
+	
+	private void colorearTextoBlanco(JLabel celda) {
+		celda.setForeground(Color.white);
+	}
+
+	private boolean esTeclaValida(KeyEvent e) {
+		//ascii 65 - 90 (209 = Ñ | 241 ñ) 97 - 122
+		return e.getKeyChar() == 10 || e.getKeyChar() == 8 || e.getKeyChar() == 209 || e.getKeyChar() == 241 ||
+			  e.getKeyChar() >= 65 && e.getKeyChar() <= 90
+			  || e.getKeyChar() >= 97 && e.getKeyChar() <= 122;
 	}
 
 	private char mayus(char letra) {
