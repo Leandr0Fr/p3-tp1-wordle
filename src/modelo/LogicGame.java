@@ -24,21 +24,15 @@ public class LogicGame{
 		verificarPalabra();
 		aciertosJugador(palabra);
 		for (estadosLetra estLet : resultadoLetras) {
-			if (estLet != estadosLetra.verde) 
-				break;
-			//todo es verde
-			return true;
+			if (estLet != estadosLetra.verde) {
+				resetearLetraYCantidad();
+				return false;
+			}
 		}
-		
-		//no acertó la palabra
-		
-		resetearPalabra();
-		resetearLetraYCantidad();
-		
-		return false;
+		//acertó la palabra
+		return true;
 	}
-
-	private estadosLetra aciertosJugador(char [] palabra) {
+	private void aciertosJugador(char [] palabra) {
 		//prioridad verde
 		for (int i = 0; i < palabra.length; i++) {
 			for (int j = 0; j < palabra.length; j++) {
@@ -55,20 +49,6 @@ public class LogicGame{
 			}
 			resultadoLetras[i] = estadosLetra.gris;
 		}
-//		
-//		if (palabra.charAt(index) == letra) {
-//			letraYcantidad.put(letra, letraYcantidad.get(letra) - 1);
-//			return estadosLetra.verde;
-//		}
-//		
-//		if (!letraYcantidad.containsKey(letra) || letraYcantidad.get(letra) < 1) {
-//			return estadosLetra.gris;
-//		}
-//		
-//		letraYcantidad.put(letra, letraYcantidad.get(letra) - 1);
-//		return estadosLetra.amarillo;
-//	
-		return null;
 	}
 	
 	public estadosLetra[] getVerificacionPalabra() {
