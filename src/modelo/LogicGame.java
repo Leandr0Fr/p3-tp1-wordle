@@ -8,9 +8,8 @@ public class LogicGame{
 	private Map<Character, Integer> letraYcantidad;
 	private char[] palabraIngresada;
 	private estadosLetra [] resultadoLetras;
-	private int posicionCaracter = 0;
+	
 	private enum estadosLetra{verde,amarillo,gris};
-	private int intentos = 6;
 
 	public LogicGame(int tamanoPalabra) {
 		this.palabraIngresada = new char[tamanoPalabra];
@@ -18,14 +17,6 @@ public class LogicGame{
 			
 		resetearPalabra();
 		resetearLetraYCantidad();
-	}
-	public void colocarLetra(char letra) {
-		//coloca la letra en la posicion y luego aumenta en uno posicionCaracter
-		palabraIngresada[posicionCaracter++] = letra;	
-	}
-	//backspace
-	public void eliminarLetra(){
-		palabraIngresada[posicionCaracter--] = ' ';
 	}
 	//enter
 	public boolean terminarIntento(char[] palabra) {
@@ -39,7 +30,6 @@ public class LogicGame{
 		}
 		
 		//no acertó la palabra
-		intentos--;
 		resetearPalabra();
 		resetearLetraYCantidad();
 		
