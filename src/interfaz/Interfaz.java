@@ -77,66 +77,8 @@ public class Interfaz {
 				System.out.println(0 + e.getKeyChar());
 				if (e.getKeyChar() != 8 && e.getKeyChar() != 10)
 					colocarLetra(e);
-				
-				
 			}
 
-			private void borrarLetra() {
-				System.out.println("ESTOY ACAAAA");
-				
-				if (posLetra > 5){
-					posLetra = 4;
-				}
-				
-				if (posLetra != 0 && tablero[posFila][posLetra].getText() == " " ) {
-					posLetra--;
-				}
-				tablero[posFila][posLetra].setText(" ");
-			}
-			
-			private void enviarPalabra() {
-				System.out.println("Su Uber flash está en camino!");
-				char[] palabraEnviada = new char[5];
-				for (int i = 0; i < tablero[posFila].length; i++) {
-					palabraEnviada[i] = tablero[posFila][i].getText().charAt(0);
-				}
-				if (game.terminarIntento(palabraEnviada)) {
-					//GANASTE!!!
-				}
-				if (posFila == 5) {
-					//perdiste
-					return;
-				}
-				posFila++;
-				posLetra = 0;
-				
-			}
-
-			private boolean esTeclaValida(KeyEvent e) {
-				//ascii 65 - 90 (209 = Ñ | 241 ñ) 97 - 122
-				return e.getKeyChar() == 10 || e.getKeyChar() == 8 || e.getKeyChar() == 209 || e.getKeyChar() == 241 ||
-					  e.getKeyChar() >= 65 && e.getKeyChar() <= 90
-					  || e.getKeyChar() >= 97 && e.getKeyChar() <= 122;
-			}
-			
-			private void colocarLetra(KeyEvent e) {
-				
-				if (tablero[posFila][posLetra].getText() != " ")
-					return;
-				
-				char letra = mayus(e.getKeyChar());
-				tablero[posFila][posLetra].setText("" + letra);
-				posLetra += posLetra != tablero[0].length - 1 ? 1 : 0;
-				
-			}
-
-			private char mayus(char letra) {
-				if (letra >= 97 && letra <= 122 || letra == 241)
-					letra = (char) (letra - 32);
-				return letra;
-			}
-			
-			
 		});
 	
 		
@@ -164,4 +106,60 @@ public class Interfaz {
 			x = 60;			
 		}
 	}
+
+	private void borrarLetra() {
+		System.out.println("ESTOY ACAAAA");
+		
+		if (posLetra > 5){
+			posLetra = 4;
+		}
+		
+		if (posLetra != 0 && tablero[posFila][posLetra].getText() == " " ) {
+			posLetra--;
+		}
+		tablero[posFila][posLetra].setText(" ");
+	}
+	
+	private void enviarPalabra() {
+		System.out.println("Su Uber flash está en camino!");
+		char[] palabraEnviada = new char[5];
+		for (int i = 0; i < tablero[posFila].length; i++) {
+			palabraEnviada[i] = tablero[posFila][i].getText().charAt(0);
+		}
+		if (game.terminarIntento(palabraEnviada)) {
+			//GANASTE!!!
+		}
+		if (posFila == 5) {
+			//perdiste
+			return;
+		}
+		posFila++;
+		posLetra = 0;
+		
+	}
+
+	private boolean esTeclaValida(KeyEvent e) {
+		//ascii 65 - 90 (209 = Ñ | 241 ñ) 97 - 122
+		return e.getKeyChar() == 10 || e.getKeyChar() == 8 || e.getKeyChar() == 209 || e.getKeyChar() == 241 ||
+			  e.getKeyChar() >= 65 && e.getKeyChar() <= 90
+			  || e.getKeyChar() >= 97 && e.getKeyChar() <= 122;
+	}
+	
+	private void colocarLetra(KeyEvent e) {
+		
+		if (tablero[posFila][posLetra].getText() != " ")
+			return;
+		
+		char letra = mayus(e.getKeyChar());
+		tablero[posFila][posLetra].setText("" + letra);
+		posLetra += posLetra != tablero[0].length - 1 ? 1 : 0;
+		
+	}
+
+	private char mayus(char letra) {
+		if (letra >= 97 && letra <= 122 || letra == 241)
+			letra = (char) (letra - 32);
+		return letra;
+	}
+	
 }
