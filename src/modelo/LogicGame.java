@@ -8,7 +8,6 @@ public class LogicGame{
 	private Map<Character, Integer> letraYcantidad;
 	private char[] palabraIngresada;
 	private estadosLetra [] resultadoLetras;
-	
 	private enum estadosLetra{verde,amarillo,gris};
 
 	public LogicGame(int tamanoPalabra) {
@@ -20,8 +19,8 @@ public class LogicGame{
 	}
 	//enter
 	public boolean terminarIntento(char[] palabra) {
+		//falta la opción de que no sea una palabra
 		verificarPalabra();
-		
 		for (estadosLetra estLet : resultadoLetras) {
 			if (estLet != estadosLetra.verde) 
 				break;
@@ -30,17 +29,13 @@ public class LogicGame{
 		}
 		
 		//no acertó la palabra
+		
 		resetearPalabra();
 		resetearLetraYCantidad();
 		
 		return false;
 	}
 	
-
-	public estadosLetra[] getVerificacionPalabra() {
-		return resultadoLetras; //devuelve puntero a objeto array
-	}
-
 	private void resetearPalabra() {
 		for (int i = 0; i < palabraIngresada.length; i++) {
 			palabraIngresada[i] = ' ';
@@ -56,10 +51,7 @@ public class LogicGame{
 	}
 
 	private void verificarPalabra() {
-		for (int i = 0; i < palabraIngresada.length; i++) {
-			char letra = palabraIngresada[i];
-			resultadoLetras[i] = verifLetra(letra, i);
-		}
+		//verifica si es una palabra que esta dentro del conjunto
 	}
 	
 	private estadosLetra verifLetra(char letra, int index) {
@@ -75,6 +67,10 @@ public class LogicGame{
 		
 		letraYcantidad.put(letra, letraYcantidad.get(letra) - 1);
 		return estadosLetra.amarillo;
+	}
+	
+	public estadosLetra[] getVerificacionPalabra() {
+		return resultadoLetras; //devuelve puntero a objeto array
 	}
 
 		
