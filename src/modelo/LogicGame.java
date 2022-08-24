@@ -1,11 +1,14 @@
 package modelo;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 public class LogicGame{
 	private String palabra = "menua";
 	private Map<Character, Integer> letraYcantidad;
+	private Set<String> listadoDePalabras;
 	private char[] palabraIngresada;
 	private estadosLetra [] resultadoLetras;
 	private int posicionCaracter = 0;
@@ -46,7 +49,16 @@ public class LogicGame{
 		return false;
 	}
 	
-
+	public boolean perteneceAlListado(char[] palabra) {
+		StringBuilder palabraFormada = new StringBuilder();
+		for (int i = 0; i < palabra.length; i++) {
+			palabraFormada.append(palabra[i]);
+		}
+		if(listadoDePalabras.contains(palabraFormada)) {
+			return true;
+		}return false;
+	}
+	
 	public estadosLetra[] getVerificacionPalabra() {
 		return resultadoLetras; //devuelve puntero a objeto array
 	}
