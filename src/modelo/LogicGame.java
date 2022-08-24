@@ -6,30 +6,24 @@ import java.util.Map;
 public class LogicGame{
 	private String palabraEnJuego = "menua";
 	private Map<Character, Integer> letraYcantidad;
-	private char[] palabraIngresada;
 	private estadosLetra [] resultadoLetras;
-	private enum estadosLetra{verde,amarillo,gris};
+	private enum estadosLetra{verde,amarillo,gris,vacio};
 
 	public LogicGame(int tamanoPalabra) {
-		this.palabraIngresada = new char[tamanoPalabra];
-		this.resultadoLetras = new estadosLetra[tamanoPalabra];
-			
-		resetearPalabra();
 		resetearLetraYCantidad();
+		resetearResultadosLetras();
 	}
 	//enter
-	//boolean = otro enum
 	public boolean terminarIntento(char[] palabra) {
-		//falta la opción de que no sea una palabra
-		verificarPalabra();
 		aciertosJugador(palabra);
 		for (estadosLetra estLet : resultadoLetras) {
 			if (estLet != estadosLetra.verde) {
 				resetearLetraYCantidad();
+				resetearResultadosLetras();
 				return false;
 			}
 		}
-		//acertó la palabra
+		//acerto la palabra
 		return true;
 	}
 	private void aciertosJugador(char [] palabra) {
@@ -52,27 +46,25 @@ public class LogicGame{
 	}
 	
 	public estadosLetra[] getVerificacionPalabra() {
-		return resultadoLetras; //devuelve puntero a objeto array
+		return resultadoLetras;
 	}
 	
 	private void verificarPalabra() {
 		//verifica si es una palabra que esta dentro del conjunto
 	}
-	
-	private void resetearPalabra() {
-		for (int i = 0; i < palabraIngresada.length; i++) {
-			palabraIngresada[i] = ' ';
-		}
-	}
 
 	private void resetearLetraYCantidad() {
-		letraYcantidad = new HashMap<Character, Integer>();
+		this.letraYcantidad = new HashMap<Character, Integer>();
 		for (Character c : palabraEnJuego.toCharArray()) {
 			int cantExistente = letraYcantidad.getOrDefault(c, 0);
 			letraYcantidad.put(c, cantExistente + 1);
 		}
+	}	
+	private void resetearResultadosLetras() {
+		this.resultadoLetras = new estadosLetra[palabraEnJuego.length()];
+		for (int i = 0; i < resultadoLetras.length; i++) {
+			resultadoLetras[i] = estadosLetra.vacio;
+		}
 	}
-
-		
 }
 	
