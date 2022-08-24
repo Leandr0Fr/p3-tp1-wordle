@@ -28,7 +28,7 @@ public class LogicGame{
 		palabraIngresada[posicionCaracter--] = ' ';
 	}
 	//enter
-	public boolean terminarIntento() {
+	public boolean terminarIntento(char[] palabra) {
 		verificarPalabra();
 		
 		for (estadosLetra estLet : resultadoLetras) {
