@@ -46,7 +46,7 @@ public class Interfaz {
 	 */
 	private void initialize() {
 		//Pantalla principal
-		game = new LogicGame(5);
+		game = new LogicGame(5,"Menem");
 		frame = new JFrame();
 		frame.setBounds(100, 100, 524, 574);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

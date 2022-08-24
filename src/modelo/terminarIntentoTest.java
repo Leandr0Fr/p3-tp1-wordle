@@ -7,8 +7,11 @@ import org.junit.Test;
 public class terminarIntentoTest {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void terminarIntentoTrueTest() {
+		LogicGame game = new LogicGame(1,"menem");
+		char [] palabraJugada = {'m','e','n','e','m'};
+		assertTrue(game.terminarIntento(palabraJugada));
+		
 	}
 
 }
