@@ -18,6 +18,7 @@ public class LogicGame{
 		resetearLetraYCantidad();
 	}
 	//enter
+	//boolean = otro enum
 	public boolean terminarIntento(char[] palabra) {
 		//falta la opción de que no sea una palabra
 		verificarPalabra();
