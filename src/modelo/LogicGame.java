@@ -17,10 +17,13 @@ public class LogicGame{
 	//enter
 	public boolean terminarIntento(char[] palabra) {
 		aciertosJugador(palabra);
+		System.out.println(palabraEnJuego);
+		System.out.println(palabra);
 		for (int i = 0; i < resultadoLetras.length; i++) {
 			System.out.print(resultadoLetras[i]+"-");
 		}
 		System.out.println();
+		System.out.println(letraYcantidad);
 		for (estadosLetra estLet : resultadoLetras) {
 			if (estLet != estadosLetra.verde) {
 				resetearLetraYCantidad();
@@ -33,23 +36,19 @@ public class LogicGame{
 	}
 	private void aciertosJugador(char [] palabraIntento) {
 		//prioridad verde
-		//fijarse si se puede hacer algo tipo palabraIntento[i] == palabraEnJuego[i]
 		for (int i = 0; i < palabraEnJuego.length(); i++) {
-			for (int j = 0; j < palabraIntento.length; j++) {
-				if (palabraIntento[i] == palabraEnJuego.charAt(j) && letraYcantidad.get(palabraIntento[i]) > 0 && resultadoLetras[i] != estadosLetra.verde) {
-					letraYcantidad.put(palabraIntento[i], letraYcantidad.get(palabraIntento[i])-1);
-					resultadoLetras[i] = estadosLetra.verde;
-					
-				}
+			if (palabraIntento[i] == palabraEnJuego.charAt(i)) {
+				resultadoLetras[i] = estadosLetra.verde;
+				letraYcantidad.put(palabraIntento[i], letraYcantidad.get(palabraIntento[i])-1);
 			}
 		}
 		//amarillo y gris
-		for (int i = 0; i < palabraIntento.length; i++) {
-			if (letraYcantidad.containsKey(palabraIntento[i]) && letraYcantidad.get(palabraIntento[i]) > 0 && resultadoLetras[i] != estadosLetra.verde) {
+		for (int i = 0; i < palabraEnJuego.length(); i++) {
+			if (palabraIntento[i] != palabraEnJuego.charAt(i) && letraYcantidad.containsKey(palabraIntento[i]) && letraYcantidad.get(palabraIntento[i]) > 0 ) {
 				resultadoLetras[i] = estadosLetra.amarillo;
 				letraYcantidad.put(palabraIntento[i], letraYcantidad.get(palabraIntento[i])-1);
 			}
-			else if(!letraYcantidad.containsKey(palabraIntento[i]) || resultadoLetras[i] != estadosLetra.verde && resultadoLetras[i] != estadosLetra.amarillo) {
+			else if(palabraIntento[i] != palabraEnJuego.charAt(i) && !letraYcantidad.containsKey(palabraIntento[i]) ||(palabraIntento[i] != palabraEnJuego.charAt(i) && letraYcantidad.get(palabraIntento[i]) == 0) ){
 				resultadoLetras[i] = estadosLetra.gris;
 			}
 		}
@@ -77,6 +76,5 @@ public class LogicGame{
 			resultadoLetras[i] = estadosLetra.vacio;
 		}
 	}
-
 }
 	
