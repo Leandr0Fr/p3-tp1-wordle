@@ -6,10 +6,13 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Interfaz {
 
@@ -60,6 +63,7 @@ public class Interfaz {
 		//tablero	
 		crearTablero(5);
 		
+		
 		//keyListener
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
@@ -85,8 +89,6 @@ public class Interfaz {
 			}
 
 		});
-	
-		
 		
 	}
 
@@ -98,7 +100,7 @@ public class Interfaz {
 		for (int f = 0; f < 6; f++) {
 			for (int c = 0; c <tamanoPalabra ; c++) {
 				tablero[f][c] = new JLabel();
-				tablero[f][c].setFont(new Font("System", Font.PLAIN, 64));
+				tablero[f][c].setFont(new Font("Source Code Pro", Font.PLAIN, 64));
 				tablero[f][c].setText(" ");
 				tablero[f][c].setBackground(Color.WHITE);
 				tablero[f][c].setOpaque(true);
