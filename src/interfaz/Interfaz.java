@@ -16,6 +16,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class Interfaz {
 
@@ -91,13 +94,15 @@ public class Interfaz {
 
 		btnStartGame.setBounds(206, 273, 89, 23);
 		frame.getContentPane().add(btnStartGame);
-		
+		updateFrame();
 		
 		//keyListener
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-
+				if(e.getKeyChar() == KeyEvent.VK_ESCAPE) {
+					System.exit(0);
+				}
 				if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) { 
 					borrarLetra();
 					return;
