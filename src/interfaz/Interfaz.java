@@ -99,7 +99,7 @@ public class Interfaz {
 					return;
 				}
 
-				if (!esTeclaValida(e) || posLetra > 4)
+				if (!game.esTeclaValida(e) || posLetra > 4)
 					return;
 				
 				if (e.getKeyChar() != 8 && e.getKeyChar() != 10)
@@ -197,7 +197,7 @@ public class Interfaz {
 		if (tablero[posFila][posLetra].getText() != " ")
 			return;
 		
-		char letra = mayus(e.getKeyChar());
+		char letra = game.mayus(e.getKeyChar());
 		tablero[posFila][posLetra].setText("" + letra);
 		posLetra += posLetra != tablero[0].length - 1 ? 1 : 0;
 		
@@ -236,19 +236,6 @@ public class Interfaz {
 	
 	private void colorearTextoBlanco(JLabel celda) {
 		celda.setForeground(Color.white);
-	}
-
-	private boolean esTeclaValida(KeyEvent e) {
-		//ascii 65 - 90 (209 = Ñ | 241 ñ) 97 - 122
-		return e.getKeyChar() == 10 || e.getKeyChar() == 8 || e.getKeyChar() == 209 || e.getKeyChar() == 241 ||
-			  e.getKeyChar() >= 65 && e.getKeyChar() <= 90
-			  || e.getKeyChar() >= 97 && e.getKeyChar() <= 122;
-	}
-
-	private char mayus(char letra) {
-		if (letra >= 97 && letra <= 122 || letra == 241)
-			letra = (char) (letra - 32);
-		return letra;
 	}
 	
 	private void updateFrame() {
