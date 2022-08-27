@@ -9,10 +9,15 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Interfaz {
 
@@ -60,8 +65,22 @@ public class Interfaz {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		//tablero	
-		crearTablero(5);
+
+		//Start button && actions	
+		JButton btnStartGame = new JButton("START!");
+		btnStartGame.setFont(new Font("Consolas", Font.PLAIN, 11));
+
+		btnStartGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				crearTablero(5);
+				btnStartGame.setEnabled(false);
+				btnStartGame.setVisible(false);
+				updateFrame();
+			}
+		});
+
+		btnStartGame.setBounds(197, 22, 89, 23);
+		frame.getContentPane().add(btnStartGame);
 		
 		
 		//keyListener
@@ -212,4 +231,10 @@ public class Interfaz {
 		return letra;
 	}
 	
+	private void updateFrame() {
+		SwingUtilities.updateComponentTreeUI(frame);
+		frame.setVisible(true);
+		frame.toFront();
+		frame.requestFocus();
+	}
 }
