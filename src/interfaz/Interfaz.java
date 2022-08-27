@@ -10,19 +10,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class Interfaz {
 
 	private JFrame frame;
-	private JLabel [][] tablero; 
+	private JLabel[] titulo;
+	private JLabel[][] tablero; 
 	private int posLetra = 0;
 	private int posFila = 0;
 	private LogicGame game;
@@ -61,9 +58,14 @@ public class Interfaz {
 		//Pantalla principal
 		game = new LogicGame(5);
 		frame = new JFrame();
-		frame.setBounds(100, 100, 524, 574);
+		// (x,y, 64 * length word, 64 * 6 + 8 * 5 + 64 * 3)
+		frame.setBounds(0, 0, 400, 600);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		//title
+		crearTitulo();
 		
 
 		//Start button && actions	
@@ -79,7 +81,7 @@ public class Interfaz {
 			}
 		});
 
-		btnStartGame.setBounds(197, 22, 89, 23);
+		btnStartGame.setBounds(206, 273, 89, 23);
 		frame.getContentPane().add(btnStartGame);
 		
 		
@@ -87,9 +89,7 @@ public class Interfaz {
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				System.out.println("Posicion letra: " + posLetra);
 				if (e.getKeyChar() == 8) { 
-					System.out.println("AAAAAAAAAAAAAAAAAaaa");
 					borrarLetra();
 					return;
 				}
@@ -102,7 +102,6 @@ public class Interfaz {
 				if (!esTeclaValida(e) || posLetra > 4)
 					return;
 				
-				System.out.println(0 + e.getKeyChar());
 				if (e.getKeyChar() != 8 && e.getKeyChar() != 10)
 					colocarLetra(e);
 			}
@@ -112,8 +111,8 @@ public class Interfaz {
 	}
 
 	private void crearTablero(int tamanoPalabra){
-		int x = 60;
-		int y = 30;
+		int x = 16;
+		int y = 72;
 		int CENTER = 0;
 		tablero = new JLabel[6][tamanoPalabra];
 		for (int f = 0; f < 6; f++) {
@@ -129,8 +128,31 @@ public class Interfaz {
 				x+= 72;
 			}
 			y+= 72;
-			x = 60;			
+			x = 16;			
 		}
+	}
+
+	private void crearTitulo(){
+		int x = 38;
+		int y = 20;
+		int CENTER = 0;
+		char[] gameTitleChars = {'w', 'U', 'N', 'G', 'S', 'd', 'l', 'e'};
+		int LEN_TITLE_CHARS = gameTitleChars.length;
+		titulo = new JLabel[LEN_TITLE_CHARS];
+
+		for (int i = 0; i < LEN_TITLE_CHARS; i++) {
+			titulo[i] = new JLabel();
+			titulo[i].setFont(new Font("Source Code Pro", Font.PLAIN, 32));
+			titulo[i].setText(" ");
+			titulo[i].setBackground(Color.WHITE);
+			titulo[i].setOpaque(true);
+			titulo[i].setHorizontalAlignment(CENTER);
+			titulo[i].setBounds(x,y,32,32);
+			titulo[i].setText("" + gameTitleChars[i]);
+			frame.getContentPane().add(titulo[i]);
+			x += 40;
+		}
+		
 	}
 
 	private void borrarLetra() {
@@ -143,11 +165,11 @@ public class Interfaz {
 		if (posLetra != 0 && tablero[posFila][posLetra].getText() == " " ) {
 			posLetra--;
 		}
+
 		tablero[posFila][posLetra].setText(" ");
 	}
 	
 	private void enviarPalabra() {
-		System.out.println("Su Uber flash está en camino!");
 		char[] palabraEnviada = new char[5];
 		for (int i = 0; i < tablero[posFila].length; i++) {
 			palabraEnviada[i] = tablero[posFila][i].getText().charAt(0);
@@ -156,7 +178,6 @@ public class Interfaz {
 		// ### PRUEBA COLOREAR
 		estadosLetra[] resultado = {estadosLetra.amarillo, estadosLetra.amarillo, estadosLetra.gris, estadosLetra.verde, estadosLetra.verde};
 		colorearLetras(resultado);
-		
 		
 		// ### PRUEBA COLOREAR
 
@@ -173,7 +194,6 @@ public class Interfaz {
 	}
 	
 	private void colocarLetra(KeyEvent e) {
-		
 		if (tablero[posFila][posLetra].getText() != " ")
 			return;
 		
