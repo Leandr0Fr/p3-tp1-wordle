@@ -4,30 +4,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LogicGame{
-	private String palabraEnJuego;;
+	private String palabraEnJuego;
 	private Map<Character, Integer> letraYcantidad;
 	private estadosLetra [] resultadoLetras;
 	private enum estadosLetra{verde,amarillo,gris,vacio};
 
 	public LogicGame(int tamano,String palabraAJugar) {
 		this.palabraEnJuego = palabraAJugar;
-		resetearLetraYCantidad();
-		resetearResultadosLetras();
+		setearLetraYCantidad();
+		setearResultadosLetras();
 	}
 	//enter
 	public boolean terminarIntento(char[] palabra) {
-		aciertosJugador(palabra);
-		System.out.println(palabraEnJuego);
-		System.out.println(palabra);
-		for (int i = 0; i < resultadoLetras.length; i++) {
-			System.out.print(resultadoLetras[i]+"-");
-		}
-		System.out.println();
-		System.out.println(letraYcantidad);
 		for (estadosLetra estLet : resultadoLetras) {
 			if (estLet != estadosLetra.verde) {
-				resetearLetraYCantidad();
-				resetearResultadosLetras();
+				setearLetraYCantidad();
+				setearResultadosLetras();
 				return false;
 			}
 		}
@@ -63,14 +55,14 @@ public class LogicGame{
 		//verifica si es una palabra que esta dentro del conjunto
 	}
 
-	private void resetearLetraYCantidad() {
+	private void setearLetraYCantidad() {
 		this.letraYcantidad = new HashMap<Character, Integer>();
 		for (Character c : palabraEnJuego.toCharArray()) {
 			int cantExistente = letraYcantidad.getOrDefault(c, 0);
 			letraYcantidad.put(c, cantExistente + 1);
 		}
 	}	
-	private void resetearResultadosLetras() {
+	private void setearResultadosLetras() {
 		this.resultadoLetras = new estadosLetra[palabraEnJuego.length()];
 		for (int i = 0; i < resultadoLetras.length; i++) {
 			resultadoLetras[i] = estadosLetra.vacio;
