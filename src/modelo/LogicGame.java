@@ -3,10 +3,12 @@ package modelo;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class LogicGame{
 	private String palabraEnJuego = "menua";
 	private Map<Character, Integer> letraYcantidad;
+	private Set<String> listadoDePalabras;
 	private estadosLetra [] resultadoLetras;
 	private enum estadosLetra{verde,amarillo,gris,vacio};
 
@@ -45,6 +47,16 @@ public class LogicGame{
 			}
 		}
 		return this.resultadoLetras;
+	}
+	
+	public boolean perteneceAlListado(char[] palabra) {
+		StringBuilder palabraFormada = new StringBuilder();
+		for (int i = 0; i < palabra.length; i++) {
+			palabraFormada.append(palabra[i]);
+		}
+		if(listadoDePalabras.contains(palabraFormada)) {
+			return true;
+		}return false;
 	}
 	
 	private void verificarPalabra() {

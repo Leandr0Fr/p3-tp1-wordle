@@ -5,6 +5,8 @@ import modelo.LogicGame;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -60,6 +62,10 @@ public class Interfaz {
 		LEN_PALABRA = 5;
 		game = new LogicGame(LEN_PALABRA);
 		frame = new JFrame();
+		Toolkit miPantalla = Toolkit.getDefaultToolkit();	
+		Image miIcono = miPantalla.getImage("src/interfaz/icono.png");
+		
+		frame.setIconImage(miIcono);
 		// (x,y, 64 * length word, 64 * 6 + 8 * 5 + 64 * 3)
 		frame.setBounds(0, 0, 400, 600);
 		frame.setLocationRelativeTo(null);
