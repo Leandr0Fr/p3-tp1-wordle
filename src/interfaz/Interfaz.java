@@ -12,10 +12,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Cursor;
 
 public class Interfaz {
 
@@ -28,9 +30,18 @@ public class Interfaz {
 	private LogicGame game;
 	private enum estadosLetra{verde,amarillo,gris};
 
+
+	private Toolkit miPantalla;	
+	private Image miIcono;
+
 	private Color VERDE = new Color(106, 170, 100);
 	private Color AMARILLO = new Color(201, 180, 88);
 	private Color GRIS = new Color(120, 124, 126);
+	
+	private Font fuenteSourceCodeSmall = new Font("Source Code Pro", Font.PLAIN, 16);
+	private Font fuenteSourceCodeMedium = new Font("Source Code Pro", Font.PLAIN, 32);
+	private Font fuenteSourceCodeBig = new Font("Source Code Pro", Font.PLAIN, 64);
+
 	/**
 	 * Launch the application.
 	 */
@@ -59,45 +70,55 @@ public class Interfaz {
 	 */
 	private void initialize() {
 		//Pantalla principal
-		LEN_PALABRA = 5;
+		LEN_PALABRA = 6;
 		game = new LogicGame(LEN_PALABRA);
 		frame = new JFrame();
-		Toolkit miPantalla = Toolkit.getDefaultToolkit();	
-		Image miIcono = miPantalla.getImage("src/interfaz/icono.png");
-		
+		frame.setResizable(false);
+		frame.setTitle("w-UNGS-dle");
+		miPantalla = Toolkit.getDefaultToolkit();	
+		miIcono = miPantalla.getImage("src/interfaz/icono.png");
 		frame.setIconImage(miIcono);
-		// (x,y, 64 * length word, 64 * 6 + 8 * 5 + 64 * 3)
-		frame.setBounds(0, 0, 400, 600);
+
+		frame.setBounds(0, 0, 472, 600);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		//title
 		crearTitulo();
-		
 
-		//Start button && actions	
+		//Start button
 		JButton btnStartGame = new JButton("START!");
-		btnStartGame.setFont(new Font("Consolas", Font.PLAIN, 11));
+		btnStartGame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnStartGame.setFont(fuenteSourceCodeSmall);
+		btnStartGame.setBorderPainted(true);
+		btnStartGame.setFocusPainted(false);
+		btnStartGame.setContentAreaFilled(true);
+		btnStartGame.setBackground(Color.WHITE);
 
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				crearTablero(5);
+				crearTablero(LEN_PALABRA);
 				btnStartGame.setEnabled(false);
 				btnStartGame.setVisible(false);
 				updateFrame();
 			}
 		});
 
-		btnStartGame.setBounds(206, 273, 89, 23);
+		btnStartGame.setBounds(128, 221, 126, 37);
 		frame.getContentPane().add(btnStartGame);
+		updateFrame();
+		//
+		
 		
 		
 		//keyListener
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-
+				if(e.getKeyChar() == KeyEvent.VK_ESCAPE) 
+					System.exit(0);
+				
 				if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) { 
 					borrarLetra();
 					return;
@@ -113,39 +134,36 @@ public class Interfaz {
 				
 				if (e.getKeyChar() != KeyEvent.VK_BACK_SPACE && e.getKeyChar() != KeyEvent.VK_ENTER)
 					colocarLetra(e);
-				
 			}
-			
-
-
 		});
 		
 	}
 
 	private void crearTablero(int tamanoPalabra){
-		int x = 16;
+		int x = 16 + 36 * (6%LEN_PALABRA);
 		int y = 72;
 		int CENTER = 0;
 		tablero = new JLabel[6][tamanoPalabra];
 		for (int f = 0; f < 6; f++) {
 			for (int c = 0; c <tamanoPalabra ; c++) {
 				tablero[f][c] = new JLabel();
-				tablero[f][c].setFont(new Font("Source Code Pro", Font.PLAIN, 64));
+				tablero[f][c].setFont(fuenteSourceCodeBig);
 				tablero[f][c].setText(" ");
 				tablero[f][c].setBackground(Color.WHITE);
 				tablero[f][c].setOpaque(true);
 				tablero[f][c].setHorizontalAlignment(CENTER);
+				System.out.println(6%LEN_PALABRA);
 				tablero[f][c].setBounds(x,y,64,64);
 				frame.getContentPane().add(tablero[f][c]);
 				x+= 72;
 			}
 			y+= 72;
-			x = 16;			
+			x = 16 + 36 * (6%LEN_PALABRA);			
 		}
 	}
 
 	private void crearTitulo(){
-		int x = 38;
+		int x = 88;
 		int y = 20;
 		int CENTER = 0;
 		char[] gameTitleChars = {'w', 'U', 'N', 'G', 'S', 'd', 'l', 'e'};
@@ -154,7 +172,7 @@ public class Interfaz {
 
 		for (int i = 0; i < LEN_TITLE_CHARS; i++) {
 			titulo[i] = new JLabel();
-			titulo[i].setFont(new Font("Source Code Pro", Font.PLAIN, 32));
+			titulo[i].setFont(fuenteSourceCodeMedium);
 			titulo[i].setText(" ");
 			titulo[i].setBackground(Color.WHITE);
 			titulo[i].setOpaque(true);
@@ -162,14 +180,12 @@ public class Interfaz {
 			titulo[i].setBounds(x,y,32,32);
 			titulo[i].setText("" + gameTitleChars[i]);
 			frame.getContentPane().add(titulo[i]);
-			x += 40;
+			x += 36;
 		}
 		
 	}
 
 	private void borrarLetra() {
-		System.out.println("ESTOY ACAAAA");
-		
 		if (posLetra > LEN_PALABRA){
 			posLetra = LEN_PALABRA-1;
 		}
@@ -188,9 +204,8 @@ public class Interfaz {
 		}
 		
 		// ### PRUEBA COLOREAR
-		estadosLetra[] resultado = {estadosLetra.amarillo, estadosLetra.amarillo, estadosLetra.gris, estadosLetra.verde, estadosLetra.verde};
+		estadosLetra[] resultado = {estadosLetra.amarillo, estadosLetra.amarillo, estadosLetra.gris, estadosLetra.verde, estadosLetra.verde, estadosLetra.gris};
 		colorearLetras(resultado);
-		
 		// ### PRUEBA COLOREAR
 
 		if (game.terminarIntento(palabraEnviada)) {
@@ -212,12 +227,10 @@ public class Interfaz {
 		char letra = game.mayus(e.getKeyChar());
 		tablero[posFila][posLetra].setText("" + letra);
 		posLetra += posLetra != tablero[0].length - 1 ? 1 : 0;
-		
 	}
 	
 	private void colorearLetras(estadosLetra[] resultados){
 		for (int i = 0; i < tablero[0].length; i++) {
-			
 			if (resultados[i] == estadosLetra.verde)
 				colorearVerde(tablero[posFila][i]);
 
@@ -226,7 +239,6 @@ public class Interfaz {
 
 			else if (resultados[i] == estadosLetra.gris)
 				colorearGris(tablero[posFila][i]);
-			
 		}
 		
 	}
@@ -247,7 +259,7 @@ public class Interfaz {
 	}
 	
 	private void colorearTextoBlanco(JLabel celda) {
-		celda.setForeground(Color.white);
+		celda.setForeground(Color.WHITE);
 	}
 	
 	private void updateFrame() {
