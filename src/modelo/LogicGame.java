@@ -1,20 +1,27 @@
 package modelo;
 
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 
 public class LogicGame{
+	private Set <String>conjuntoPalabras;
 	private String palabraEnJuego = "menua";
 	private Map<Character, Integer> letraYcantidad;
 	private EstadoCasillero [] resultadoLetras;
 	private enum EstadoCasillero{verde,amarillo,gris,vacio};
 	private enum Dificultad{facil,normal,dificil};
-
+	
 
 	public LogicGame(int tamanoPalabra) {
 		setearLetraYCantidad();
 		setearResultadosLetras();
+		this.conjuntoPalabras = new HashSet<>();
 	}
 	public boolean terminarIntento(char[] palabra) {
 		for (EstadoCasillero estLet : resultadoLetras) {
@@ -47,7 +54,31 @@ public class LogicGame{
 		}
 		return this.resultadoLetras;
 	}
-	
+	public void obtenerConjuntoDePalabras(Dificultad dificultad, boolean ingles) {
+		StringBuilder rutaTxt = new StringBuilder(LogicGame.class.getResource("").getPath());
+		rutaTxt.append((ingles)?"ingles":"espanol");
+		if (dificultad == Dificultad.facil) {
+			rutaTxt.append("Facil.txt");
+		}
+		else if(dificultad == Dificultad.normal) {
+			rutaTxt.append("Normal.txt");
+		}
+		else {
+			rutaTxt.append("Dificil.txt");
+		}
+		//leer contenido
+		File archivoNombres = new File(rutaTxt.toString());
+		try {
+			Scanner leerArchivo = new Scanner(archivoNombres);
+			while (leerArchivo.hasNext()) {
+				conjuntoPalabras.add(leerArchivo.next().toString().toLowerCase());
+			}
+			leerArchivo.close();
+		} catch (FileNotFoundException e) {	
+			e.printStackTrace();
+		}
+		
+	}
 	public EstadoCasillero[] getVerificacionPalabra() {
 		return resultadoLetras; //devuelve puntero a objeto array
 	}
