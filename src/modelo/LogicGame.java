@@ -19,9 +19,9 @@ public class LogicGame{
 	//modificar constructor para que tome la dificultad
 	public LogicGame(int tamanoPalabra) {
 		setearLetraYCantidad();
-		setearResultadosLetras();
-		obtenerConjuntoDePalabras(Dificultad.normal, false);
+		setearResultadosLetras();	
 		this.listadoDePalabras = new HashSet<>();
+		obtenerConjuntoDePalabras(Dificultad.normal, false);
 	}
 	
 	public boolean terminarIntento(char[] palabra) {
