@@ -7,8 +7,9 @@ import java.util.Map;
 public class LogicGame{
 	private String palabraEnJuego = "menua";
 	private Map<Character, Integer> letraYcantidad;
-	private estadosLetra [] resultadoLetras;
-	private enum estadosLetra{verde,amarillo,gris,vacio};
+	private EstadoCasillero [] resultadoLetras;
+	private enum EstadoCasillero{verde,amarillo,gris,vacio};
+	private enum Dificultad{facil,normal,dificil};
 
 
 	public LogicGame(int tamanoPalabra) {
@@ -16,8 +17,8 @@ public class LogicGame{
 		setearResultadosLetras();
 	}
 	public boolean terminarIntento(char[] palabra) {
-		for (estadosLetra estLet : resultadoLetras) {
-			if (estLet != estadosLetra.verde) {
+		for (EstadoCasillero estLet : resultadoLetras) {
+			if (estLet != EstadoCasillero.verde) {
 				setearLetraYCantidad();
 				setearResultadosLetras();
 				return false;
@@ -26,53 +27,31 @@ public class LogicGame{
 		//acerto la palabra
 		return true;
 	}
-	public estadosLetra[] aciertosJugador(char [] palabraIntento) {
+	public EstadoCasillero[] aciertosJugador(char [] palabraIntento) {
 		//prioridad verde
 		for (int i = 0; i < palabraEnJuego.length(); i++) {
 			if (palabraIntento[i] == palabraEnJuego.charAt(i)) {
-				resultadoLetras[i] = estadosLetra.verde;
+				resultadoLetras[i] = EstadoCasillero.verde;
 				letraYcantidad.put(palabraIntento[i], letraYcantidad.get(palabraIntento[i])-1);
 			}
 		}
 		//amarillo y gris
 		for (int i = 0; i < palabraEnJuego.length(); i++) {
 			if (palabraIntento[i] != palabraEnJuego.charAt(i) && letraYcantidad.containsKey(palabraIntento[i]) && letraYcantidad.get(palabraIntento[i]) > 0 ) {
-				resultadoLetras[i] = estadosLetra.amarillo;
+				resultadoLetras[i] = EstadoCasillero.amarillo;
 				letraYcantidad.put(palabraIntento[i], letraYcantidad.get(palabraIntento[i])-1);
 			}
 			else if(palabraIntento[i] != palabraEnJuego.charAt(i) && !letraYcantidad.containsKey(palabraIntento[i]) ||(palabraIntento[i] != palabraEnJuego.charAt(i) && letraYcantidad.get(palabraIntento[i]) == 0) ){
-				resultadoLetras[i] = estadosLetra.gris;
+				resultadoLetras[i] = EstadoCasillero.gris;
 			}
 		}
 		return this.resultadoLetras;
 	}
 	
-	private void verificarPalabra() {
-		//verifica si es una palabra que esta dentro del conjunto
-	}
-
-	private void setearResultadosLetras() {
-		this.resultadoLetras = new estadosLetra[palabraEnJuego.length()];
-		for (int i = 0; i < resultadoLetras.length; i++) {
-			resultadoLetras[i] = estadosLetra.vacio;
-		}
-	}
-
-
-	public estadosLetra[] getVerificacionPalabra() {
+	public EstadoCasillero[] getVerificacionPalabra() {
 		return resultadoLetras; //devuelve puntero a objeto array
 	}
 
-
-	private void setearLetraYCantidad() {
-		letraYcantidad = new HashMap<Character, Integer>();
-		for (Character c : palabraEnJuego.toCharArray()) {
-			int cantExistente = letraYcantidad.getOrDefault(c, 0);
-			letraYcantidad.put(c, cantExistente + 1);
-		}
-	}
-	
-	
 	public boolean esTeclaValida(KeyEvent e) {
 		//ascii 65 - 90 (209 = Ñ | 241 ñ) 97 - 122
 		return e.getKeyChar() == 10 || e.getKeyChar() == 8 || e.getKeyChar() == 209 || e.getKeyChar() == 241 ||
@@ -84,7 +63,25 @@ public class LogicGame{
 			letra = (char) (letra - 32);
 		return letra;
 	}
-		
+
+	private void setearLetraYCantidad() {
+		letraYcantidad = new HashMap<Character, Integer>();
+		for (Character c : palabraEnJuego.toCharArray()) {
+			int cantExistente = letraYcantidad.getOrDefault(c, 0);
+			letraYcantidad.put(c, cantExistente + 1);
+		}
+	}
+	private void setearResultadosLetras() {
+		this.resultadoLetras = new EstadoCasillero[palabraEnJuego.length()];
+		for (int i = 0; i < resultadoLetras.length; i++) {
+			resultadoLetras[i] = EstadoCasillero.vacio;
+		}
+	}
+
+	private void verificarPalabra() {
+		//verifica si es una palabra que esta dentro del conjunto
+	}
+
 }
 		
 	
