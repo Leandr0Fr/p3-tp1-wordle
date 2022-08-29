@@ -5,6 +5,8 @@ import modelo.LogicGame;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,6 +16,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class Interfaz {
 
@@ -22,6 +27,7 @@ public class Interfaz {
 	private JLabel[][] tablero; 
 	private int posLetra = 0;
 	private int posFila = 0;
+	private int LEN_PALABRA;
 	private LogicGame game;
 	private enum estadosLetra{verde,amarillo,gris};
 
@@ -56,8 +62,13 @@ public class Interfaz {
 	 */
 	private void initialize() {
 		//Pantalla principal
-		game = new LogicGame(5);
+		LEN_PALABRA = 5;
+		game = new LogicGame(LEN_PALABRA);
 		frame = new JFrame();
+		Toolkit miPantalla = Toolkit.getDefaultToolkit();	
+		Image miIcono = miPantalla.getImage("src/interfaz/icono.png");
+		
+		frame.setIconImage(miIcono);
 		// (x,y, 64 * length word, 64 * 6 + 8 * 5 + 64 * 3)
 		frame.setBounds(0, 0, 400, 600);
 		frame.setLocationRelativeTo(null);
@@ -83,28 +94,34 @@ public class Interfaz {
 
 		btnStartGame.setBounds(206, 273, 89, 23);
 		frame.getContentPane().add(btnStartGame);
-		
+		updateFrame();
 		
 		//keyListener
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (e.getKeyChar() == 8) { 
+				if(e.getKeyChar() == KeyEvent.VK_ESCAPE) {
+					System.exit(0);
+				}
+				if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) { 
 					borrarLetra();
 					return;
 				}
 				
-				if (e.getKeyChar() == 10 && posLetra >= 4) {
+				if (e.getKeyChar() == KeyEvent.VK_ENTER && posLetra >= LEN_PALABRA-1 && tablero[posFila][LEN_PALABRA-1].getText() != " ") {
 					enviarPalabra();
 					return;
 				}
 
-				if (!game.esTeclaValida(e) || posLetra > 4)
+				if (!game.esTeclaValida(e) || posLetra > LEN_PALABRA-1)
 					return;
 				
-				if (e.getKeyChar() != 8 && e.getKeyChar() != 10)
+				if (e.getKeyChar() != KeyEvent.VK_BACK_SPACE && e.getKeyChar() != KeyEvent.VK_ENTER)
 					colocarLetra(e);
+				
 			}
+			
+
 
 		});
 		
@@ -158,8 +175,8 @@ public class Interfaz {
 	private void borrarLetra() {
 		System.out.println("ESTOY ACAAAA");
 		
-		if (posLetra > 5){
-			posLetra = 4;
+		if (posLetra > LEN_PALABRA){
+			posLetra = LEN_PALABRA-1;
 		}
 		
 		if (posLetra != 0 && tablero[posFila][posLetra].getText() == " " ) {
@@ -170,7 +187,7 @@ public class Interfaz {
 	}
 	
 	private void enviarPalabra() {
-		char[] palabraEnviada = new char[5];
+		char[] palabraEnviada = new char[LEN_PALABRA];
 		for (int i = 0; i < tablero[posFila].length; i++) {
 			palabraEnviada[i] = tablero[posFila][i].getText().charAt(0);
 		}

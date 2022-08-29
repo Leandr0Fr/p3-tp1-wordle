@@ -10,19 +10,20 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class LogicGame{
-	private Set <String>conjuntoPalabras;
-	private String palabraEnJuego = "menua";
+	private String palabraEnJuego = "menem";
 	private Map<Character, Integer> letraYcantidad;
+	private Set<String> listadoDePalabras;
 	private EstadoCasillero [] resultadoLetras;
 	private enum EstadoCasillero{verde,amarillo,gris,vacio};
 	private enum Dificultad{facil,normal,dificil};
-	
-
+	//modificar constructor para que tome la dificultad
 	public LogicGame(int tamanoPalabra) {
 		setearLetraYCantidad();
 		setearResultadosLetras();
-		this.conjuntoPalabras = new HashSet<>();
+		obtenerConjuntoDePalabras(Dificultad.normal, false);
+		this.listadoDePalabras = new HashSet<>();
 	}
+	
 	public boolean terminarIntento(char[] palabra) {
 		for (EstadoCasillero estLet : resultadoLetras) {
 			if (estLet != EstadoCasillero.verde) {
@@ -54,33 +55,14 @@ public class LogicGame{
 		}
 		return this.resultadoLetras;
 	}
-	public void obtenerConjuntoDePalabras(Dificultad dificultad, boolean ingles) {
-		StringBuilder rutaTxt = new StringBuilder(LogicGame.class.getResource("").getPath());
-		rutaTxt.append((ingles)?"ingles":"espanol");
-		if (dificultad == Dificultad.facil) {
-			rutaTxt.append("Facil.txt");
+	
+	
+	public boolean perteneceAlListado(char[] palabra) {
+		StringBuilder palabraFormada = new StringBuilder();
+		for (int i = 0; i < palabra.length; i++) {
+			palabraFormada.append(palabra[i]);
 		}
-		else if(dificultad == Dificultad.normal) {
-			rutaTxt.append("Normal.txt");
-		}
-		else {
-			rutaTxt.append("Dificil.txt");
-		}
-		//leer contenido
-		File archivoNombres = new File(rutaTxt.toString());
-		try {
-			Scanner leerArchivo = new Scanner(archivoNombres);
-			while (leerArchivo.hasNext()) {
-				conjuntoPalabras.add(leerArchivo.next().toString().toLowerCase());
-			}
-			leerArchivo.close();
-		} catch (FileNotFoundException e) {	
-			e.printStackTrace();
-		}
-		
-	}
-	public EstadoCasillero[] getVerificacionPalabra() {
-		return resultadoLetras; //devuelve puntero a objeto array
+		return listadoDePalabras.contains(palabraFormada.toString());
 	}
 
 	public boolean esTeclaValida(KeyEvent e) {
@@ -94,7 +76,28 @@ public class LogicGame{
 			letra = (char) (letra - 32);
 		return letra;
 	}
-
+	
+	private void obtenerConjuntoDePalabras(Dificultad dificultad, boolean ingles) {
+		StringBuilder ruta = new StringBuilder(LogicGame.class.getResource("").getPath());
+		ruta.append((ingles)?"ingles":"espanol");
+		if (dificultad == Dificultad.facil) {ruta.append("Facil.txt");}
+		else if(dificultad == Dificultad.normal) {ruta.append("Normal.txt");}
+		else {ruta.append("Dificil.txt");}
+		//leer contenido
+		File archivoPalabras = new File(ruta.toString());
+		try {
+			Scanner palabras = new Scanner(archivoPalabras);
+			while (palabras.hasNext()) {
+				listadoDePalabras.add(palabras.next().toString().toLowerCase());
+			}
+			palabras.close();
+		} catch (FileNotFoundException e) {	
+				e.printStackTrace();
+			}	
+	}
+	private void seleccionarPalabra() {
+		
+	}
 	private void setearLetraYCantidad() {
 		letraYcantidad = new HashMap<Character, Integer>();
 		for (Character c : palabraEnJuego.toCharArray()) {
@@ -108,11 +111,4 @@ public class LogicGame{
 			resultadoLetras[i] = EstadoCasillero.vacio;
 		}
 	}
-
-	private void verificarPalabra() {
-		//verifica si es una palabra que esta dentro del conjunto
-	}
-
 }
-		
-	
