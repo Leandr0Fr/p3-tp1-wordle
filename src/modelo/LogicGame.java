@@ -5,14 +5,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
 public class LogicGame{
-	private String palabraEnJuego = "menem";
+	private String palabraEnJuego = "";
 	private Map<Character, Integer> letraYcantidad;
-	private Set<String> listadoDePalabras;
+	private List<String> listadoDePalabras;
 	private EstadoCasillero [] resultadoLetras;
 	private enum EstadoCasillero{verde,amarillo,gris,vacio};
 	private enum Dificultad{facil,normal,dificil};
@@ -20,8 +23,10 @@ public class LogicGame{
 	public LogicGame(int tamanoPalabra) {
 		setearLetraYCantidad();
 		setearResultadosLetras();	
-		this.listadoDePalabras = new HashSet<>();
+		this.listadoDePalabras = new LinkedList<String>();
 		obtenerConjuntoDePalabras(Dificultad.normal, false);
+		seleccionarPalabra();
+		System.out.println(palabraEnJuego);
 	}
 	
 	public boolean terminarIntento(char[] palabra) {
@@ -96,7 +101,8 @@ public class LogicGame{
 			}	
 	}
 	private void seleccionarPalabra() {
-		
+		Random random = new Random();
+		this.palabraEnJuego = listadoDePalabras.get(random.nextInt(listadoDePalabras.size()));
 	}
 	private void setearLetraYCantidad() {
 		letraYcantidad = new HashMap<Character, Integer>();
