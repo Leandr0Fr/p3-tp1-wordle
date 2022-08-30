@@ -100,7 +100,7 @@ public class LogicGame{
 	}
 	private void seleccionarPalabra() {
 		Random random = new Random();
-		this.palabraEnJuego = listadoDePalabras.get(random.nextInt(listadoDePalabras.size()));
+		this.palabraEnJuego = listadoDePalabras.get(random.nextInt(listadoDePalabras.size()-1));
 	}
 	private void setearLetraYCantidad() {
 		letraYcantidad = new HashMap<Character, Integer>();
