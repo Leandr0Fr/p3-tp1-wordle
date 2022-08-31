@@ -177,7 +177,7 @@ public class Interfaz {
 			}
 		});
 
-		btnPlayFacil.setBounds(24, 133, 126, 37);
+		btnPlayFacil.setBounds(20, 133, 126, 37);
 		frame.getContentPane().add(btnPlayFacil);
 	}
 
@@ -198,7 +198,7 @@ public class Interfaz {
 			}
 		});
 
-		btnPlayNormal.setBounds(160, 133, 126, 37);
+		btnPlayNormal.setBounds(164, 133, 126, 37);
 		frame.getContentPane().add(btnPlayNormal);
 	}
 
@@ -343,21 +343,21 @@ public class Interfaz {
 		JTextPane recordsFacil = new JTextPane();
 		recordsFacil.setFont(new Font("Consolas", Font.BOLD, 18));
 		recordsFacil.setBackground(new Color(204, 204, 204));
-		recordsFacil.setBounds(20, 181, 120, 220);
+		recordsFacil.setBounds(20, 181, 128, 220);
 		frame.getContentPane().add(recordsFacil);
 
 		JTextPane recordsNormal = new JTextPane();
 		recordsNormal.setEditable(false);
 		recordsNormal.setFont(new Font("Consolas", Font.BOLD, 18));
 		recordsNormal.setBackground(new Color(204, 204, 204));
-		recordsNormal.setBounds(164, 183, 120, 220);
+		recordsNormal.setBounds(164, 183, 128, 220);
 		frame.getContentPane().add(recordsNormal);
 
 		JTextPane recordsDificil = new JTextPane();
 		recordsDificil.setEditable(false);
 		recordsDificil.setFont(new Font("Consolas", Font.BOLD, 18));
 		recordsDificil.setBackground(new Color(204, 204, 204));
-		recordsDificil.setBounds(306, 181, 126, 220);
+		recordsDificil.setBounds(306, 181, 128, 220);
 		frame.getContentPane().add(recordsDificil);
 
 	}
