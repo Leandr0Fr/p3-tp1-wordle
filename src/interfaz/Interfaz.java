@@ -270,7 +270,7 @@ public class Interfaz {
 		JEditorPane ungsLogo = new JEditorPane();
 		ungsLogo.setEditable(false);
 		ungsLogo.setForeground(new Color(0, 128, 128));
-		ungsLogo.setFont(new Font("Source Code Pro", Font.PLAIN, 1));
+		ungsLogo.setFont(new Font("Consolas", Font.PLAIN, 1));
 		ungsLogo.setText(
 				"                                           ~~~         ~~                                           \n"
 						+ "                                    ~  7?JY5PP7       ?P5YJ?7  ~                                    \n"
