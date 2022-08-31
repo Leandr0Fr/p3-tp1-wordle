@@ -25,28 +25,32 @@ public class Interfaz {
 	private JFrame frame;
 	private boolean flagEmpezarJuego;
 	private JLabel[] titulo;
-	private JLabel[][] tablero; 
+	private JLabel[][] tablero;
 	private int posLetra = 0;
 	private int posFila = 0;
 	private int LEN_PALABRA;
 	private LogicGame game;
-	private enum estadosLetra{verde,amarillo,gris};
-	
+
+	private enum estadosLetra {
+		verde, amarillo, gris
+	};
+
 	private JButton btnJugar;
 
-	private Toolkit miPantalla;	
+	private Toolkit miPantalla;
 	private Image miIcono;
 
 	private Color VERDE = new Color(106, 170, 100);
 	private Color AMARILLO = new Color(201, 180, 88);
 	private Color GRIS = new Color(120, 124, 126);
 	private Color BORDER_COLOUR = new Color(120, 120, 120);
-	
+
 	private Font fuenteSourceCodeSmall = new Font("Source Code Pro", Font.PLAIN, 16);
 	private Font fuenteSourceCodeMedium = new Font("Source Code Pro", Font.PLAIN, 32);
 	private Font fuenteSourceCodeBig = new Font("Source Code Pro", Font.PLAIN, 64);
 
 	private int index = 0;
+
 	/**
 	 * Launch the application.
 	 */
@@ -74,14 +78,14 @@ public class Interfaz {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		//Pantalla principal
+		// Pantalla principal
 		LEN_PALABRA = 5;
 		game = new LogicGame(LEN_PALABRA);
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setResizable(false);
 		frame.setTitle("w-UNGS-dle");
-		miPantalla = Toolkit.getDefaultToolkit();	
+		miPantalla = Toolkit.getDefaultToolkit();
 		miIcono = miPantalla.getImage("src/interfaz/icono.png");
 		frame.setIconImage(miIcono);
 
@@ -89,41 +93,42 @@ public class Interfaz {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		//title
+
+		// title
 		crearTitulo();
 
 		menuPrincipal();
-		
-		//keyListener
+
+		// keyListener
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if (tablero == null)
 					return;
-				
-				if(e.getKeyChar() == KeyEvent.VK_ESCAPE) 
+
+				if (e.getKeyChar() == KeyEvent.VK_ESCAPE)
 					System.exit(0);
-				
-				if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) { 
+
+				if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
 					borrarLetra();
 					return;
 				}
-				
-				if (e.getKeyChar() == KeyEvent.VK_ENTER && posLetra >= LEN_PALABRA-1 && tablero[posFila][LEN_PALABRA-1].getText() != " ") {
+
+				if (e.getKeyChar() == KeyEvent.VK_ENTER && posLetra >= LEN_PALABRA - 1
+						&& tablero[posFila][LEN_PALABRA - 1].getText() != " ") {
 					enviarPalabra();
 					return;
 				}
 
-				if (!game.esTeclaValida(e) || posLetra > LEN_PALABRA-1)
+				if (!game.esTeclaValida(e) || posLetra > LEN_PALABRA - 1)
 					return;
-				
+
 				if (e.getKeyChar() != KeyEvent.VK_BACK_SPACE && e.getKeyChar() != KeyEvent.VK_ENTER)
 					colocarLetra(e);
 			}
 		});
 		System.out.println(index++ + " final");
-		
+
 	}
 
 	private void menuPrincipal() {
@@ -156,11 +161,11 @@ public class Interfaz {
 		btnJugar.setBounds(170, 450, 126, 37);
 		frame.getContentPane().add(btnJugar);
 		//
-		
+
 	}
 
 	private void crearBtnFacil() {
-		//Start button
+		// Start button
 		JButton btnPlayFacil = new JButton("Facil");
 		btnPlayFacil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPlayFacil.setFont(fuenteSourceCodeSmall);
@@ -180,9 +185,9 @@ public class Interfaz {
 		frame.getContentPane().add(btnPlayFacil);
 		//
 	}
-	
+
 	private void crearBtnNormal() {
-		//Start button
+		// Start button
 		JButton btnPlayNormal = new JButton("Normal");
 		btnPlayNormal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPlayNormal.setFont(fuenteSourceCodeSmall);
@@ -204,7 +209,7 @@ public class Interfaz {
 	}
 
 	private void crearBtnDificil() {
-		//Start button
+		// Start button
 		JButton btnPlayDificil = new JButton("Dificil");
 		btnPlayDificil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPlayDificil.setFont(fuenteSourceCodeSmall);
@@ -224,19 +229,19 @@ public class Interfaz {
 		frame.getContentPane().add(btnPlayDificil);
 		//
 	}
-	
+
 	private void setFlagEmpezarJuego() {
 		flagEmpezarJuego = true;
 		btnJugar.setEnabled(flagEmpezarJuego);
 	}
 
-	private void crearTablero(int tamanoPalabra){
-		int x = 16 + 36 * (6%LEN_PALABRA);
+	private void crearTablero(int tamanoPalabra) {
+		int x = 16 + 36 * (6 % LEN_PALABRA);
 		int y = 72;
 		int CENTER = 0;
 		tablero = new JLabel[6][tamanoPalabra];
 		for (int f = 0; f < 6; f++) {
-			for (int c = 0; c <tamanoPalabra ; c++) {
+			for (int c = 0; c < tamanoPalabra; c++) {
 				tablero[f][c] = new JLabel();
 				tablero[f][c].setFont(fuenteSourceCodeBig);
 				tablero[f][c].setText(" ");
@@ -244,26 +249,26 @@ public class Interfaz {
 				tablero[f][c].setOpaque(true);
 				tablero[f][c].setHorizontalAlignment(CENTER);
 				tablero[f][c].setBorder(new LineBorder(BORDER_COLOUR, 1));
-				tablero[f][c].setBounds(x,y,64,64);
+				tablero[f][c].setBounds(x, y, 64, 64);
 				frame.getContentPane().add(tablero[f][c]);
-				x+= 72;
+				x += 72;
 			}
-			y+= 72;
-			x = 16 + 36 * (6%LEN_PALABRA);			
+			y += 72;
+			x = 16 + 36 * (6 % LEN_PALABRA);
 		}
 	}
-	
+
 	private void limpiarPantalla() {
 		frame.getContentPane().removeAll();
 		crearTitulo();
 		updateFrame();
 	}
 
-	private void crearTitulo(){
+	private void crearTitulo() {
 		int x = 88;
 		int y = 12;
 		int CENTER = 0;
-		char[] gameTitleChars = {'w', 'U', 'N', 'G', 'S', 'd', 'l', 'e'};
+		char[] gameTitleChars = { 'w', 'U', 'N', 'G', 'S', 'd', 'l', 'e' };
 		int LEN_TITLE_CHARS = gameTitleChars.length;
 		titulo = new JLabel[LEN_TITLE_CHARS];
 
@@ -275,60 +280,61 @@ public class Interfaz {
 			titulo[i].setOpaque(true);
 			titulo[i].setHorizontalAlignment(CENTER);
 			titulo[i].setVerticalAlignment(CENTER);
-			titulo[i].setBounds(x,y,32,32);
+			titulo[i].setBounds(x, y, 32, 32);
 			titulo[i].setText("" + gameTitleChars[i]);
 			titulo[i].setBorder(new LineBorder(BORDER_COLOUR, 1));
 			frame.getContentPane().add(titulo[i]);
 			x += 36;
 		}
-		
+
 	}
 
 	private void borrarLetra() {
-		if (posLetra > LEN_PALABRA){
-			posLetra = LEN_PALABRA-1;
+		if (posLetra > LEN_PALABRA) {
+			posLetra = LEN_PALABRA - 1;
 		}
-		
-		if (posLetra != 0 && tablero[posFila][posLetra].getText() == " " ) {
+
+		if (posLetra != 0 && tablero[posFila][posLetra].getText() == " ") {
 			posLetra--;
 		}
 
 		tablero[posFila][posLetra].setText(" ");
 	}
-	
+
 	private void enviarPalabra() {
 		char[] palabraEnviada = new char[LEN_PALABRA];
 		for (int i = 0; i < tablero[posFila].length; i++) {
 			palabraEnviada[i] = tablero[posFila][i].getText().charAt(0);
 		}
-		
+
 		// ### PRUEBA COLOREAR
-		estadosLetra[] resultado = {estadosLetra.amarillo, estadosLetra.amarillo, estadosLetra.gris, estadosLetra.verde, estadosLetra.verde, estadosLetra.gris};
+		estadosLetra[] resultado = { estadosLetra.amarillo, estadosLetra.amarillo, estadosLetra.gris,
+				estadosLetra.verde, estadosLetra.verde, estadosLetra.gris };
 		colorearLetras(resultado);
 		// ### PRUEBA COLOREAR
 
 		if (game.terminarIntento(palabraEnviada)) {
-			//GANASTE!!!
+			// GANASTE!!!
 		}
 		if (posFila == 5) {
-			//perdiste
+			// perdiste
 			return;
 		}
 		posFila++;
 		posLetra = 0;
-		
+
 	}
-	
+
 	private void colocarLetra(KeyEvent e) {
 		if (tablero[posFila][posLetra].getText() != " ")
 			return;
-		
+
 		char letra = game.mayus(e.getKeyChar());
 		tablero[posFila][posLetra].setText("" + letra);
 		posLetra += posLetra != tablero[0].length - 1 ? 1 : 0;
 	}
-	
-	private void colorearLetras(estadosLetra[] resultados){
+
+	private void colorearLetras(estadosLetra[] resultados) {
 		for (int i = 0; i < tablero[0].length; i++) {
 			if (resultados[i] == estadosLetra.verde)
 				colorearVerde(tablero[posFila][i]);
@@ -339,7 +345,7 @@ public class Interfaz {
 			else if (resultados[i] == estadosLetra.gris)
 				colorearGris(tablero[posFila][i]);
 		}
-		
+
 	}
 
 	private void colorearVerde(JLabel celda) {
@@ -356,11 +362,11 @@ public class Interfaz {
 		celda.setBackground(GRIS);
 		colorearTextoBlanco(celda);
 	}
-	
+
 	private void colorearTextoBlanco(JLabel celda) {
 		celda.setForeground(Color.WHITE);
 	}
-	
+
 	private void updateFrame() {
 		SwingUtilities.updateComponentTreeUI(frame);
 		frame.setVisible(true);
