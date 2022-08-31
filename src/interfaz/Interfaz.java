@@ -19,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Cursor;
 import javax.swing.border.LineBorder;
+import javax.swing.JTextPane;
+import javax.swing.JEditorPane;
 
 public class Interfaz {
 
@@ -89,13 +91,13 @@ public class Interfaz {
 		miIcono = miPantalla.getImage("src/interfaz/icono.png");
 		frame.setIconImage(miIcono);
 
-		frame.setBounds(0, 0, 472, 600);
+		frame.setBounds(0, 0, 472, 664);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		// title
-		crearTitulo();
+		limpiarPantalla();
 
 		menuPrincipal();
 
@@ -136,13 +138,13 @@ public class Interfaz {
 		crearBtnNormal();
 		crearBtnDificil();
 		crearBtnJugar();
+		crearRankings();
 		updateFrame();
 		System.out.println(index++ + " menu principal");
 	}
 
 	private void crearBtnJugar() {
-		// TODO Auto-generated method stub
-		btnJugar = new JButton("Jugar!");
+		btnJugar = new JButton("Jugar en -----");
 		btnJugar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnJugar.setFont(fuenteSourceCodeSmall);
 		btnJugar.setBorderPainted(true);
@@ -158,14 +160,12 @@ public class Interfaz {
 			}
 		});
 
-		btnJugar.setBounds(170, 450, 126, 37);
+		btnJugar.setBounds(118, 477, 209, 37);
 		frame.getContentPane().add(btnJugar);
-		//
 
 	}
 
 	private void crearBtnFacil() {
-		// Start button
 		JButton btnPlayFacil = new JButton("Facil");
 		btnPlayFacil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPlayFacil.setFont(fuenteSourceCodeSmall);
@@ -177,17 +177,16 @@ public class Interfaz {
 		btnPlayFacil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LEN_PALABRA = 4;
+				btnJugar.setText("Jugar en FÁCIL");
 				setFlagEmpezarJuego();
 			}
 		});
 
-		btnPlayFacil.setBounds(20, 120, 126, 37);
+		btnPlayFacil.setBounds(10, 65, 126, 37);
 		frame.getContentPane().add(btnPlayFacil);
-		//
 	}
 
 	private void crearBtnNormal() {
-		// Start button
 		JButton btnPlayNormal = new JButton("Normal");
 		btnPlayNormal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPlayNormal.setFont(fuenteSourceCodeSmall);
@@ -199,17 +198,16 @@ public class Interfaz {
 		btnPlayNormal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LEN_PALABRA = 5;
+				btnJugar.setText("Jugar en NORMAL");
 				setFlagEmpezarJuego();
 			}
 		});
 
-		btnPlayNormal.setBounds(170, 120, 126, 37);
+		btnPlayNormal.setBounds(166, 65, 126, 37);
 		frame.getContentPane().add(btnPlayNormal);
-		//
 	}
 
 	private void crearBtnDificil() {
-		// Start button
 		JButton btnPlayDificil = new JButton("Dificil");
 		btnPlayDificil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPlayDificil.setFont(fuenteSourceCodeSmall);
@@ -221,13 +219,13 @@ public class Interfaz {
 		btnPlayDificil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LEN_PALABRA = 6;
+				btnJugar.setText("Jugar en DIFÍCIL");
 				setFlagEmpezarJuego();
 			}
 		});
 
-		btnPlayDificil.setBounds(320, 120, 126, 37);
+		btnPlayDificil.setBounds(320, 65, 126, 37);
 		frame.getContentPane().add(btnPlayDificil);
-		//
 	}
 
 	private void setFlagEmpezarJuego() {
@@ -261,7 +259,63 @@ public class Interfaz {
 	private void limpiarPantalla() {
 		frame.getContentPane().removeAll();
 		crearTitulo();
+		crearAnio();
+		crearLogo();
 		updateFrame();
+	}
+
+	private void crearAnio() {
+		JLabel lblAnio = new JLabel("2022");
+		lblAnio.setFont(new Font("Source Code Pro", Font.PLAIN, 11));
+		lblAnio.setBounds(415, 600, 31, 14);
+		frame.getContentPane().add(lblAnio);
+	}
+	
+	private void crearLogo() {
+		JEditorPane ungsLogo = new JEditorPane();
+		ungsLogo.setEditable(false);
+		ungsLogo.setForeground(new Color(0, 128, 128));
+		ungsLogo.setFont(new Font("Source Code Pro", Font.PLAIN, 1));
+		ungsLogo.setText("                                           ~~~         ~~                                           \n"
+				+ "                                    ~  7?JY5PP7       ?P5YJ?7  ~                                    \n"
+				+ "                                  ?YPB#&@@@@@B        B@@@@@&#BPY? ~                                \n"
+				+ "                            ~ ?YG#@@@@@@@@@@@J~      ?@@@@@@@@@@@@#GY7 ~                            \n"
+				+ "                         ~ ?5#@@@@@@@@@@@@@@#        G@@@@@@@@@@@@@@@&B57                           \n"
+				+ "                       ~7YB@@@@@@@@@@@@@@@@@Y~      7&@@@@@@@@@@@@@@@@@@&GJ ~                       \n"
+				+ "                      75&@@@@@@@@@@@@@@@@@@&7      ~P@@@@@@@@@@@@@@@@@@@@@@#Y                       \n"
+				+ "                     5&@@@@@@@@@@@@@@@@@@@@P~      7&@@@@@@#BGB&@@@@@@@@@@@@@#J                     \n"
+				+ "                  ~J#@@@@@@@@@@@@@@@@@@@@@&7      ~5@@@@@#J    75@@@@@@@@@@@@@@G7                   \n"
+				+ "                  5@@@@@@@@@@@@@@@@@@@@@@@G        #@@@@&?~     ~G@@@@@@@@@@@@@@#J~                 \n"
+				+ "                 G@@@@@@@@@@@@@@@@@@@@@@@@?       J@@@@@G~       B@@@@@@@@@@@@@@@@Y                 \n"
+				+ "                G@@@@@@@@@@@@@@@@@@@@@@@@B        B@@@@@?       J@@@@@@@@@@@@@@@@@@Y~               \n"
+				+ "               P@@@@@@@@@@@@@@@@@@@@@@@@@J       ?@@@@@B        B@@@@@@@@@@@@@@@@@@@J               \n"
+				+ "              Y@@@@@@@@@@@@@@@@@@@@@@@@@#        G@@@@@J       ?@@@@@@@@@@@@@@@@@@@@&7              \n"
+				+ "              #@@@@@@@@@@@@@@@@@@@@@@@@@Y~      7&@@@@#       ~G@@@@@@@@@@@@@@@@@@@@@P              \n"
+				+ "             Y@@@@@@@@@@@@@@@@@@@@@@@@@&7      ~P@@@@@Y       7&@@@@@@@@@@@@@@@@@@@@@&7             \n"
+				+ "            ~G@@@@@@@@@@@@@@@@@@@@@@@@@5~      7&@@@@#       ~5@@@@@@@@@@@@@@@@@@@@@@@Y~            \n"
+				+ "             B@@@@@@@@@@@@@@@@@@@@@@@@&7      ~5@@@@@5       7&@@@@@@@@@@@@@@@@@@@@@@@P~            \n"
+				+ "             #@@@@@@@@@@@@@@@@@@@@@@@@G        #@@@@&7      ~Y@@@@@@@@@@@@@@@@@@@@@@@@G             \n"
+				+ "             B@@@@@@@@@@@@@@@@@@@@@@@@?       Y@@@@@P~       #@@@@@@@@@@@@@@@@@@@@@@@@G~            \n"
+				+ "            ~P@@@@@@@@@@@@@@@@@@@@@@@B        B@@@@@?       J@@@@@@@@@@@@@@@@@@@@@@@@@5~            \n"
+				+ "             J@@@@@@@@@@@@@@@@@@@@@@@J       J@@@@@G        B@@@@@@@@@@@@@@@@@@@@@@@@@?             \n"
+				+ "              B@@@@@@@@@@@@@@@@@@@@@#        G@@@@@J       ?@@@@@@@@@@@@@@@@@@@@@@@@@B              \n"
+				+ "              J@@@@@@@@@@@@@@@@@@@@@Y       ?&@@@@#        G@@@@@@@@@@@@@@@@@@@@@@@@&?              \n"
+				+ "               5@@@@@@@@@@@@@@@@@@@&       ~P@@@@@Y~      7&@@@@@@@@@@@@@@@@@@@@@@@@5~              \n"
+				+ "                P@@@@@@@@@@@@@@@@@@5~      7&@@@@#       ~P@@@@@@@@@@@@@@@@@@@@@@@@P                \n"
+				+ "                 P@@@@@@@@@@@@@@@@&7      ~5@@@@@5~      7&@@@@@@@@@@@@@@@@@@@@@@@P                 \n"
+				+ "                  5&@@@@@@@@@@@@@@&7~      #@@@@&7      ~Y@@@@@@@@@@@@@@@@@@@@@@&Y                  \n"
+				+ "                  ~?B@@@@@@@@@@@@@@#J7  7JB@@@@@P~       #@@@@@@@@@@@@@@@@@@@@@B?~                  \n"
+				+ "                     5&@@@@@@@@@@@@@@&##&@@@@@@@?       J@@@@@@@@@@@@@@@@@@@@#Y                     \n"
+				+ "                      75&@@@@@@@@@@@@@@@@@@@@@@G        B@@@@@@@@@@@@@@@@@@#57~                     \n"
+				+ "                       ~75#@@@@@@@@@@@@@@@@@@@@J       ?@@@@@@@@@@@@@@@@@BY ~                       \n"
+				+ "                         ~ ?P#@@@@@@@@@@@@@@@@B        G@@@@@@@@@@@@@@B5?                           \n"
+				+ "                            ~ ?5B&@@@@@@@@@@@@Y~      7&@@@@@@@@@@#GY? ~                            \n"
+				+ "                               ~ 7J5G#&@@@@@@#        P@@@@@&#BPY?                                  \n"
+				+ "                                   ~  77JY5PGY        PP5YJ?7  ~                                    \n"
+				+ "                                          ~~~          ~~                                           \n"
+				+ "");
+		ungsLogo.setBounds(175, 530, 111, 82);
+		frame.getContentPane().add(ungsLogo);
 	}
 
 	private void crearTitulo() {
@@ -287,6 +341,31 @@ public class Interfaz {
 			x += 36;
 		}
 
+	}
+	
+	private void crearRankings() {
+		JTextPane recordsFacil = new JTextPane();
+		recordsFacil.setEditable(false);
+		recordsFacil.setFont(new Font("Consolas", Font.BOLD, 18));
+		recordsFacil.setBackground(new Color(204, 204, 204));
+		recordsFacil.setBounds(10, 110, 126, 313);
+		frame.getContentPane().add(recordsFacil);
+
+		JTextPane recordsNormal = new JTextPane();
+		recordsNormal.setEditable(false);
+		recordsNormal.setFont(new Font("Consolas", Font.BOLD, 18));
+		recordsNormal.setBackground(new Color(204, 204, 204));
+		recordsNormal.setBounds(166, 113, 126, 313);
+		frame.getContentPane().add(recordsNormal);
+
+		JTextPane recordsDificil = new JTextPane();
+		recordsDificil.setEditable(false);
+		recordsDificil.setFont(new Font("Consolas", Font.BOLD, 18));
+		recordsDificil.setBackground(new Color(204, 204, 204));
+		recordsDificil.setBounds(320, 113, 126, 313);
+		frame.getContentPane().add(recordsDificil);
+		
+		
 	}
 
 	private void borrarLetra() {
