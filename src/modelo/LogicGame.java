@@ -2,6 +2,7 @@ package modelo;
 
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ public class LogicGame{
 	private String palabraEnJuego = "menua";
 	private Map<Character, Integer> letraYcantidad;
 	private Set<String> listadoDePalabras;
+	private char[] palabraIngresada;
 	private estadosLetra [] resultadoLetras;
 	private enum estadosLetra{verde,amarillo,gris,vacio};
 
@@ -59,6 +61,7 @@ public class LogicGame{
 		}return false;
 	}
 	
+
 	private void verificarPalabra() {
 		//verifica si es una palabra que esta dentro del conjunto
 	}
@@ -69,6 +72,7 @@ public class LogicGame{
 			resultadoLetras[i] = estadosLetra.vacio;
 		}
 	}
+
 
 
 	public estadosLetra[] getVerificacionPalabra() {
