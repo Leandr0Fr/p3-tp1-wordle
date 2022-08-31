@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +21,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 
 public class Interfaz {
 
@@ -30,6 +34,11 @@ public class Interfaz {
 	private int LEN_PALABRA;
 	private LogicGame game;
 	private enum estadosLetra{verde,amarillo,gris};
+	private Timer tiempo;
+	private int centesimasDeSegundo = 0;
+	private int segundo = 0;
+	private int minuto = 0;
+	
 
 	private Color VERDE = new Color(106, 170, 100);
 	private Color AMARILLO = new Color(201, 180, 88);
@@ -78,13 +87,19 @@ public class Interfaz {
 		//title
 		crearTitulo();
 		
-
+		JLabel contador = new JLabel("00:00");
+		contador.setFont(new Font("Lucida Console", Font.PLAIN, 20));
+		contador.setHorizontalAlignment(SwingConstants.CENTER);
+		contador.setBounds(150, 525, 80, 25);
+		frame.getContentPane().add(contador);
+		
 		//Start button && actions	
 		JButton btnStartGame = new JButton("START!");
 		btnStartGame.setFont(new Font("Consolas", Font.PLAIN, 11));
 
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				tiempo.start();
 				crearTablero(5);
 				btnStartGame.setEnabled(false);
 				btnStartGame.setVisible(false);
@@ -120,11 +135,36 @@ public class Interfaz {
 					colocarLetra(e);
 				
 			}
-			
-
-
 		});
+		ActionListener accion = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				centesimasDeSegundo++;
+				if(centesimasDeSegundo==60) {
+					segundo++;
+					centesimasDeSegundo=0;
+				}
+				if(segundo==60) {
+					minuto++;
+					segundo=0;
+					JOptionPane.showMessageDialog(null, "¡GANASTE!");
+					JOptionPane.showInputDialog(null, "INGRESE SU NOMBRE");
+				}
+				if(minuto==60) {
+					minuto=0;
+				}
+				actualizarContador(contador);
+			}
+		};
+		tiempo = new Timer(10, accion);
 		
+	}
+	
+	private void actualizarContador(JLabel contador) {
+		System.out.println("centesimas: "+ centesimasDeSegundo);
+		String texto = (minuto <= 9?"0":"") + minuto + ":" + (segundo <= 9?"0":"")+ segundo;
+		contador.setText(texto);
 	}
 
 	private void crearTablero(int tamanoPalabra){
