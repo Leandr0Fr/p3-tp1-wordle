@@ -99,7 +99,7 @@ public class Interfaz {
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (tablero == null)
+				if (tablero == null || game.getIsOver())
 					return;
 
 				if (e.getKeyChar() == KeyEvent.VK_ESCAPE)
@@ -386,7 +386,7 @@ public class Interfaz {
 			// GANASTE!!!
 		}
 		if (posFila == 5) {
-			// perdiste
+			game.setIsOver();
 			return;
 		}
 		posFila++;

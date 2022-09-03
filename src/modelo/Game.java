@@ -15,6 +15,7 @@ public class Game {
 	private Map<Character, Integer> letraYcantidad;
 	private List<String> listadoDePalabras;
 	private EstadoCasillero[] resultadoLetras;
+	private boolean isOver;
 
 	public enum EstadoCasillero {
 		verde, amarillo, gris, vacio
@@ -48,6 +49,7 @@ public class Game {
 			}
 		}
 		// acerto la palabra
+		setIsOver();
 		return true;
 	}
 
@@ -135,5 +137,13 @@ public class Game {
 		for (int i = 0; i < resultadoLetras.length; i++) {
 			resultadoLetras[i] = EstadoCasillero.vacio;
 		}
+	}
+
+	public boolean getIsOver() {
+		return isOver;
+	}
+
+	public void setIsOver() {
+		isOver = true;
 	}
 }
