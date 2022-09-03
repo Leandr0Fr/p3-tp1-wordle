@@ -1,6 +1,7 @@
 package interfaz;
 
 import modelo.LogicGame;
+import modelo.LogicGame.EstadoCasillero;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -32,10 +33,6 @@ public class Interfaz {
 	private int posFila = 0;
 	private int LEN_PALABRA;
 	private LogicGame game;
-
-	private enum estadosLetra {
-		verde, amarillo, gris
-	};
 
 	private JButton btnJugar;
 
@@ -381,8 +378,7 @@ public class Interfaz {
 		}
 
 		// ### PRUEBA COLOREAR
-		estadosLetra[] resultado = { estadosLetra.amarillo, estadosLetra.amarillo, estadosLetra.gris,
-				estadosLetra.verde, estadosLetra.verde, estadosLetra.gris };
+		EstadoCasillero[] resultado = game.aciertosJugador(palabraEnviada);
 		colorearLetras(resultado);
 		// ### PRUEBA COLOREAR
 
@@ -407,15 +403,15 @@ public class Interfaz {
 		posLetra += posLetra != tablero[0].length - 1 ? 1 : 0;
 	}
 
-	private void colorearLetras(estadosLetra[] resultados) {
+	private void colorearLetras(EstadoCasillero[] resultados) {
 		for (int i = 0; i < tablero[0].length; i++) {
-			if (resultados[i] == estadosLetra.verde)
+			if (resultados[i] == EstadoCasillero.verde)
 				colorearVerde(tablero[posFila][i]);
 
-			else if (resultados[i] == estadosLetra.amarillo)
+			else if (resultados[i] == EstadoCasillero.amarillo)
 				colorearAmarillo(tablero[posFila][i]);
 
-			else if (resultados[i] == estadosLetra.gris)
+			else if (resultados[i] == EstadoCasillero.gris)
 				colorearGris(tablero[posFila][i]);
 		}
 
