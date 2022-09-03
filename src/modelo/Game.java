@@ -32,6 +32,7 @@ public class Game {
 		seleccionarPalabra();
 		setearLetraYCantidad();
 		setearResultadosLetras();
+		isOver = false;
 		System.out.println(palabraEnJuego);
 	}
 
