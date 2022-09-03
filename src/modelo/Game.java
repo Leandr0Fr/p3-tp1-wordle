@@ -10,21 +10,22 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
-public class LogicGame{
+public class Game{
 	private String palabraEnJuego = "";
 	private Map<Character, Integer> letraYcantidad;
 	private List<String> listadoDePalabras;
 	private EstadoCasillero [] resultadoLetras;
-	private enum EstadoCasillero{verde,amarillo,gris,vacio};
+	public enum EstadoCasillero{verde,amarillo,gris,vacio};
 	private enum Dificultad{facil,normal,dificil};
 	//modificar constructor para que tome la dificultad
-	public LogicGame(int tamanoPalabra) {
-		setearLetraYCantidad();
-		setearResultadosLetras();	
+	public Game(int tamanoPalabra) {
 		this.listadoDePalabras = new LinkedList<String>();
 		obtenerConjuntoDePalabras(Dificultad.normal, false);
 		seleccionarPalabra();
+		setearLetraYCantidad();
+		setearResultadosLetras();	
 		System.out.println(palabraEnJuego);
+		System.out.println(resultadoLetras.length);
 	}
 	
 	public boolean terminarIntento(char[] palabra) {
@@ -43,7 +44,9 @@ public class LogicGame{
 		for (int i = 0; i < palabraEnJuego.length(); i++) {
 			if (palabraIntento[i] == palabraEnJuego.charAt(i)) {
 				resultadoLetras[i] = EstadoCasillero.verde;
+				System.out.println(letraYcantidad.get(palabraIntento[i]) + " AAAAA");
 				letraYcantidad.put(palabraIntento[i], letraYcantidad.get(palabraIntento[i])-1);
+				System.out.println("verdes : " + letraYcantidad);
 			}
 		}
 		//amarillo y gris
@@ -58,7 +61,6 @@ public class LogicGame{
 		}
 		return this.resultadoLetras;
 	}
-	
 	
 	public boolean perteneceAlListado(char[] palabra) {
 		StringBuilder palabraFormada = new StringBuilder();
@@ -81,7 +83,7 @@ public class LogicGame{
 	}
 	
 	private void obtenerConjuntoDePalabras(Dificultad dificultad, boolean ingles) {
-		StringBuilder ruta = new StringBuilder(LogicGame.class.getResource("").getPath());
+		StringBuilder ruta = new StringBuilder(Game.class.getResource("").getPath());
 		ruta.append((ingles)?"ingles":"espanol");
 		if (dificultad == Dificultad.facil) {ruta.append("Facil.txt");}
 		else if(dificultad == Dificultad.normal) {ruta.append("Normal.txt");}
@@ -104,6 +106,7 @@ public class LogicGame{
 	}
 	private void setearLetraYCantidad() {
 		letraYcantidad = new HashMap<Character, Integer>();
+		palabraEnJuego = palabraEnJuego.toUpperCase();
 		for (Character c : palabraEnJuego.toCharArray()) {
 			int cantExistente = letraYcantidad.getOrDefault(c, 0);
 			letraYcantidad.put(c, cantExistente + 1);
