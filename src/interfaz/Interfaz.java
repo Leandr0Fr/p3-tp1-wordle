@@ -1,7 +1,7 @@
 package interfaz;
 
-import modelo.LogicGame;
-import modelo.LogicGame.EstadoCasillero;
+import modelo.Game;
+import modelo.Game.EstadoCasillero;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -32,7 +32,7 @@ public class Interfaz {
 	private int posLetra = 0;
 	private int posFila = 0;
 	private int LEN_PALABRA;
-	private LogicGame game;
+	private Game game;
 
 	private JButton btnJugar;
 
@@ -77,7 +77,7 @@ public class Interfaz {
 	private void initialize() {
 		// Pantalla principal
 		LEN_PALABRA = 5;
-		game = new LogicGame(LEN_PALABRA);
+		game = new Game(LEN_PALABRA);
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setResizable(false);
