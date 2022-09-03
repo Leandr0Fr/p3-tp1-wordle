@@ -27,11 +27,16 @@ public class Game {
 	// modificar constructor para que tome la dificultad
 	public Game(int tamanoPalabra) {
 		this.listadoDePalabras = new LinkedList<String>();
-		obtenerConjuntoDePalabras(Dificultad.normal, false);
+		obtenerConjuntoDePalabras(cualDificultad(tamanoPalabra), false);
 		seleccionarPalabra();
 		setearLetraYCantidad();
 		setearResultadosLetras();
 		System.out.println(palabraEnJuego);
+	}
+
+	private Dificultad cualDificultad(int len) {
+		Dificultad ret = (len == 4 ? Dificultad.facil : len == 5 ? Dificultad.normal : Dificultad.dificil);
+		return ret;
 	}
 
 	public boolean terminarIntento(char[] palabra) {

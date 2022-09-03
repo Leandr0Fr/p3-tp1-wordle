@@ -77,7 +77,6 @@ public class Interfaz {
 	private void initialize() {
 		// Pantalla principal
 		LEN_PALABRA = 5;
-		game = new Game(LEN_PALABRA);
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setResizable(false);
@@ -148,6 +147,7 @@ public class Interfaz {
 		btnJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarPantalla();
+				game = new Game(LEN_PALABRA);
 				crearTablero(LEN_PALABRA);
 			}
 		});
