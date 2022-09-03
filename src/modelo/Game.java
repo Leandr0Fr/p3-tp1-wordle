@@ -25,7 +25,6 @@ public class Game{
 		setearLetraYCantidad();
 		setearResultadosLetras();	
 		System.out.println(palabraEnJuego);
-		System.out.println(resultadoLetras.length);
 	}
 	
 	public boolean terminarIntento(char[] palabra) {
@@ -44,9 +43,7 @@ public class Game{
 		for (int i = 0; i < palabraEnJuego.length(); i++) {
 			if (palabraIntento[i] == palabraEnJuego.charAt(i)) {
 				resultadoLetras[i] = EstadoCasillero.verde;
-				System.out.println(letraYcantidad.get(palabraIntento[i]) + " AAAAA");
 				letraYcantidad.put(palabraIntento[i], letraYcantidad.get(palabraIntento[i])-1);
-				System.out.println("verdes : " + letraYcantidad);
 			}
 		}
 		//amarillo y gris
