@@ -11,33 +11,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-
-<<<<<<< HEAD:src/modelo/LogicGame.java
-import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-public class LogicGame{
-	private String palabraEnJuego = "";
-	private Map<Character, Integer> letraYcantidad;
-	private List<String> listadoDePalabras;
-	private EstadoCasillero [] resultadoLetras;
-	private enum EstadoCasillero{verde,amarillo,gris,vacio};
-	private enum Dificultad{facil,normal,dificil};
-	private Timer tiempo;
-	private int centesimasDeSegundo = 0;
-	private int segundo = 0;
-	private int minuto = 0;
-	//modificar constructor para que tome la dificultad
-	public LogicGame(int tamanoPalabra) {
-		setearLetraYCantidad();
-		setearResultadosLetras();	
-=======
+
 public class Game {
 	private String palabraEnJuego = "";
 	private Map<Character, Integer> letraYcantidad;
 	private List<String> listadoDePalabras;
 	private EstadoCasillero[] resultadoLetras;
 	private boolean isOver;
+	private Timer tiempo;
+	private int centesimasDeSegundo = 0;
+	private int segundo = 0;
+	private int minuto = 0;
 
 	public enum EstadoCasillero {
 		verde, amarillo, gris, vacio
@@ -49,13 +35,12 @@ public class Game {
 
 	// modificar constructor para que tome la dificultad
 	public Game(int tamanoPalabra) {
->>>>>>> pre-main:src/modelo/Game.java
 		this.listadoDePalabras = new LinkedList<String>();
 		obtenerConjuntoDePalabras(cualDificultad(tamanoPalabra), false);
 		seleccionarPalabra();
 		setearLetraYCantidad();
 		setearResultadosLetras();
-		System.out.println(palabraEnJuego);
+		iniciarTiempo();
 	}
 
 	private Dificultad cualDificultad(int len) {
@@ -71,16 +56,18 @@ public class Game {
 				return false;
 			}
 		}
-<<<<<<< HEAD:src/modelo/LogicGame.java
-		//acerto la palabra
-		
-		JOptionPane.showMessageDialog(null, "¡GANASTE!");
-=======
 		// acerto la palabra
+		tiempo.stop();
+		guardarTiempoJugada();
+		System.out.println(guardarTiempoJugada());
 		setIsOver();
->>>>>>> pre-main:src/modelo/Game.java
 		return true;
 	}
+
+	private String guardarTiempoJugada() {
+		return (minuto<=9?"0":"") + minuto + ":" + (segundo<=9?"0":"") + segundo;
+	}
+
 
 	public EstadoCasillero[] aciertosJugador(char[] palabraIntento) {
 		// prioridad verde
@@ -113,17 +100,10 @@ public class Game {
 	}
 
 	public boolean esTeclaValida(KeyEvent e) {
-<<<<<<< HEAD:src/modelo/LogicGame.java
 		//ascii 65 - 90 (209 = Ñ | 241 ñ) 97 - 122
-		iniciarTiempo();
 		return e.getKeyChar() == 10 || e.getKeyChar() == 8 || e.getKeyChar() == 209 || e.getKeyChar() == 241 ||
 			  e.getKeyChar() >= 65 && e.getKeyChar() <= 90
 			  || e.getKeyChar() >= 97 && e.getKeyChar() <= 122;
-=======
-		// ascii 65 - 90 (209 = Ñ | 241 ñ) 97 - 122
-		return e.getKeyChar() == 10 || e.getKeyChar() == 8 || e.getKeyChar() == 209 || e.getKeyChar() == 241
-				|| e.getKeyChar() >= 65 && e.getKeyChar() <= 90 || e.getKeyChar() >= 97 && e.getKeyChar() <= 122;
->>>>>>> pre-main:src/modelo/Game.java
 	}
 
 	public char mayus(char letra) {
@@ -131,14 +111,14 @@ public class Game {
 			letra = (char) (letra - 32);
 		return letra;
 	}
-<<<<<<< HEAD:src/modelo/LogicGame.java
+
 	
 	private void iniciarTiempo() {
 		ActionListener accion = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			centesimasDeSegundo++;
-			System.out.println(segundo);
+			System.out.println(" " + minuto + " : " + segundo + " " + palabraEnJuego);
 			if(centesimasDeSegundo==60) {
 				segundo++;
 				centesimasDeSegundo=0;
@@ -149,18 +129,14 @@ public class Game {
 			}
 			if(minuto==60) {
 				minuto=0;
-				JOptionPane.showMessageDialog(null, "¡PERDISTE!");
 			}
 		}
 	};
 		tiempo = new Timer(10, accion);
 		tiempo.start();
 	}
-	
-	
-=======
 
->>>>>>> pre-main:src/modelo/Game.java
+
 	private void obtenerConjuntoDePalabras(Dificultad dificultad, boolean ingles) {
 		StringBuilder ruta = new StringBuilder(Game.class.getResource("").getPath());
 		ruta.append((ingles) ? "ingles" : "espanol");

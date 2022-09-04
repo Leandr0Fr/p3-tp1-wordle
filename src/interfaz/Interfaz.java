@@ -43,19 +43,8 @@ public class Interfaz {
 	private int posLetra = 0;
 	private int posFila = 0;
 	private int LEN_PALABRA;
-<<<<<<< HEAD
-	private LogicGame game;
 
-	
-	
-
-
-	private enum estadosLetra {
-		verde, amarillo, gris
-	};
-=======
 	private Game game;
->>>>>>> pre-main
 
 	private JButton btnJugar;
 
@@ -433,15 +422,22 @@ public class Interfaz {
 		// ### PRUEBA COLOREAR
 
 		if (game.terminarIntento(palabraEnviada)) {
-			// GANASTE!!!
+			JOptionPane.showMessageDialog(null, "¡GANASTE!");
+			pedirNombreJugador();
 		}
 		if (posFila == 5) {
 			game.setIsOver();
+			JOptionPane.showMessageDialog(null, "¡PERDISTE!");
 			return;
 		}
 		posFila++;
 		posLetra = 0;
 
+	}
+
+	private String pedirNombreJugador() {
+		String nombre = JOptionPane.showInputDialog("INGRESE SU TAG");
+		return nombre;
 	}
 
 	private void colocarLetra(KeyEvent e) {
