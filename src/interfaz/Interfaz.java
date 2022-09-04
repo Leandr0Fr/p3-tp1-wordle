@@ -49,7 +49,7 @@ public class Interfaz {
 
 	private Font fuenteSourceCodeSmall = new Font("Source Code Pro", Font.PLAIN, 16);
 	private Font fuenteSourceCodeMedium = new Font("Source Code Pro", Font.PLAIN, 32);
-	private Font fuenteSourceCodeBig = new Font("Source Code Pro", Font.PLAIN, 64);
+	private Font fuenteSourceCodeBig = new Font("Source Code Pro", Font.PLAIN, 60);
 
 	/**
 	 * Launch the application.
@@ -270,7 +270,7 @@ public class Interfaz {
 		JEditorPane ungsLogo = new JEditorPane();
 		ungsLogo.setEditable(false);
 		ungsLogo.setForeground(new Color(0, 128, 128));
-		ungsLogo.setFont(new Font("Source Code Pro", Font.PLAIN, 1));
+		ungsLogo.setFont(new Font("consolas", Font.PLAIN, 1));
 		ungsLogo.setText(
 				"                                           ~~~         ~~                                           \n"
 						+ "                                    ~  7?JY5PP7       ?P5YJ?7  ~                                    \n"
