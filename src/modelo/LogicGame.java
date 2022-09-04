@@ -102,7 +102,7 @@ public class LogicGame{
 				segundo++;
 				centesimasDeSegundo=0;
 			}
-			if(segundo==20) {
+			if(segundo==60) {
 				minuto++;
 				segundo=0;
 			}
