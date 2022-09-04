@@ -1,6 +1,7 @@
 package interfaz;
 
-import modelo.LogicGame;
+import modelo.Game;
+import modelo.Game.EstadoCasillero;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -31,11 +32,7 @@ public class Interfaz {
 	private int posLetra = 0;
 	private int posFila = 0;
 	private int LEN_PALABRA;
-	private LogicGame game;
-
-	private enum estadosLetra {
-		verde, amarillo, gris
-	};
+	private Game game;
 
 	private JButton btnJugar;
 
@@ -80,7 +77,6 @@ public class Interfaz {
 	private void initialize() {
 		// Pantalla principal
 		LEN_PALABRA = 5;
-		game = new LogicGame(LEN_PALABRA);
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setResizable(false);
@@ -103,7 +99,7 @@ public class Interfaz {
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (tablero == null)
+				if (tablero == null || game.getIsOver())
 					return;
 
 				if (e.getKeyChar() == KeyEvent.VK_ESCAPE)
@@ -151,6 +147,7 @@ public class Interfaz {
 		btnJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarPantalla();
+				game = new Game(LEN_PALABRA);
 				crearTablero(LEN_PALABRA);
 			}
 		});
@@ -270,7 +267,7 @@ public class Interfaz {
 		JEditorPane ungsLogo = new JEditorPane();
 		ungsLogo.setEditable(false);
 		ungsLogo.setForeground(new Color(0, 128, 128));
-		ungsLogo.setFont(new Font("consolas", Font.PLAIN, 1));
+		ungsLogo.setFont(new Font("Consolas", Font.PLAIN, 1));
 		ungsLogo.setText(
 				"                                           ~~~         ~~                                           \n"
 						+ "                                    ~  7?JY5PP7       ?P5YJ?7  ~                                    \n"
@@ -381,8 +378,7 @@ public class Interfaz {
 		}
 
 		// ### PRUEBA COLOREAR
-		estadosLetra[] resultado = { estadosLetra.amarillo, estadosLetra.amarillo, estadosLetra.gris,
-				estadosLetra.verde, estadosLetra.verde, estadosLetra.gris };
+		EstadoCasillero[] resultado = game.aciertosJugador(palabraEnviada);
 		colorearLetras(resultado);
 		// ### PRUEBA COLOREAR
 
@@ -390,7 +386,7 @@ public class Interfaz {
 			// GANASTE!!!
 		}
 		if (posFila == 5) {
-			// perdiste
+			game.setIsOver();
 			return;
 		}
 		posFila++;
@@ -407,15 +403,15 @@ public class Interfaz {
 		posLetra += posLetra != tablero[0].length - 1 ? 1 : 0;
 	}
 
-	private void colorearLetras(estadosLetra[] resultados) {
+	private void colorearLetras(EstadoCasillero[] resultados) {
 		for (int i = 0; i < tablero[0].length; i++) {
-			if (resultados[i] == estadosLetra.verde)
+			if (resultados[i] == EstadoCasillero.verde)
 				colorearVerde(tablero[posFila][i]);
 
-			else if (resultados[i] == estadosLetra.amarillo)
+			else if (resultados[i] == EstadoCasillero.amarillo)
 				colorearAmarillo(tablero[posFila][i]);
 
-			else if (resultados[i] == estadosLetra.gris)
+			else if (resultados[i] == EstadoCasillero.gris)
 				colorearGris(tablero[posFila][i]);
 		}
 
