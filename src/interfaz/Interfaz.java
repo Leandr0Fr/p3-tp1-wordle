@@ -5,6 +5,7 @@ import modelo.Game.EstadoCasillero;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Window;
@@ -14,11 +15,26 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+import javax.swing.Timer;
+
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
+
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+
+import java.awt.Cursor;
+import javax.swing.border.LineBorder;
+import javax.swing.JTextPane;
+import javax.swing.JEditorPane;
+
 
 public class Interfaz {
 
@@ -29,6 +45,7 @@ public class Interfaz {
 	private int posLetra = 0;
 	private int posFila = 0;
 	private int LEN_PALABRA;
+
 	private Game game;
 
 	protected JButton btnJugar;
@@ -38,7 +55,6 @@ public class Interfaz {
 
 	private Toolkit miPantalla;
 	private Image miIcono;
-
 	/**
 	 * Launch the application.
 	 */
@@ -82,9 +98,18 @@ public class Interfaz {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		//title
+		
+		JLabel contador = new JLabel("00:00");
+		contador.setFont(new Font("Lucida Console", Font.PLAIN, 20));
+		contador.setHorizontalAlignment(SwingConstants.CENTER);
+		contador.setBounds(184, 511, 80, 25);
+		frame.getContentPane().add(contador);
+		
 		// title
 		limpiarPantalla();
 		menuPrincipal();
+
 
 		// keyListener
 		addEventosDeTeclado();
@@ -120,6 +145,7 @@ public class Interfaz {
 					colocarLetra(e);
 			}
 		});
+		
 	}
 
 	private void addEventosDeBtn() {
@@ -156,6 +182,7 @@ public class Interfaz {
 			}
 		});
 	}
+
 
 	private void menuPrincipal() {
 		btnPlayFacil = new JButton("Facil");
@@ -201,15 +228,22 @@ public class Interfaz {
 		colorearLetras(resultado);
 
 		if (game.terminarIntento(palabraEnviada)) {
-			finalizarJuego();
+			JOptionPane.showMessageDialog(null, "¡GANASTE!");
+			pedirNombreJugador();
 		}
 		
 		if (posFila == 5) {
 			game.setIsOver();
+			JOptionPane.showMessageDialog(null, "¡PERDISTE!");
 			return;
 		}
 		posFila++;
 		posLetra = 0;
+	}
+
+	private String pedirNombreJugador() {
+		String nombre = JOptionPane.showInputDialog("INGRESE SU TAG");
+		return nombre;
 	}
 
 	private void colocarLetra(KeyEvent e) {
@@ -234,18 +268,6 @@ public class Interfaz {
 		}
 	}
 
-	private void finalizarJuego() {
-		JPanel panel = new JPanel();
-		panel.setBounds(152, 98, 241, 247);
-		panel.setOpaque(true);
-		panel.setBackground(Color.GREEN);
-		frame.getContentPane().add(panel);
-		panel.setLayout(null);
-		updateFrame();
-
-
-	}
-	
 	private void updateFrame() {
 		SwingUtilities.updateComponentTreeUI(frame);
 		frame.setVisible(true);

@@ -1,5 +1,7 @@
 package modelo;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import javax.swing.Timer;
+
 
 public class Game {
 	private String palabraEnJuego = "";
@@ -16,6 +20,10 @@ public class Game {
 	private List<String> listadoDePalabras;
 	private EstadoCasillero[] resultadoLetras;
 	private boolean isOver;
+	private Timer tiempo;
+	private int centesimasDeSegundo = 0;
+	private int segundo = 0;
+	private int minuto = 0;
 
 	public enum EstadoCasillero {
 		verde, amarillo, gris, vacio
@@ -34,6 +42,7 @@ public class Game {
 		setearResultadosLetras();
 		isOver = false;
 		System.out.println(palabraEnJuego);
+		iniciarTiempo();
 	}
 
 	private Dificultad cualDificultad(int len) {
@@ -50,9 +59,17 @@ public class Game {
 			}
 		}
 		// acerto la palabra
+		tiempo.stop();
+		guardarTiempoJugada();
+		System.out.println(guardarTiempoJugada());
 		setIsOver();
 		return true;
 	}
+
+	private String guardarTiempoJugada() {
+		return (minuto<=9?"0":"") + minuto + ":" + (segundo<=9?"0":"") + segundo;
+	}
+
 
 	public EstadoCasillero[] aciertosJugador(char[] palabraIntento) {
 		// prioridad verde
@@ -85,9 +102,10 @@ public class Game {
 	}
 
 	public boolean esTeclaValida(KeyEvent e) {
-		// ascii 65 - 90 (209 = Ñ | 241 ñ) 97 - 122
-		return e.getKeyChar() == 10 || e.getKeyChar() == 8 || e.getKeyChar() == 209 || e.getKeyChar() == 241
-				|| e.getKeyChar() >= 65 && e.getKeyChar() <= 90 || e.getKeyChar() >= 97 && e.getKeyChar() <= 122;
+		//ascii 65 - 90 (209 = Ñ | 241 ñ) 97 - 122
+		return e.getKeyChar() == 10 || e.getKeyChar() == 8 || e.getKeyChar() == 209 || e.getKeyChar() == 241 ||
+			  e.getKeyChar() >= 65 && e.getKeyChar() <= 90
+			  || e.getKeyChar() >= 97 && e.getKeyChar() <= 122;
 	}
 
 	public char mayus(char letra) {
@@ -95,6 +113,31 @@ public class Game {
 			letra = (char) (letra - 32);
 		return letra;
 	}
+
+	
+	private void iniciarTiempo() {
+		ActionListener accion = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			centesimasDeSegundo++;
+			System.out.println(" " + minuto + " : " + segundo + " " + palabraEnJuego);
+			if(centesimasDeSegundo==60) {
+				segundo++;
+				centesimasDeSegundo=0;
+			}
+			if(segundo==60) {
+				minuto++;
+				segundo=0;
+			}
+			if(minuto==60) {
+				minuto=0;
+			}
+		}
+	};
+		tiempo = new Timer(10, accion);
+		tiempo.start();
+	}
+
 
 	private void obtenerConjuntoDePalabras(Dificultad dificultad, boolean ingles) {
 		StringBuilder ruta = new StringBuilder(Game.class.getResource("").getPath());
