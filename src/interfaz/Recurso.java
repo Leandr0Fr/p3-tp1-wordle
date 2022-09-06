@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
 
-public class Assets {
+public class Recurso {
 
 	private Font fuenteSourceCodeSmall = new Font("Source Code Pro", Font.PLAIN, 16);
 	private Font fuenteSourceCodeMedium = new Font("Source Code Pro", Font.PLAIN, 32);

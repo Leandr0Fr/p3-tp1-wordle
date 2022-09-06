@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.Window;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,10 +18,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
 
 public class Interfaz {
 
-	private Assets assets;
+	private Recurso recurso;
 	private JFrame frame;
 	private JLabel[] titulo;
 	private JLabel[][] tablero;
@@ -66,7 +68,7 @@ public class Interfaz {
 	private void initialize() {
 		// Pantalla principal
 		LEN_PALABRA = 5;
-		assets = new Assets();
+		recurso = new Recurso();
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setResizable(false);
@@ -79,7 +81,7 @@ public class Interfaz {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
+		
 		// title
 		limpiarPantalla();
 		menuPrincipal();
@@ -150,7 +152,7 @@ public class Interfaz {
 				limpiarPantalla();
 				game = new Game(LEN_PALABRA);
 				tablero = new JLabel[6][LEN_PALABRA];
-				assets.crearTablero(frame, LEN_PALABRA, tablero);
+				recurso.crearTablero(frame, LEN_PALABRA, tablero);
 			}
 		});
 	}
@@ -160,20 +162,20 @@ public class Interfaz {
 		btnPlayNormal = new JButton("Normal");
 		btnPlayDificil = new JButton("Dificil");
 		btnJugar = new JButton("Jugar en ----");
-		assets.crearBtnFacil(frame, btnPlayFacil);
-		assets.crearBtnNormal(frame, btnPlayNormal);
-		assets.crearBtnDificil(frame, btnPlayDificil);
-		assets.crearBtnJugar(frame, btnJugar);
-		assets.crearRankings(frame);
+		recurso.crearBtnFacil(frame, btnPlayFacil);
+		recurso.crearBtnNormal(frame, btnPlayNormal);
+		recurso.crearBtnDificil(frame, btnPlayDificil);
+		recurso.crearBtnJugar(frame, btnJugar);
+		recurso.crearRankings(frame);
 
 		updateFrame();
 	}
 
 	private void limpiarPantalla() {
 		frame.getContentPane().removeAll();
-		assets.crearTitulo(frame, titulo);
-		assets.crearAnio(frame);
-		assets.crearLogo(frame);
+		recurso.crearTitulo(frame, titulo);
+		recurso.crearAnio(frame);
+		recurso.crearLogo(frame);
 		updateFrame();
 	}
 
@@ -199,8 +201,9 @@ public class Interfaz {
 		colorearLetras(resultado);
 
 		if (game.terminarIntento(palabraEnviada)) {
-			// GANASTE!!!
+			finalizarJuego();
 		}
+		
 		if (posFila == 5) {
 			game.setIsOver();
 			return;
@@ -221,16 +224,28 @@ public class Interfaz {
 	private void colorearLetras(EstadoCasillero[] resultados) {
 		for (int i = 0; i < tablero[0].length; i++) {
 			if (resultados[i] == EstadoCasillero.verde)
-				assets.colorearVerde(tablero[posFila][i]);
+				recurso.colorearVerde(tablero[posFila][i]);
 
 			else if (resultados[i] == EstadoCasillero.amarillo)
-				assets.colorearAmarillo(tablero[posFila][i]);
+				recurso.colorearAmarillo(tablero[posFila][i]);
 
 			else if (resultados[i] == EstadoCasillero.gris)
-				assets.colorearGris(tablero[posFila][i]);
+				recurso.colorearGris(tablero[posFila][i]);
 		}
 	}
 
+	private void finalizarJuego() {
+		JPanel panel = new JPanel();
+		panel.setBounds(152, 98, 241, 247);
+		panel.setOpaque(true);
+		panel.setBackground(Color.GREEN);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		updateFrame();
+
+
+	}
+	
 	private void updateFrame() {
 		SwingUtilities.updateComponentTreeUI(frame);
 		frame.setVisible(true);
