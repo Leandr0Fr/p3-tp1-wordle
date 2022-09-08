@@ -17,7 +17,6 @@ import javax.swing.SwingUtilities;
 
 import javax.swing.Timer;
 
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +33,6 @@ import java.awt.Cursor;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextPane;
 import javax.swing.JEditorPane;
-
 
 public class Interfaz {
 
@@ -55,6 +53,7 @@ public class Interfaz {
 
 	private Toolkit miPantalla;
 	private Image miIcono;
+
 	/**
 	 * Launch the application.
 	 */
@@ -97,19 +96,18 @@ public class Interfaz {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		//title
-		
+
+		// title
+
 		JLabel contador = new JLabel("00:00");
 		contador.setFont(new Font("Lucida Console", Font.PLAIN, 20));
 		contador.setHorizontalAlignment(SwingConstants.CENTER);
 		contador.setBounds(184, 511, 80, 25);
 		frame.getContentPane().add(contador);
-		
+
 		// title
 		limpiarPantalla();
 		menuPrincipal();
-
 
 		// keyListener
 		addEventosDeTeclado();
@@ -145,7 +143,7 @@ public class Interfaz {
 					colocarLetra(e);
 			}
 		});
-		
+
 	}
 
 	private void addEventosDeBtn() {
@@ -182,7 +180,6 @@ public class Interfaz {
 			}
 		});
 	}
-
 
 	private void menuPrincipal() {
 		btnPlayFacil = new JButton("Facil");
@@ -231,7 +228,7 @@ public class Interfaz {
 			JOptionPane.showMessageDialog(null, "¡GANASTE!");
 			pedirNombreJugador();
 		}
-		
+
 		if (posFila == 5) {
 			game.setIsOver();
 			JOptionPane.showMessageDialog(null, "¡PERDISTE!");

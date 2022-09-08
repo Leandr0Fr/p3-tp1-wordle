@@ -14,7 +14,6 @@ import java.util.Scanner;
 import ranking.Ranking;
 import javax.swing.Timer;
 
-
 public class Game {
 	private String palabraEnJuego = "";
 	private Map<Character, Integer> letraYcantidad;
@@ -87,10 +86,10 @@ public class Game {
 		}
 		return rkFacil.obtenerRanking();
 	}
-	private String guardarTiempoJugada() {
-		return (minuto<=9?"0":"") + minuto + ":" + (segundo<=9?"0":"") + segundo;
-	}
 
+	private String guardarTiempoJugada() {
+		return (minuto <= 9 ? "0" : "") + minuto + ":" + (segundo <= 9 ? "0" : "") + segundo;
+	}
 
 	public EstadoCasillero[] aciertosJugador(char[] palabraIntento) {
 		// prioridad verde
@@ -123,10 +122,9 @@ public class Game {
 	}
 
 	public boolean esTeclaValida(KeyEvent e) {
-		//ascii 65 - 90 (209 = Ñ | 241 ñ) 97 - 122
-		return e.getKeyChar() == 10 || e.getKeyChar() == 8 || e.getKeyChar() == 209 || e.getKeyChar() == 241 ||
-			  e.getKeyChar() >= 65 && e.getKeyChar() <= 90
-			  || e.getKeyChar() >= 97 && e.getKeyChar() <= 122;
+		// ascii 65 - 90 (209 = Ñ | 241 ñ) 97 - 122
+		return e.getKeyChar() == 10 || e.getKeyChar() == 8 || e.getKeyChar() == 209 || e.getKeyChar() == 241
+				|| e.getKeyChar() >= 65 && e.getKeyChar() <= 90 || e.getKeyChar() >= 97 && e.getKeyChar() <= 122;
 	}
 
 	public char mayus(char letra) {
@@ -135,30 +133,28 @@ public class Game {
 		return letra;
 	}
 
-	
 	private void iniciarTiempo() {
 		ActionListener accion = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			centesimasDeSegundo++;
-			System.out.println(" " + minuto + " : " + segundo + " " + palabraEnJuego);
-			if(centesimasDeSegundo==60) {
-				segundo++;
-				centesimasDeSegundo=0;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				centesimasDeSegundo++;
+				System.out.println(" " + minuto + " : " + segundo + " " + palabraEnJuego);
+				if (centesimasDeSegundo == 60) {
+					segundo++;
+					centesimasDeSegundo = 0;
+				}
+				if (segundo == 60) {
+					minuto++;
+					segundo = 0;
+				}
+				if (minuto == 60) {
+					minuto = 0;
+				}
 			}
-			if(segundo==60) {
-				minuto++;
-				segundo=0;
-			}
-			if(minuto==60) {
-				minuto=0;
-			}
-		}
-	};
+		};
 		tiempo = new Timer(10, accion);
 		tiempo.start();
 	}
-
 
 	private void obtenerConjuntoDePalabras(Dificultad dificultad, boolean ingles) {
 		StringBuilder ruta = new StringBuilder(Game.class.getResource("").getPath());
