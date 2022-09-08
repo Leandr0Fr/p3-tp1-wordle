@@ -230,17 +230,15 @@ public class Interfaz {
 
 		if (game.terminarIntento(palabraEnviada)) {
 			JOptionPane.showMessageDialog(null, "¡GANASTE!");
-			pedirNombreJugador();
-			game.getDificultad();
 			if (game.getDificultad() == Dificultad.facil) {
-				rkFacil.agregarPuntaje("MMM", game.getMinuto(), game.getSegundo());
+				rkFacil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
 				return;
 			}
 			if (game.getDificultad() == Dificultad.normal) {
-				rkNormal.agregarPuntaje("DDD", game.getMinuto(), game.getSegundo());
+				rkNormal.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
 				return;
 			}
-			rkDificil.agregarPuntaje("ZZZ", game.getMinuto(), game.getSegundo());
+			rkDificil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
 			return;
 		}
 
@@ -285,6 +283,6 @@ public class Interfaz {
 		frame.setVisible(true);
 		frame.toFront();
 		frame.requestFocus();
-		//7495769 Codigo seguimiento pami
+		// 7495769 Codigo seguimiento pami
 	}
 }
