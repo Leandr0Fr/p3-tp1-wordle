@@ -47,7 +47,6 @@ public class Interfaz {
 	private Font fuenteSourceCodeSmall = new Font("Source Code Pro", Font.PLAIN, 16);
 	private Font fuenteSourceCodeMedium = new Font("Source Code Pro", Font.PLAIN, 32);
 	private Font fuenteSourceCodeBig = new Font("Source Code Pro", Font.PLAIN, 60);
-
 	/**
 	 * Launch the application.
 	 */
