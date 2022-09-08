@@ -206,6 +206,11 @@ public class Interfaz {
 		for (int i = 0; i < tablero[posFila].length; i++) {
 			palabraEnviada[i] = tablero[posFila][i].getText().charAt(0);
 		}
+		
+		if (!game.perteneceAlListado(palabraEnviada)) {
+			JOptionPane.showMessageDialog(null, "No existe la palabra");
+			return;
+		}
 
 		EstadoCasillero[] resultado = game.aciertosJugador(palabraEnviada);
 		colorearLetras(resultado);
