@@ -111,7 +111,6 @@ public class Game {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				centesimasDeSegundo++;
-				System.out.println(" " + minuto + " : " + segundo + " " + palabraEnJuego);
 				if (centesimasDeSegundo == 60) {
 					segundo++;
 					centesimasDeSegundo = 0;

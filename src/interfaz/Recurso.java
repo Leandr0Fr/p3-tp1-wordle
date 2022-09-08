@@ -181,7 +181,6 @@ public class Recurso {
 		StringBuilder sb = new StringBuilder();
 
 		for (int i = 0; i < rkFacilString.length - 1; i++) {
-			System.out.println();
 			sb.append(recordsFacil.getText());
 			sb.append(rkFacilString[i]);
 			sb.append('\n');
@@ -200,7 +199,6 @@ public class Recurso {
 		sb = new StringBuilder();
 
 		for (int i = 0; i < rkNormalString.length - 1; i++) {
-			System.out.println();
 			sb.append(recordsNormal.getText());
 			sb.append(rkNormalString[i]);
 			sb.append('\n');
@@ -219,7 +217,6 @@ public class Recurso {
 		sb = new StringBuilder();
 
 		for (int i = 0; i < rkDificilString.length - 1; i++) {
-			System.out.println();
 			sb.append(recordsDificil.getText());
 			sb.append(rkDificilString[i]);
 			sb.append('\n');
