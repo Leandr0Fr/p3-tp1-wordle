@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import ranking.Ranking;
+
 public class Game {
 	private String palabraEnJuego = "";
 	private Map<Character, Integer> letraYcantidad;
@@ -20,6 +21,7 @@ public class Game {
 	private Ranking rkNormal;
 	private Ranking rkDificil;
 	private Dificultad dificultad;
+
 	public enum EstadoCasillero {
 		verde, amarillo, gris, vacio
 	};
@@ -42,7 +44,7 @@ public class Game {
 	}
 
 	private void cualDificultad(int len) {
-		this.dificultad = (len == 4 ? Dificultad.facil : len == 5 ? Dificultad.normal : Dificultad.dificil); 
+		this.dificultad = (len == 4 ? Dificultad.facil : len == 5 ? Dificultad.normal : Dificultad.dificil);
 	}
 
 	public boolean terminarIntento(char[] palabra) {
@@ -57,10 +59,12 @@ public class Game {
 		setIsOver();
 		return true;
 	}
+
 	public void agregarPuntaje() {
-		
+
 	}
-	public String [] obtenerRanking() {
+
+	public String[] obtenerRanking() {
 		if (dificultad == Dificultad.dificil) {
 			return rkDificil.obtenerRanking();
 		}
@@ -69,6 +73,7 @@ public class Game {
 		}
 		return rkFacil.obtenerRanking();
 	}
+
 	public EstadoCasillero[] aciertosJugador(char[] palabraIntento) {
 		// prioridad verde
 		for (int i = 0; i < palabraEnJuego.length(); i++) {
@@ -154,7 +159,6 @@ public class Game {
 			resultadoLetras[i] = EstadoCasillero.vacio;
 		}
 	}
-	
 
 	public boolean getIsOver() {
 		return isOver;
