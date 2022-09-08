@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
 
+import ranking.Ranking;
+
 public class Recurso {
 
 	private Font fuenteSourceCodeSmall = new Font("Source Code Pro", Font.PLAIN, 16);
@@ -168,11 +170,24 @@ public class Recurso {
 
 	}
 
-	protected void crearRankings(JFrame frame) {
+	protected void crearRankings(JFrame frame, Ranking rkFacil, Ranking rkNormal, Ranking rkDificil) {
 		JTextPane recordsFacil = new JTextPane();
+		recordsFacil.setEditable(false);
 		recordsFacil.setFont(new Font("Consolas", Font.BOLD, 18));
 		recordsFacil.setBackground(new Color(204, 204, 204));
 		recordsFacil.setBounds(20, 181, 128, 220);
+
+		String[] rkFacilString = rkFacil.obtenerRanking();
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < rkFacilString.length - 1; i++) {
+			System.out.println();
+			sb.append(recordsFacil.getText());
+			sb.append(rkFacilString[i]);
+			sb.append('\n');
+		}
+		sb.append(rkFacilString[rkFacilString.length - 1]);
+		recordsFacil.setText(sb.toString());
 		frame.getContentPane().add(recordsFacil);
 
 		JTextPane recordsNormal = new JTextPane();
@@ -180,6 +195,18 @@ public class Recurso {
 		recordsNormal.setFont(new Font("Consolas", Font.BOLD, 18));
 		recordsNormal.setBackground(new Color(204, 204, 204));
 		recordsNormal.setBounds(164, 183, 128, 220);
+
+		String[] rkNormalString = rkNormal.obtenerRanking();
+		sb = new StringBuilder();
+
+		for (int i = 0; i < rkNormalString.length - 1; i++) {
+			System.out.println();
+			sb.append(recordsNormal.getText());
+			sb.append(rkNormalString[i]);
+			sb.append('\n');
+		}
+		sb.append(rkNormalString[rkNormalString.length - 1]);
+		recordsNormal.setText(sb.toString());
 		frame.getContentPane().add(recordsNormal);
 
 		JTextPane recordsDificil = new JTextPane();
@@ -187,6 +214,19 @@ public class Recurso {
 		recordsDificil.setFont(new Font("Consolas", Font.BOLD, 18));
 		recordsDificil.setBackground(new Color(204, 204, 204));
 		recordsDificil.setBounds(306, 181, 128, 220);
+
+		String[] rkDificilString = rkDificil.obtenerRanking();
+		sb = new StringBuilder();
+
+		for (int i = 0; i < rkDificilString.length - 1; i++) {
+			System.out.println();
+			sb.append(recordsDificil.getText());
+			sb.append(rkDificilString[i]);
+			sb.append('\n');
+		}
+		sb.append(rkDificilString[rkDificilString.length - 1]);
+		recordsDificil.setText(sb.toString());
+
 		frame.getContentPane().add(recordsDificil);
 	}
 

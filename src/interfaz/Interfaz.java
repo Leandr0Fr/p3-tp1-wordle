@@ -2,6 +2,7 @@ package interfaz;
 
 import modelo.Game;
 import modelo.Game.EstadoCasillero;
+import ranking.Ranking;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -39,6 +40,11 @@ public class Interfaz {
 
 	private Toolkit miPantalla;
 	private Image miIcono;
+	
+	private Ranking rkFacil;
+	private Ranking rkNormal;
+	private Ranking rkDificil;
+	
 
 	/**
 	 * Launch the application.
@@ -176,8 +182,7 @@ public class Interfaz {
 		recurso.crearBtnNormal(frame, btnPlayNormal);
 		recurso.crearBtnDificil(frame, btnPlayDificil);
 		recurso.crearBtnJugar(frame, btnJugar);
-		recurso.crearRankings(frame);
-
+		crearRankings();
 		updateFrame();
 	}
 
@@ -189,6 +194,13 @@ public class Interfaz {
 		updateFrame();
 	}
 
+	private void crearRankings() {
+		rkFacil = new Ranking("Facil");
+		rkNormal = new Ranking("Normal");
+		rkDificil = new Ranking("Dificil");
+		recurso.crearRankings(frame, rkFacil, rkNormal, rkDificil);
+	}
+	
 	private void borrarLetra() {
 		if (posLetra > LEN_PALABRA) {
 			posLetra = LEN_PALABRA - 1;
