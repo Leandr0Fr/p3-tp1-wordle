@@ -40,11 +40,10 @@ public class Interfaz {
 
 	private Toolkit miPantalla;
 	private Image miIcono;
-	
+
 	private Ranking rkFacil;
 	private Ranking rkNormal;
 	private Ranking rkDificil;
-	
 
 	/**
 	 * Launch the application.
@@ -200,7 +199,7 @@ public class Interfaz {
 		rkDificil = new Ranking("Dificil");
 		recurso.crearRankings(frame, rkFacil, rkNormal, rkDificil);
 	}
-	
+
 	private void borrarLetra() {
 		if (posLetra > LEN_PALABRA) {
 			posLetra = LEN_PALABRA - 1;
@@ -218,7 +217,7 @@ public class Interfaz {
 		for (int i = 0; i < tablero[posFila].length; i++) {
 			palabraEnviada[i] = tablero[posFila][i].getText().charAt(0);
 		}
-		
+
 		if (!game.perteneceAlListado(palabraEnviada)) {
 			JOptionPane.showMessageDialog(null, "No existe la palabra");
 			return;
