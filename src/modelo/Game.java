@@ -32,7 +32,6 @@ public class Game {
 		seleccionarPalabra();
 		setearLetraYCantidad();
 		setearResultadosLetras();
-		System.out.println(palabraEnJuego);
 	}
 
 	private Dificultad cualDificultad(int len) {
