@@ -1,8 +1,5 @@
 package interfaz;
 
-import modelo.Game;
-import modelo.Game.Dificultad;
-import modelo.Game.EstadoCasillero;
 import ranking.Ranking;
 
 import java.awt.Color;
@@ -14,6 +11,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
+
+import modelo.Game;
+import modelo.Game.Dificultad;
+import modelo.Game.EstadoCasillero;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

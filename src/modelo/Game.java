@@ -34,7 +34,6 @@ public class Game {
 		facil, normal, dificil
 	};
 
-	// modificar constructor para que tome la dificultad
 	public Game(int tamanoPalabra) {
 		this.listadoDePalabras = new LinkedList<String>();
 		cualDificultad(tamanoPalabra);
@@ -61,18 +60,8 @@ public class Game {
 		}
 		// acerto la palabra
 		tiempo.stop();
-		guardarTiempoJugada();
-		System.out.println(guardarTiempoJugada());
 		setIsOver();
 		return true;
-	}
-
-	public void agregarPuntaje() {
-
-	}
-
-	private String guardarTiempoJugada() {
-		return (minuto <= 9 ? "0" : "") + minuto + ":" + (segundo <= 9 ? "0" : "") + segundo;
 	}
 
 	public EstadoCasillero[] aciertosJugador(char[] palabraIntento) {
