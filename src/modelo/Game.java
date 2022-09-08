@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-import ranking.Ranking;
 import javax.swing.Timer;
 
 public class Game {
@@ -31,7 +30,7 @@ public class Game {
 		verde, amarillo, gris, vacio
 	};
 
-	private enum Dificultad {
+	public enum Dificultad {
 		facil, normal, dificil
 	};
 
@@ -71,6 +70,7 @@ public class Game {
 	public void agregarPuntaje() {
 
 	}
+
 	private String guardarTiempoJugada() {
 		return (minuto <= 9 ? "0" : "") + minuto + ":" + (segundo <= 9 ? "0" : "") + segundo;
 	}
@@ -191,11 +191,17 @@ public class Game {
 	public void setIsOver() {
 		isOver = true;
 	}
+
 	public int getMinuto() {
 		return minuto;
 	}
+
 	public int getSegundo() {
 		return segundo;
+	}
+
+	public Dificultad getDificultad() {
+		return dificultad;
 	}
 
 }

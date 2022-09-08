@@ -1,6 +1,7 @@
 package interfaz;
 
 import modelo.Game;
+import modelo.Game.Dificultad;
 import modelo.Game.EstadoCasillero;
 import ranking.Ranking;
 
@@ -229,6 +230,16 @@ public class Interfaz {
 		if (game.terminarIntento(palabraEnviada)) {
 			JOptionPane.showMessageDialog(null, "¡GANASTE!");
 			pedirNombreJugador();
+			game.getDificultad();
+			if (game.getDificultad() == Dificultad.facil) {
+				rkFacil.agregarPuntaje("MMM", game.getMinuto(), game.getSegundo());
+				return;
+			}
+			if (game.getDificultad() == Dificultad.normal) {
+				rkNormal.agregarPuntaje("DDD", game.getMinuto(), game.getSegundo());
+				return;
+			}
+			rkDificil.agregarPuntaje("ZZZ", game.getMinuto(), game.getSegundo());
 			return;
 		}
 
