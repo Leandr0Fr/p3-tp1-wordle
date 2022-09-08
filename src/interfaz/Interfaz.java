@@ -8,46 +8,53 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.Window;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+import javax.swing.Timer;
+
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
+
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+
 import java.awt.Cursor;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextPane;
 import javax.swing.JEditorPane;
 
+
 public class Interfaz {
 
+	private Recurso recurso;
 	private JFrame frame;
-	private boolean flagEmpezarJuego;
 	private JLabel[] titulo;
 	private JLabel[][] tablero;
 	private int posLetra = 0;
 	private int posFila = 0;
 	private int LEN_PALABRA;
+
 	private Game game;
 
-	private JButton btnJugar;
+	protected JButton btnJugar;
+	private JButton btnPlayFacil;
+	private JButton btnPlayNormal;
+	private JButton btnPlayDificil;
 
 	private Toolkit miPantalla;
 	private Image miIcono;
-
-	private Color VERDE = new Color(106, 170, 100);
-	private Color AMARILLO = new Color(201, 180, 88);
-	private Color GRIS = new Color(120, 124, 126);
-	private Color BORDER_COLOUR = new Color(120, 120, 120);
-
-	private Font fuenteSourceCodeSmall = new Font("Source Code Pro", Font.PLAIN, 16);
-	private Font fuenteSourceCodeMedium = new Font("Source Code Pro", Font.PLAIN, 32);
-	private Font fuenteSourceCodeBig = new Font("Source Code Pro", Font.PLAIN, 60);
-
 	/**
 	 * Launch the application.
 	 */
@@ -77,6 +84,7 @@ public class Interfaz {
 	private void initialize() {
 		// Pantalla principal
 		LEN_PALABRA = 5;
+		recurso = new Recurso();
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setResizable(false);
@@ -89,13 +97,27 @@ public class Interfaz {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
+		
+		//title
+		
+		JLabel contador = new JLabel("00:00");
+		contador.setFont(new Font("Lucida Console", Font.PLAIN, 20));
+		contador.setHorizontalAlignment(SwingConstants.CENTER);
+		contador.setBounds(184, 511, 80, 25);
+		frame.getContentPane().add(contador);
+		
 		// title
 		limpiarPantalla();
-
 		menuPrincipal();
 
+
 		// keyListener
+		addEventosDeTeclado();
+
+		addEventosDeBtn();
+	}
+
+	private void addEventosDeTeclado() {
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -123,240 +145,65 @@ public class Interfaz {
 					colocarLetra(e);
 			}
 		});
+		
 	}
 
-	private void menuPrincipal() {
-		crearBtnFacil();
-		crearBtnNormal();
-		crearBtnDificil();
-		crearBtnJugar();
-		crearRankings();
-		updateFrame();
-	}
-
-	private void crearBtnJugar() {
-		btnJugar = new JButton("Jugar en -----");
-		btnJugar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnJugar.setFont(fuenteSourceCodeSmall);
-		btnJugar.setBorderPainted(true);
-		btnJugar.setFocusPainted(false);
-		btnJugar.setContentAreaFilled(true);
-		btnJugar.setBackground(Color.WHITE);
-		btnJugar.setEnabled(flagEmpezarJuego);
-
-		btnJugar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				limpiarPantalla();
-				game = new Game(LEN_PALABRA);
-				crearTablero(LEN_PALABRA);
-			}
-		});
-
-		btnJugar.setBounds(124, 429, 209, 37);
-		frame.getContentPane().add(btnJugar);
-
-	}
-
-	private void crearBtnFacil() {
-		JButton btnPlayFacil = new JButton("Facil");
-		btnPlayFacil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnPlayFacil.setFont(fuenteSourceCodeSmall);
-		btnPlayFacil.setBorderPainted(true);
-		btnPlayFacil.setFocusPainted(false);
-		btnPlayFacil.setContentAreaFilled(true);
-		btnPlayFacil.setBackground(Color.WHITE);
-
+	private void addEventosDeBtn() {
 		btnPlayFacil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LEN_PALABRA = 4;
 				btnJugar.setText("Jugar en FÁCIL");
-				setFlagEmpezarJuego();
+				btnJugar.setEnabled(true);
 			}
 		});
-
-		btnPlayFacil.setBounds(20, 133, 126, 37);
-		frame.getContentPane().add(btnPlayFacil);
-	}
-
-	private void crearBtnNormal() {
-		JButton btnPlayNormal = new JButton("Normal");
-		btnPlayNormal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnPlayNormal.setFont(fuenteSourceCodeSmall);
-		btnPlayNormal.setBorderPainted(true);
-		btnPlayNormal.setFocusPainted(false);
-		btnPlayNormal.setContentAreaFilled(true);
-		btnPlayNormal.setBackground(Color.WHITE);
 
 		btnPlayNormal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LEN_PALABRA = 5;
 				btnJugar.setText("Jugar en NORMAL");
-				setFlagEmpezarJuego();
+				btnJugar.setEnabled(true);
 			}
 		});
-
-		btnPlayNormal.setBounds(164, 133, 126, 37);
-		frame.getContentPane().add(btnPlayNormal);
-	}
-
-	private void crearBtnDificil() {
-		JButton btnPlayDificil = new JButton("Dificil");
-		btnPlayDificil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnPlayDificil.setFont(fuenteSourceCodeSmall);
-		btnPlayDificil.setBorderPainted(true);
-		btnPlayDificil.setFocusPainted(false);
-		btnPlayDificil.setContentAreaFilled(true);
-		btnPlayDificil.setBackground(Color.WHITE);
 
 		btnPlayDificil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LEN_PALABRA = 6;
 				btnJugar.setText("Jugar en DIFÍCIL");
-				setFlagEmpezarJuego();
+				btnJugar.setEnabled(true);
 			}
 		});
 
-		btnPlayDificil.setBounds(306, 133, 126, 37);
-		frame.getContentPane().add(btnPlayDificil);
-	}
-
-	private void setFlagEmpezarJuego() {
-		flagEmpezarJuego = true;
-		btnJugar.setEnabled(flagEmpezarJuego);
-	}
-
-	private void crearTablero(int tamanoPalabra) {
-		int x = 16 + 36 * (6 % LEN_PALABRA);
-		int y = 72;
-		int CENTER = 0;
-		tablero = new JLabel[6][tamanoPalabra];
-		for (int f = 0; f < 6; f++) {
-			for (int c = 0; c < tamanoPalabra; c++) {
-				tablero[f][c] = new JLabel();
-				tablero[f][c].setFont(fuenteSourceCodeBig);
-				tablero[f][c].setText(" ");
-				tablero[f][c].setBackground(Color.WHITE);
-				tablero[f][c].setOpaque(true);
-				tablero[f][c].setHorizontalAlignment(CENTER);
-				tablero[f][c].setBorder(new LineBorder(BORDER_COLOUR, 1));
-				tablero[f][c].setBounds(x, y, 64, 64);
-				frame.getContentPane().add(tablero[f][c]);
-				x += 72;
+		btnJugar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiarPantalla();
+				game = new Game(LEN_PALABRA);
+				tablero = new JLabel[6][LEN_PALABRA];
+				recurso.crearTablero(frame, LEN_PALABRA, tablero);
 			}
-			y += 72;
-			x = 16 + 36 * (6 % LEN_PALABRA);
-		}
+		});
+	}
+
+
+	private void menuPrincipal() {
+		btnPlayFacil = new JButton("Facil");
+		btnPlayNormal = new JButton("Normal");
+		btnPlayDificil = new JButton("Dificil");
+		btnJugar = new JButton("Jugar en ----");
+		recurso.crearBtnFacil(frame, btnPlayFacil);
+		recurso.crearBtnNormal(frame, btnPlayNormal);
+		recurso.crearBtnDificil(frame, btnPlayDificil);
+		recurso.crearBtnJugar(frame, btnJugar);
+		recurso.crearRankings(frame);
+
+		updateFrame();
 	}
 
 	private void limpiarPantalla() {
 		frame.getContentPane().removeAll();
-		crearTitulo();
-		crearAnio();
-		crearLogo();
+		recurso.crearTitulo(frame, titulo);
+		recurso.crearAnio(frame);
+		recurso.crearLogo(frame);
 		updateFrame();
-	}
-
-	private void crearAnio() {
-		JLabel lblAnio = new JLabel("2022");
-		lblAnio.setFont(new Font("Source Code Pro", Font.PLAIN, 11));
-		lblAnio.setBounds(415, 568, 31, 14);
-		frame.getContentPane().add(lblAnio);
-	}
-
-	private void crearLogo() {
-		JEditorPane ungsLogo = new JEditorPane();
-		ungsLogo.setEditable(false);
-		ungsLogo.setForeground(new Color(0, 128, 128));
-		ungsLogo.setFont(new Font("Consolas", Font.PLAIN, 1));
-		ungsLogo.setText(
-				"                                           ~~~         ~~                                           \n"
-						+ "                                    ~  7?JY5PP7       ?P5YJ?7  ~                                    \n"
-						+ "                                  ?YPB#&@@@@@B        B@@@@@&#BPY? ~                                \n"
-						+ "                            ~ ?YG#@@@@@@@@@@@J~      ?@@@@@@@@@@@@#GY7 ~                            \n"
-						+ "                         ~ ?5#@@@@@@@@@@@@@@#        G@@@@@@@@@@@@@@@&B57                           \n"
-						+ "                       ~7YB@@@@@@@@@@@@@@@@@Y~      7&@@@@@@@@@@@@@@@@@@&GJ ~                       \n"
-						+ "                      75&@@@@@@@@@@@@@@@@@@&7      ~P@@@@@@@@@@@@@@@@@@@@@@#Y                       \n"
-						+ "                     5&@@@@@@@@@@@@@@@@@@@@P~      7&@@@@@@#BGB&@@@@@@@@@@@@@#J                     \n"
-						+ "                  ~J#@@@@@@@@@@@@@@@@@@@@@&7      ~5@@@@@#J    75@@@@@@@@@@@@@@G7                   \n"
-						+ "                  5@@@@@@@@@@@@@@@@@@@@@@@G        #@@@@&?~     ~G@@@@@@@@@@@@@@#J~                 \n"
-						+ "                 G@@@@@@@@@@@@@@@@@@@@@@@@?       J@@@@@G~       B@@@@@@@@@@@@@@@@Y                 \n"
-						+ "                G@@@@@@@@@@@@@@@@@@@@@@@@B        B@@@@@?       J@@@@@@@@@@@@@@@@@@Y~               \n"
-						+ "               P@@@@@@@@@@@@@@@@@@@@@@@@@J       ?@@@@@B        B@@@@@@@@@@@@@@@@@@@J               \n"
-						+ "              Y@@@@@@@@@@@@@@@@@@@@@@@@@#        G@@@@@J       ?@@@@@@@@@@@@@@@@@@@@&7              \n"
-						+ "              #@@@@@@@@@@@@@@@@@@@@@@@@@Y~      7&@@@@#       ~G@@@@@@@@@@@@@@@@@@@@@P              \n"
-						+ "             Y@@@@@@@@@@@@@@@@@@@@@@@@@&7      ~P@@@@@Y       7&@@@@@@@@@@@@@@@@@@@@@&7             \n"
-						+ "            ~G@@@@@@@@@@@@@@@@@@@@@@@@@5~      7&@@@@#       ~5@@@@@@@@@@@@@@@@@@@@@@@Y~            \n"
-						+ "             B@@@@@@@@@@@@@@@@@@@@@@@@&7      ~5@@@@@5       7&@@@@@@@@@@@@@@@@@@@@@@@P~            \n"
-						+ "             #@@@@@@@@@@@@@@@@@@@@@@@@G        #@@@@&7      ~Y@@@@@@@@@@@@@@@@@@@@@@@@G             \n"
-						+ "             B@@@@@@@@@@@@@@@@@@@@@@@@?       Y@@@@@P~       #@@@@@@@@@@@@@@@@@@@@@@@@G~            \n"
-						+ "            ~P@@@@@@@@@@@@@@@@@@@@@@@B        B@@@@@?       J@@@@@@@@@@@@@@@@@@@@@@@@@5~            \n"
-						+ "             J@@@@@@@@@@@@@@@@@@@@@@@J       J@@@@@G        B@@@@@@@@@@@@@@@@@@@@@@@@@?             \n"
-						+ "              B@@@@@@@@@@@@@@@@@@@@@#        G@@@@@J       ?@@@@@@@@@@@@@@@@@@@@@@@@@B              \n"
-						+ "              J@@@@@@@@@@@@@@@@@@@@@Y       ?&@@@@#        G@@@@@@@@@@@@@@@@@@@@@@@@&?              \n"
-						+ "               5@@@@@@@@@@@@@@@@@@@&       ~P@@@@@Y~      7&@@@@@@@@@@@@@@@@@@@@@@@@5~              \n"
-						+ "                P@@@@@@@@@@@@@@@@@@5~      7&@@@@#       ~P@@@@@@@@@@@@@@@@@@@@@@@@P                \n"
-						+ "                 P@@@@@@@@@@@@@@@@&7      ~5@@@@@5~      7&@@@@@@@@@@@@@@@@@@@@@@@P                 \n"
-						+ "                  5&@@@@@@@@@@@@@@&7~      #@@@@&7      ~Y@@@@@@@@@@@@@@@@@@@@@@&Y                  \n"
-						+ "                  ~?B@@@@@@@@@@@@@@#J7  7JB@@@@@P~       #@@@@@@@@@@@@@@@@@@@@@B?~                  \n"
-						+ "                     5&@@@@@@@@@@@@@@&##&@@@@@@@?       J@@@@@@@@@@@@@@@@@@@@#Y                     \n"
-						+ "                      75&@@@@@@@@@@@@@@@@@@@@@@G        B@@@@@@@@@@@@@@@@@@#57~                     \n"
-						+ "                       ~75#@@@@@@@@@@@@@@@@@@@@J       ?@@@@@@@@@@@@@@@@@BY ~                       \n"
-						+ "                         ~ ?P#@@@@@@@@@@@@@@@@B        G@@@@@@@@@@@@@@B5?                           \n"
-						+ "                            ~ ?5B&@@@@@@@@@@@@Y~      7&@@@@@@@@@@#GY? ~                            \n"
-						+ "                               ~ 7J5G#&@@@@@@#        P@@@@@&#BPY?                                  \n"
-						+ "                                   ~  77JY5PGY        PP5YJ?7  ~                                    \n"
-						+ "                                          ~~~          ~~                                           \n"
-						+ "");
-		ungsLogo.setBounds(0, 511, 111, 82);
-		frame.getContentPane().add(ungsLogo);
-	}
-
-	private void crearTitulo() {
-		int x = 88;
-		int y = 12;
-		int CENTER = 0;
-		char[] gameTitleChars = { 'w', 'U', 'N', 'G', 'S', 'd', 'l', 'e' };
-		int LEN_TITLE_CHARS = gameTitleChars.length;
-		titulo = new JLabel[LEN_TITLE_CHARS];
-
-		for (int i = 0; i < LEN_TITLE_CHARS; i++) {
-			titulo[i] = new JLabel();
-			titulo[i].setFont(fuenteSourceCodeMedium);
-			titulo[i].setText(" ");
-			titulo[i].setBackground(Color.WHITE);
-			titulo[i].setOpaque(true);
-			titulo[i].setHorizontalAlignment(CENTER);
-			titulo[i].setVerticalAlignment(CENTER);
-			titulo[i].setBounds(x, y, 32, 32);
-			titulo[i].setText("" + gameTitleChars[i]);
-			titulo[i].setBorder(new LineBorder(BORDER_COLOUR, 1));
-			frame.getContentPane().add(titulo[i]);
-			x += 36;
-		}
-
-	}
-
-	private void crearRankings() {
-		JTextPane recordsFacil = new JTextPane();
-		recordsFacil.setFont(new Font("Consolas", Font.BOLD, 18));
-		recordsFacil.setBackground(new Color(204, 204, 204));
-		recordsFacil.setBounds(20, 181, 128, 220);
-		frame.getContentPane().add(recordsFacil);
-
-		JTextPane recordsNormal = new JTextPane();
-		recordsNormal.setEditable(false);
-		recordsNormal.setFont(new Font("Consolas", Font.BOLD, 18));
-		recordsNormal.setBackground(new Color(204, 204, 204));
-		recordsNormal.setBounds(164, 183, 128, 220);
-		frame.getContentPane().add(recordsNormal);
-
-		JTextPane recordsDificil = new JTextPane();
-		recordsDificil.setEditable(false);
-		recordsDificil.setFont(new Font("Consolas", Font.BOLD, 18));
-		recordsDificil.setBackground(new Color(204, 204, 204));
-		recordsDificil.setBounds(306, 181, 128, 220);
-		frame.getContentPane().add(recordsDificil);
-
 	}
 
 	private void borrarLetra() {
@@ -377,21 +224,26 @@ public class Interfaz {
 			palabraEnviada[i] = tablero[posFila][i].getText().charAt(0);
 		}
 
-		// ### PRUEBA COLOREAR
 		EstadoCasillero[] resultado = game.aciertosJugador(palabraEnviada);
 		colorearLetras(resultado);
-		// ### PRUEBA COLOREAR
 
 		if (game.terminarIntento(palabraEnviada)) {
-			// GANASTE!!!
+			JOptionPane.showMessageDialog(null, "¡GANASTE!");
+			pedirNombreJugador();
 		}
+		
 		if (posFila == 5) {
 			game.setIsOver();
+			JOptionPane.showMessageDialog(null, "¡PERDISTE!");
 			return;
 		}
 		posFila++;
 		posLetra = 0;
+	}
 
+	private String pedirNombreJugador() {
+		String nombre = JOptionPane.showInputDialog("INGRESE SU TAG");
+		return nombre;
 	}
 
 	private void colocarLetra(KeyEvent e) {
@@ -406,34 +258,14 @@ public class Interfaz {
 	private void colorearLetras(EstadoCasillero[] resultados) {
 		for (int i = 0; i < tablero[0].length; i++) {
 			if (resultados[i] == EstadoCasillero.verde)
-				colorearVerde(tablero[posFila][i]);
+				recurso.colorearVerde(tablero[posFila][i]);
 
 			else if (resultados[i] == EstadoCasillero.amarillo)
-				colorearAmarillo(tablero[posFila][i]);
+				recurso.colorearAmarillo(tablero[posFila][i]);
 
 			else if (resultados[i] == EstadoCasillero.gris)
-				colorearGris(tablero[posFila][i]);
+				recurso.colorearGris(tablero[posFila][i]);
 		}
-
-	}
-
-	private void colorearVerde(JLabel celda) {
-		celda.setBackground(VERDE);
-		colorearTextoBlanco(celda);
-	}
-
-	private void colorearAmarillo(JLabel celda) {
-		celda.setBackground(AMARILLO);
-		colorearTextoBlanco(celda);
-	}
-
-	private void colorearGris(JLabel celda) {
-		celda.setBackground(GRIS);
-		colorearTextoBlanco(celda);
-	}
-
-	private void colorearTextoBlanco(JLabel celda) {
-		celda.setForeground(Color.WHITE);
 	}
 
 	private void updateFrame() {
