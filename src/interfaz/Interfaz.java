@@ -218,6 +218,7 @@ public class Interfaz {
 		if (game.terminarIntento(palabraEnviada)) {
 			JOptionPane.showMessageDialog(null, "¡GANASTE!");
 			pedirNombreJugador();
+			return;
 		}
 
 		if (posFila == 5) {
