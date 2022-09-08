@@ -57,6 +57,9 @@ public class Game {
 		setIsOver();
 		return true;
 	}
+	public void agregarPuntaje() {
+		
+	}
 	public String [] obtenerRanking() {
 		if (dificultad == Dificultad.dificil) {
 			return rkDificil.obtenerRanking();
