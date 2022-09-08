@@ -9,14 +9,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-
+import ranking.Ranking;
 public class Game {
 	private String palabraEnJuego = "";
 	private Map<Character, Integer> letraYcantidad;
 	private List<String> listadoDePalabras;
 	private EstadoCasillero[] resultadoLetras;
 	private boolean isOver;
-
+	private Ranking rkFacil;
+	private Ranking rkNormal;
+	private Ranking rkDificil;
 	public enum EstadoCasillero {
 		verde, amarillo, gris, vacio
 	};
@@ -28,6 +30,9 @@ public class Game {
 	// modificar constructor para que tome la dificultad
 	public Game(int tamanoPalabra) {
 		this.listadoDePalabras = new LinkedList<String>();
+		this.rkFacil = new Ranking("Facil");
+		this.rkFacil = new Ranking("Normal");
+		this.rkFacil = new Ranking("Dificil");
 		obtenerConjuntoDePalabras(cualDificultad(tamanoPalabra), false);
 		seleccionarPalabra();
 		setearLetraYCantidad();
