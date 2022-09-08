@@ -144,11 +144,11 @@ public class Game {
 		StringBuilder ruta = new StringBuilder(Game.class.getResource("").getPath());
 		ruta.append((ingles) ? "ingles" : "espanol");
 		if (dificultad == Dificultad.facil) {
-			ruta.append("Facil.txt");
+			ruta.append("Facil.wd");
 		} else if (dificultad == Dificultad.normal) {
-			ruta.append("Normal.txt");
+			ruta.append("Normal.wd");
 		} else {
-			ruta.append("Dificil.txt");
+			ruta.append("Dificil.wd");
 		}
 		// leer contenido
 		File archivoPalabras = new File(ruta.toString());
