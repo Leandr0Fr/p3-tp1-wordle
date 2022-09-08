@@ -273,5 +273,6 @@ public class Interfaz {
 		frame.setVisible(true);
 		frame.toFront();
 		frame.requestFocus();
+		//7495769 Codigo seguimiento pami
 	}
 }

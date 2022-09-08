@@ -20,12 +20,10 @@ public class Game {
 	private List<String> listadoDePalabras;
 	private EstadoCasillero[] resultadoLetras;
 	private boolean isOver;
-	private Ranking rkFacil;
-	private Ranking rkNormal;
-	private Ranking rkDificil;
 	private Dificultad dificultad;
 	private Timer tiempo;
 	private int centesimasDeSegundo = 0;
+
 	private int segundo = 0;
 	private int minuto = 0;
 
@@ -40,9 +38,6 @@ public class Game {
 	// modificar constructor para que tome la dificultad
 	public Game(int tamanoPalabra) {
 		this.listadoDePalabras = new LinkedList<String>();
-		this.rkFacil = new Ranking("Facil");
-		this.rkFacil = new Ranking("Normal");
-		this.rkFacil = new Ranking("Dificil");
 		cualDificultad(tamanoPalabra);
 		obtenerConjuntoDePalabras(dificultad, false);
 		seleccionarPalabra();
@@ -76,17 +71,6 @@ public class Game {
 	public void agregarPuntaje() {
 
 	}
-
-	public String[] obtenerRanking() {
-		if (dificultad == Dificultad.dificil) {
-			return rkDificil.obtenerRanking();
-		}
-		if (dificultad == Dificultad.normal) {
-			return rkNormal.obtenerRanking();
-		}
-		return rkFacil.obtenerRanking();
-	}
-
 	private String guardarTiempoJugada() {
 		return (minuto <= 9 ? "0" : "") + minuto + ":" + (segundo <= 9 ? "0" : "") + segundo;
 	}
@@ -207,4 +191,11 @@ public class Game {
 	public void setIsOver() {
 		isOver = true;
 	}
+	public int getMinuto() {
+		return minuto;
+	}
+	public int getSegundo() {
+		return segundo;
+	}
+
 }
