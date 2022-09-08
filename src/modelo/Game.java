@@ -171,7 +171,7 @@ public class Game {
 		try {
 			Scanner palabras = new Scanner(archivoPalabras);
 			while (palabras.hasNext()) {
-				listadoDePalabras.add(palabras.next().toString().toLowerCase());
+				listadoDePalabras.add(palabras.next().toString().toUpperCase());
 			}
 			palabras.close();
 		} catch (FileNotFoundException e) {
