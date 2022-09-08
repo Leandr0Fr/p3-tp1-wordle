@@ -19,6 +19,7 @@ public class Game {
 	private Ranking rkFacil;
 	private Ranking rkNormal;
 	private Ranking rkDificil;
+	private Dificultad dificultad;
 	public enum EstadoCasillero {
 		verde, amarillo, gris, vacio
 	};
@@ -33,15 +34,15 @@ public class Game {
 		this.rkFacil = new Ranking("Facil");
 		this.rkFacil = new Ranking("Normal");
 		this.rkFacil = new Ranking("Dificil");
-		obtenerConjuntoDePalabras(cualDificultad(tamanoPalabra), false);
+		cualDificultad(tamanoPalabra);
+		obtenerConjuntoDePalabras(dificultad, false);
 		seleccionarPalabra();
 		setearLetraYCantidad();
 		setearResultadosLetras();
 	}
 
-	private Dificultad cualDificultad(int len) {
-		Dificultad ret = (len == 4 ? Dificultad.facil : len == 5 ? Dificultad.normal : Dificultad.dificil);
-		return ret;
+	private void cualDificultad(int len) {
+		this.dificultad = (len == 4 ? Dificultad.facil : len == 5 ? Dificultad.normal : Dificultad.dificil); 
 	}
 
 	public boolean terminarIntento(char[] palabra) {
@@ -56,7 +57,15 @@ public class Game {
 		setIsOver();
 		return true;
 	}
-
+	public String [] obtenerRanking() {
+		if (dificultad == Dificultad.dificil) {
+			return rkDificil.obtenerRanking();
+		}
+		if (dificultad == Dificultad.normal) {
+			return rkNormal.obtenerRanking();
+		}
+		return rkFacil.obtenerRanking();
+	}
 	public EstadoCasillero[] aciertosJugador(char[] palabraIntento) {
 		// prioridad verde
 		for (int i = 0; i < palabraEnJuego.length(); i++) {
@@ -142,6 +151,7 @@ public class Game {
 			resultadoLetras[i] = EstadoCasillero.vacio;
 		}
 	}
+	
 
 	public boolean getIsOver() {
 		return isOver;
