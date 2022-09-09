@@ -278,7 +278,7 @@ public class Interfaz {
 		}
 
 		if (!game.perteneceAlListado(palabraEnviada)) {
-			JOptionPane.showMessageDialog(null, "No existe la palabra");
+			JOptionPane.showMessageDialog(null, isEnglish ? "Word does not exists" : "No existe la palabra");
 			return;
 		}
 
@@ -286,13 +286,13 @@ public class Interfaz {
 		colorearLetras(resultado);
 
 		if (game.terminarIntento(palabraEnviada)) {
-			JOptionPane.showMessageDialog(null, isEnglish ? "¡WINNER!" : "¡GANASTE!");
+			JOptionPane.showMessageDialog(null, isEnglish ? "WINNER!" : "¡GANASTE!");
 			mostrarTagContainer();
 		}
 
 		if (posFila == 5) {
 			game.setIsOver();
-			JOptionPane.showMessageDialog(null, isEnglish ? "¡YOU LOST!" : "¡PERDISTE!");
+			JOptionPane.showMessageDialog(null, isEnglish ? "YOU LOST!" : "¡PERDISTE!");
 			return;
 		}
 		posFila++;
