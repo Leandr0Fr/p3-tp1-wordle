@@ -33,9 +33,10 @@ public class Interfaz {
 	private int posLetra = 0;
 	private int posFila = 0;
 	private int LEN_PALABRA;
-	
+
 	private JButton btnEsp;
 	private JButton btnEng;
+	private boolean isEnglish;
 
 	private Game game;
 
@@ -105,13 +106,11 @@ public class Interfaz {
 		// title
 		limpiarPantalla();
 		menuIdioma();
-		
-		//menuPrincipal();
+
 
 		// keyListener
 		addEventosDeTeclado();
 
-		//addEventosDeBtn();
 	}
 
 	private void menuIdioma() {
@@ -119,13 +118,19 @@ public class Interfaz {
 		recurso.crearBtnEsp(frame, btnEsp);
 		btnEsp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				isEnglish = false;
+				limpiarPantalla();
+				menuPrincipal();
 			}
 		});
-		
+
 		btnEng = new JButton("     E N G L I S H");
 		recurso.crearBtnEng(frame, btnEng);
 		btnEng.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				isEnglish = true;
+				limpiarPantalla();
+				menuPrincipal();
 			}
 		});
 	}
@@ -165,7 +170,7 @@ public class Interfaz {
 		btnPlayFacil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LEN_PALABRA = 4;
-				btnJugar.setText("Jugar en FÁCIL");
+				btnJugar.setText(isEnglish ? "Play on EASY" : "Jugar en FÁCIL");
 				btnJugar.setEnabled(true);
 			}
 		});
@@ -173,7 +178,7 @@ public class Interfaz {
 		btnPlayNormal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LEN_PALABRA = 5;
-				btnJugar.setText("Jugar en NORMAL");
+				btnJugar.setText(isEnglish ?"Play on NORMAL" : "Jugar en NORMAL");
 				btnJugar.setEnabled(true);
 			}
 		});
@@ -181,7 +186,7 @@ public class Interfaz {
 		btnPlayDificil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LEN_PALABRA = 6;
-				btnJugar.setText("Jugar en DIFÍCIL");
+				btnJugar.setText(isEnglish ? "Play on HARD" : "Jugar en DIFÍCIL");
 				btnJugar.setEnabled(true);
 			}
 		});
@@ -197,14 +202,15 @@ public class Interfaz {
 	}
 
 	private void menuPrincipal() {
-		btnPlayFacil = new JButton("Facil");
+		btnPlayFacil = new JButton(isEnglish ? "Easy" : "Facil");
 		btnPlayNormal = new JButton("Normal");
-		btnPlayDificil = new JButton("Dificil");
-		btnJugar = new JButton("Jugar en ----");
+		btnPlayDificil = new JButton(isEnglish ? "Hard" : "Dificil");
+		btnJugar = new JButton(isEnglish ? "Play on ----" : "Jugar en ----");
 		recurso.crearBtnFacil(frame, btnPlayFacil);
 		recurso.crearBtnNormal(frame, btnPlayNormal);
 		recurso.crearBtnDificil(frame, btnPlayDificil);
 		recurso.crearBtnJugar(frame, btnJugar);
+		addEventosDeBtn();
 		crearRankings();
 		updateFrame();
 	}
