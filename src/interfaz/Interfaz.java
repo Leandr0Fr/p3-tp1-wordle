@@ -256,7 +256,7 @@ public class Interfaz {
 		colorearLetras(resultado);
 
 		if (game.terminarIntento(palabraEnviada)) {
-			JOptionPane.showMessageDialog(null, "¡GANASTE!");
+			JOptionPane.showMessageDialog(null, isEnglish ? "¡WINNER!" : "¡GANASTE!");
 			if (game.getDificultad() == Dificultad.facil) {
 				rkFacil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
 				return;
@@ -271,7 +271,7 @@ public class Interfaz {
 
 		if (posFila == 5) {
 			game.setIsOver();
-			JOptionPane.showMessageDialog(null, "¡PERDISTE!");
+			JOptionPane.showMessageDialog(null, isEnglish ? "¡YOU LOST!" : "¡PERDISTE!");
 			return;
 		}
 		posFila++;
