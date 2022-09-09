@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
 public class Interfaz {
 
@@ -32,6 +33,9 @@ public class Interfaz {
 	private int posLetra = 0;
 	private int posFila = 0;
 	private int LEN_PALABRA;
+	
+	private JButton btnEsp;
+	private JButton btnEng;
 
 	private Game game;
 
@@ -100,12 +104,30 @@ public class Interfaz {
 
 		// title
 		limpiarPantalla();
-		menuPrincipal();
+		menuIdioma();
+		
+		//menuPrincipal();
 
 		// keyListener
 		addEventosDeTeclado();
 
-		addEventosDeBtn();
+		//addEventosDeBtn();
+	}
+
+	private void menuIdioma() {
+		btnEsp = new JButton("C A S T E L L A N O");
+		recurso.crearBtnEsp(frame, btnEsp);
+		btnEsp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		
+		btnEng = new JButton("     E N G L I S H");
+		recurso.crearBtnEng(frame, btnEng);
+		btnEng.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 	}
 
 	private void addEventosDeTeclado() {

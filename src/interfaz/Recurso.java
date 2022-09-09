@@ -3,11 +3,14 @@ package interfaz;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import ranking.Ranking;
@@ -244,5 +247,34 @@ public class Recurso {
 
 	protected void colorearTextoBlanco(JLabel celda) {
 		celda.setForeground(Color.WHITE);
+	}
+
+	protected void crearBtnEsp(JFrame frame, JButton btnEsp) {
+		btnEsp.setIcon(new ImageIcon(Interfaz.class.getResource("/interfaz/ar.png")));
+		btnEsp.setIconTextGap(20);
+		btnEsp.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnEsp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnEsp.setHorizontalAlignment(SwingConstants.LEFT);
+		btnEsp.setBorderPainted(true);
+		btnEsp.setFocusPainted(false);
+		btnEsp.setContentAreaFilled(true);
+		btnEsp.setBackground(Color.WHITE);
+		btnEsp.setBounds(119, 153, 200, 60);
+		frame.getContentPane().add(btnEsp);
+		
+	}
+
+	public void crearBtnEng(JFrame frame, JButton btnEng) {
+		btnEng.setIcon(new ImageIcon(Interfaz.class.getResource("/interfaz/gb.png")));
+		btnEng.setIconTextGap(20);
+		btnEng.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnEng.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnEng.setHorizontalAlignment(SwingConstants.LEFT);
+		btnEng.setBorderPainted(true);
+		btnEng.setFocusPainted(false);
+		btnEng.setContentAreaFilled(true);
+		btnEng.setBackground(Color.WHITE);
+		btnEng.setBounds(119, 324, 200, 60);
+		frame.getContentPane().add(btnEng);
 	}
 }
