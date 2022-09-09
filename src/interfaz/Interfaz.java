@@ -288,12 +288,13 @@ public class Interfaz {
 			JOptionPane.showMessageDialog(null, "TAG NO VALIDO");
 		}
 	}
+
 	private boolean tagValido(String tag) {
-			for (int i = 0; i < 3; i++) {
-				if (!game.esLetraValida(tag.charAt(i))) {
-					return false;
-				}
+		for (int i = 0; i < 3; i++) {
+			if (!game.esLetraValida(tag.charAt(i))) {
+				return false;
 			}
+		}
 		return true;
 	}
 
