@@ -253,6 +253,7 @@ public class Recurso {
 	}
 
 	protected void crearBtnEsp(JPanel mainContainer, JButton btnEsp) {
+		btnEsp.setText("C A S T E L L A N O");
 		btnEsp.setFont(fuenteSmall);
 		btnEsp.setIcon(new ImageIcon(Interfaz.class.getResource("/interfaz/ar.png")));
 		btnEsp.setIconTextGap(20);
@@ -263,12 +264,13 @@ public class Recurso {
 		btnEsp.setFocusPainted(false);
 		btnEsp.setContentAreaFilled(true);
 		btnEsp.setBackground(Color.WHITE);
-		btnEsp.setBounds(119, 153, 200, 60);
+		btnEsp.setBounds(115, 156, 230, 60);
 		mainContainer.add(btnEsp);
 
 	}
 
 	protected void crearBtnEng(JPanel mainContainer, JButton btnEng) {
+		btnEng.setText("   E N G L I S H");
 		btnEng.setFont(fuenteSmall);
 		btnEng.setIcon(new ImageIcon(Interfaz.class.getResource("/interfaz/gb.png")));
 		btnEng.setIconTextGap(20);
@@ -279,7 +281,7 @@ public class Recurso {
 		btnEng.setFocusPainted(false);
 		btnEng.setContentAreaFilled(true);
 		btnEng.setBackground(Color.WHITE);
-		btnEng.setBounds(119, 324, 200, 60);
+		btnEng.setBounds(115, 320, 230, 60);
 		mainContainer.add(btnEng);
 	}
 

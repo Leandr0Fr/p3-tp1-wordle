@@ -134,7 +134,7 @@ public class Interfaz {
 
 	private void menuIdioma() {
 		limpiarPantalla();
-		btnEsp = new JButton("C A S T E L L A N O");
+		btnEsp = new JButton();
 		recurso.crearBtnEsp(mainContainer, btnEsp);
 		posLetra = 0;
 		posFila = 0;
@@ -147,7 +147,7 @@ public class Interfaz {
 			}
 		});
 
-		btnEng = new JButton("     E N G L I S H");
+		btnEng = new JButton();
 		recurso.crearBtnEng(mainContainer, btnEng);
 		btnEng.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
