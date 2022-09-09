@@ -261,7 +261,7 @@ public class Recurso {
 		btnEsp.setBackground(Color.WHITE);
 		btnEsp.setBounds(119, 153, 200, 60);
 		frame.getContentPane().add(btnEsp);
-		
+
 	}
 
 	public void crearBtnEng(JFrame frame, JButton btnEng) {

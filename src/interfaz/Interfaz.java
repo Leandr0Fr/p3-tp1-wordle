@@ -107,7 +107,6 @@ public class Interfaz {
 		limpiarPantalla();
 		menuIdioma();
 
-
 		// keyListener
 		addEventosDeTeclado();
 
@@ -178,7 +177,7 @@ public class Interfaz {
 		btnPlayNormal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LEN_PALABRA = 5;
-				btnJugar.setText(isEnglish ?"Play on NORMAL" : "Jugar en NORMAL");
+				btnJugar.setText(isEnglish ? "Play on NORMAL" : "Jugar en NORMAL");
 				btnJugar.setEnabled(true);
 			}
 		});
