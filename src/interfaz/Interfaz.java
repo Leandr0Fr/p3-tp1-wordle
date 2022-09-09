@@ -279,8 +279,22 @@ public class Interfaz {
 	}
 
 	private String pedirNombreJugador() {
-		String nombre = JOptionPane.showInputDialog("INGRESE SU TAG");
-		return nombre;
+		String nombre = "";
+		while (true) {
+			nombre = JOptionPane.showInputDialog("INGRESE SU TAG DE 3 LETRAS");
+			if (nombre.length() == 3 && tagValido(nombre)) {
+				return nombre;
+			}
+			JOptionPane.showMessageDialog(null, "TAG NO VALIDO");
+		}
+	}
+	private boolean tagValido(String tag) {
+			for (int i = 0; i < 3; i++) {
+				if (!game.esLetraValida(tag.charAt(i))) {
+					return false;
+				}
+			}
+		return true;
 	}
 
 	private void colocarLetra(KeyEvent e) {
