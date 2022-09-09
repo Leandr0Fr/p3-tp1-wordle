@@ -148,6 +148,7 @@ public class Recurso {
 						+ "                                          ~~~          ~~                                           \n"
 						+ "");
 		ungsLogo.setBounds(0, 511, 111, 82);
+		ungsLogo.setFocusable(false);
 		mainContainer.add(ungsLogo);
 	}
 
