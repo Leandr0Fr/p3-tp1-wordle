@@ -4,7 +4,6 @@ import ranking.Ranking;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JButton;
@@ -22,12 +21,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EtchedBorder;
-import java.awt.Cursor;
-import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -38,8 +31,8 @@ public class Interfaz {
 	private JPanel mainContainer;
 	private JLabel[] titulo;
 	private JLabel[][] tablero;
-	private int posLetra = 0;
-	private int posFila = 0;
+	private int posLetra;
+	private int posFila;
 	private int LEN_PALABRA;
 
 	private JButton btnEsp;
@@ -108,43 +101,7 @@ public class Interfaz {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		tagContainer = new JPanel();
-		tagContainer.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		tagContainer.setBounds(93, 181, 233, 160);
-		tagContainer.setLayout(null);
-		tagContainer.setVisible(false);
-		frame.getContentPane().add(tagContainer);
-
-		lblIngreseTag = new JLabel(isEnglish ? "Enter your TAG: " : "Ingrese su TAG: ");
-		lblIngreseTag.setBounds(10, 11, 227, 14);
-		tagContainer.add(lblIngreseTag);
-
-		lblEnviarTag = new JLabel(isEnglish ? "SUBMIT" : "ENVIAR");
-		lblEnviarTag.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (game.getDificultad() == Dificultad.facil) {
-					rkFacil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
-
-				} else if (game.getDificultad() == Dificultad.normal) {
-					rkNormal.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
-
-				} else
-					rkDificil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
-
-				tagContainer.setVisible(false);
-			}
-		});
-
-		lblEnviarTag.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEnviarTag.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblEnviarTag.setBackground(Color.WHITE);
-		lblEnviarTag.setOpaque(true);
-		lblEnviarTag.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		lblEnviarTag.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblEnviarTag.setBounds(73, 116, 76, 33);
-		lblEnviarTag.setEnabled(false);
-		tagContainer.add(lblEnviarTag);
+		crearTagContainer();
 
 		mainContainer.setBounds(0, 0, 456, 593);
 		frame.getContentPane().add(mainContainer);
@@ -160,9 +117,28 @@ public class Interfaz {
 
 	}
 
+	private void crearTagContainer() {
+		tagContainer = new JPanel();
+		lblIngreseTag = new JLabel(isEnglish ? "Enter your TAG: " : "Ingrese su TAG: ");
+		lblEnviarTag = new JLabel(isEnglish ? "SUBMIT" : "ENVIAR");
+		recurso.crearTagContainer(frame, tagContainer, lblIngreseTag, lblEnviarTag);
+
+		lblEnviarTag.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				enviarTag();
+			}
+
+		});
+	}
+
 	private void menuIdioma() {
+		limpiarPantalla();
 		btnEsp = new JButton("C A S T E L L A N O");
 		recurso.crearBtnEsp(mainContainer, btnEsp);
+		posLetra = 0;
+		posFila = 0;
+
 		btnEsp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isEnglish = false;
@@ -187,8 +163,9 @@ public class Interfaz {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				System.out.println("" + e.getKeyChar());
-				if (tagJugador != null && tagContainer.isVisible() && game.esLetraValida(e.getKeyChar())) {
+				if (tagJugador != null && tagContainer.isVisible()) {
 					colocarLetraEnTag(e);
+
 				}
 
 				if (tablero == null || game.getIsOver())
@@ -324,22 +301,17 @@ public class Interfaz {
 
 	private void mostrarTagContainer() {
 		tagJugador = new JLabel[3];
-		for (int i = 0; i < tagJugador.length; i++) {
-			tagJugador[i] = new JLabel(" ");
-			tagJugador[i].setOpaque(true);
-			tagJugador[i].setHorizontalAlignment(SwingConstants.CENTER);
-			tagJugador[i].setFont(new Font("Consolas", Font.PLAIN, 60));
-			tagJugador[i].setBackground(Color.WHITE);
-			tagJugador[i].setBounds(10 + i * 72, 24, 64, 64);
-			tagContainer.add(tagJugador[i]);
-		}
-
-		tagContainer.setVisible(true);
-		tagContainer.requestFocus();
+		recurso.mostrarTagContainer(tagContainer, tagJugador);
 		updateFrame();
 	}
 
 	private void colocarLetraEnTag(KeyEvent e) {
+		if (e.getKeyChar() == KeyEvent.VK_ENTER && lblEnviarTag.isEnabled())
+			enviarTag();
+
+		if (!game.esLetraValida(e.getKeyChar()))
+			return;
+
 		for (int i = 0; i < tagJugador.length; i++) {
 
 			if (i == tagJugador.length - 1)
@@ -351,7 +323,20 @@ public class Interfaz {
 				break;
 			}
 		}
+	}
 
+	private void enviarTag() {
+		if (game.getDificultad() == Dificultad.facil) {
+			rkFacil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
+
+		} else if (game.getDificultad() == Dificultad.normal) {
+			rkNormal.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
+
+		} else
+			rkDificil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
+
+		tagContainer.setVisible(false);
+		menuIdioma();
 	}
 
 	private String pedirNombreJugador() {

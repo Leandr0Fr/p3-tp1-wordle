@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 
 import ranking.Ranking;
@@ -265,7 +266,7 @@ public class Recurso {
 
 	}
 
-	public void crearBtnEng(JPanel mainContainer, JButton btnEng) {
+	protected void crearBtnEng(JPanel mainContainer, JButton btnEng) {
 		btnEng.setIcon(new ImageIcon(Interfaz.class.getResource("/interfaz/gb.png")));
 		btnEng.setIconTextGap(20);
 		btnEng.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -278,4 +279,39 @@ public class Recurso {
 		btnEng.setBounds(119, 324, 200, 60);
 		mainContainer.add(btnEng);
 	}
+	
+	protected void crearTagContainer(JFrame frame, JPanel tagContainer, JLabel lblIngreseTag, JLabel lblEnviarTag) {
+		tagContainer.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		tagContainer.setBounds(93, 181, 233, 160);
+		tagContainer.setLayout(null);
+		tagContainer.setVisible(false);
+		frame.getContentPane().add(tagContainer);
+		lblIngreseTag.setBounds(10, 11, 227, 14);
+		tagContainer.add(lblIngreseTag);
+		lblEnviarTag.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEnviarTag.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblEnviarTag.setBackground(Color.WHITE);
+		lblEnviarTag.setOpaque(true);
+		lblEnviarTag.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		lblEnviarTag.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblEnviarTag.setBounds(73, 116, 76, 33);
+		lblEnviarTag.setEnabled(false);
+		tagContainer.add(lblEnviarTag);
+	}
+	
+	protected void mostrarTagContainer(JPanel tagContainer, JLabel[] tagJugador) {
+		for (int i = 0; i < tagJugador.length; i++) {
+			tagJugador[i] = new JLabel(" ");
+			tagJugador[i].setOpaque(true);
+			tagJugador[i].setHorizontalAlignment(SwingConstants.CENTER);
+			tagJugador[i].setFont(new Font("Consolas", Font.PLAIN, 60));
+			tagJugador[i].setBackground(Color.WHITE);
+			tagJugador[i].setBounds(10 + i * 72, 24, 64, 64);
+			tagContainer.add(tagJugador[i]);
+		}
+
+		tagContainer.setVisible(true);
+		tagContainer.requestFocus();
+	}
+	
 }
