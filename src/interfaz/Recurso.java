@@ -19,9 +19,10 @@ import ranking.Ranking;
 
 public class Recurso {
 
-	private Font fuenteSourceCodeSmall = new Font("Source Code Pro", Font.PLAIN, 16);
-	private Font fuenteSourceCodeMedium = new Font("Source Code Pro", Font.PLAIN, 32);
-	private Font fuenteSourceCodeBig = new Font("Source Code Pro", Font.PLAIN, 64);
+	private Font fuenteSmall = new Font("Consolas", Font.PLAIN, 12);
+	private Font fuenteMedium = new Font("Consolas", Font.PLAIN, 28);
+	private Font fuenteBig = new Font("Consolas", Font.PLAIN, 60);
+	private Font fuenteRK = new Font("Consolas", Font.BOLD, 20);
 
 	private Color VERDE = new Color(106, 170, 100);
 	private Color AMARILLO = new Color(201, 180, 88);
@@ -30,7 +31,7 @@ public class Recurso {
 
 	protected void crearBtnFacil(JPanel mainContainer, JButton btnPlayFacil) {
 		btnPlayFacil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnPlayFacil.setFont(fuenteSourceCodeSmall);
+		btnPlayFacil.setFont(fuenteSmall);
 		btnPlayFacil.setBorderPainted(true);
 		btnPlayFacil.setFocusPainted(false);
 		btnPlayFacil.setContentAreaFilled(true);
@@ -41,7 +42,7 @@ public class Recurso {
 
 	protected void crearBtnNormal(JPanel mainContainer, JButton btnPlayNormal) {
 		btnPlayNormal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnPlayNormal.setFont(fuenteSourceCodeSmall);
+		btnPlayNormal.setFont(fuenteSmall);
 		btnPlayNormal.setBorderPainted(true);
 		btnPlayNormal.setFocusPainted(false);
 		btnPlayNormal.setContentAreaFilled(true);
@@ -52,7 +53,7 @@ public class Recurso {
 
 	protected void crearBtnDificil(JPanel mainContainer, JButton btnPlayDificil) {
 		btnPlayDificil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnPlayDificil.setFont(fuenteSourceCodeSmall);
+		btnPlayDificil.setFont(fuenteSmall);
 		btnPlayDificil.setBorderPainted(true);
 		btnPlayDificil.setFocusPainted(false);
 		btnPlayDificil.setContentAreaFilled(true);
@@ -63,7 +64,7 @@ public class Recurso {
 
 	protected void crearBtnJugar(JPanel mainContainer, JButton btnJugar) {
 		btnJugar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnJugar.setFont(fuenteSourceCodeSmall);
+		btnJugar.setFont(fuenteSmall);
 		btnJugar.setBorderPainted(true);
 		btnJugar.setFocusPainted(false);
 		btnJugar.setContentAreaFilled(true);
@@ -80,7 +81,7 @@ public class Recurso {
 		for (int f = 0; f < 6; f++) {
 			for (int c = 0; c < LEN_PALABRA; c++) {
 				tablero[f][c] = new JLabel();
-				tablero[f][c].setFont(fuenteSourceCodeBig);
+				tablero[f][c].setFont(fuenteBig);
 				tablero[f][c].setText(" ");
 				tablero[f][c].setBackground(Color.WHITE);
 				tablero[f][c].setOpaque(true);
@@ -97,7 +98,7 @@ public class Recurso {
 
 	protected void crearAnio(JPanel mainContainer) {
 		JLabel lblAnio = new JLabel("2022");
-		lblAnio.setFont(new Font("Source Code Pro", Font.PLAIN, 11));
+		lblAnio.setFont(fuenteSmall);
 		lblAnio.setBounds(415, 568, 31, 14);
 		mainContainer.add(lblAnio);
 	}
@@ -160,7 +161,7 @@ public class Recurso {
 
 		for (int i = 0; i < LEN_TITLE_CHARS; i++) {
 			titulo[i] = new JLabel();
-			titulo[i].setFont(fuenteSourceCodeMedium);
+			titulo[i].setFont(fuenteMedium);
 			titulo[i].setText(" ");
 			titulo[i].setBackground(Color.WHITE);
 			titulo[i].setOpaque(true);
@@ -178,7 +179,7 @@ public class Recurso {
 	protected void crearRankings(JPanel mainContainer, Ranking rkFacil, Ranking rkNormal, Ranking rkDificil) {
 		JTextPane recordsFacil = new JTextPane();
 		recordsFacil.setEditable(false);
-		recordsFacil.setFont(new Font("Consolas", Font.BOLD, 18));
+		recordsFacil.setFont(fuenteRK);
 		recordsFacil.setBackground(new Color(204, 204, 204));
 		recordsFacil.setBounds(20, 181, 128, 220);
 
@@ -196,7 +197,7 @@ public class Recurso {
 
 		JTextPane recordsNormal = new JTextPane();
 		recordsNormal.setEditable(false);
-		recordsNormal.setFont(new Font("Consolas", Font.BOLD, 18));
+		recordsNormal.setFont(fuenteRK);
 		recordsNormal.setBackground(new Color(204, 204, 204));
 		recordsNormal.setBounds(164, 183, 128, 220);
 
@@ -214,7 +215,7 @@ public class Recurso {
 
 		JTextPane recordsDificil = new JTextPane();
 		recordsDificil.setEditable(false);
-		recordsDificil.setFont(new Font("Consolas", Font.BOLD, 18));
+		recordsDificil.setFont(fuenteRK);
 		recordsDificil.setBackground(new Color(204, 204, 204));
 		recordsDificil.setBounds(306, 181, 128, 220);
 
@@ -252,6 +253,7 @@ public class Recurso {
 	}
 
 	protected void crearBtnEsp(JPanel mainContainer, JButton btnEsp) {
+		btnEsp.setFont(fuenteSmall);
 		btnEsp.setIcon(new ImageIcon(Interfaz.class.getResource("/interfaz/ar.png")));
 		btnEsp.setIconTextGap(20);
 		btnEsp.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -267,6 +269,7 @@ public class Recurso {
 	}
 
 	protected void crearBtnEng(JPanel mainContainer, JButton btnEng) {
+		btnEng.setFont(fuenteSmall);
 		btnEng.setIcon(new ImageIcon(Interfaz.class.getResource("/interfaz/gb.png")));
 		btnEng.setIconTextGap(20);
 		btnEng.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -304,7 +307,7 @@ public class Recurso {
 			tagJugador[i] = new JLabel(" ");
 			tagJugador[i].setOpaque(true);
 			tagJugador[i].setHorizontalAlignment(SwingConstants.CENTER);
-			tagJugador[i].setFont(new Font("Consolas", Font.PLAIN, 60));
+			tagJugador[i].setFont(fuenteBig);
 			tagJugador[i].setBackground(Color.WHITE);
 			tagJugador[i].setBounds(10 + i * 72, 24, 64, 64);
 			tagContainer.add(tagJugador[i]);
