@@ -77,7 +77,6 @@ public class Recurso {
 	protected void crearTablero(JPanel mainContainer, int LEN_PALABRA, JLabel[][] tablero) {
 		int x = 16 + 36 * (6 % LEN_PALABRA);
 		int y = 72;
-		int CENTER = 0;
 		for (int f = 0; f < 6; f++) {
 			for (int c = 0; c < LEN_PALABRA; c++) {
 				tablero[f][c] = new JLabel();
@@ -85,7 +84,8 @@ public class Recurso {
 				tablero[f][c].setText(" ");
 				tablero[f][c].setBackground(Color.WHITE);
 				tablero[f][c].setOpaque(true);
-				tablero[f][c].setHorizontalAlignment(CENTER);
+				tablero[f][c].setHorizontalAlignment(SwingConstants.CENTER);
+				tablero[f][c].setVerticalAlignment(SwingConstants.TOP);
 				tablero[f][c].setBorder(new LineBorder(BORDER_COLOUR, 1));
 				tablero[f][c].setBounds(x, y, 64, 64);
 				mainContainer.add(tablero[f][c]);
@@ -154,7 +154,6 @@ public class Recurso {
 	protected void crearTitulo(JPanel mainContainer, JLabel[] titulo) {
 		int x = 88;
 		int y = 12;
-		int CENTER = 0;
 		char[] gameTitleChars = { 'w', 'U', 'N', 'G', 'S', 'd', 'l', 'e' };
 		int LEN_TITLE_CHARS = gameTitleChars.length;
 		titulo = new JLabel[LEN_TITLE_CHARS];
@@ -165,8 +164,8 @@ public class Recurso {
 			titulo[i].setText(" ");
 			titulo[i].setBackground(Color.WHITE);
 			titulo[i].setOpaque(true);
-			titulo[i].setHorizontalAlignment(CENTER);
-			titulo[i].setVerticalAlignment(CENTER);
+			titulo[i].setHorizontalAlignment(SwingConstants.CENTER);
+			titulo[i].setVerticalAlignment(SwingConstants.TOP);
 			titulo[i].setBounds(x, y, 32, 32);
 			titulo[i].setText("" + gameTitleChars[i]);
 			titulo[i].setBorder(new LineBorder(BORDER_COLOUR, 1));
@@ -309,6 +308,7 @@ public class Recurso {
 			tagJugador[i] = new JLabel(" ");
 			tagJugador[i].setOpaque(true);
 			tagJugador[i].setHorizontalAlignment(SwingConstants.CENTER);
+			tagJugador[i].setVerticalAlignment(SwingConstants.TOP);
 			tagJugador[i].setFont(fuenteBig);
 			tagJugador[i].setBackground(Color.WHITE);
 			tagJugador[i].setBounds(10 + i * 72, 24, 64, 64);
