@@ -279,7 +279,7 @@ public class Recurso {
 		btnEng.setBounds(119, 324, 200, 60);
 		mainContainer.add(btnEng);
 	}
-	
+
 	protected void crearTagContainer(JFrame frame, JPanel tagContainer, JLabel lblIngreseTag, JLabel lblEnviarTag) {
 		tagContainer.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		tagContainer.setBounds(93, 181, 233, 160);
@@ -298,7 +298,7 @@ public class Recurso {
 		lblEnviarTag.setEnabled(false);
 		tagContainer.add(lblEnviarTag);
 	}
-	
+
 	protected void mostrarTagContainer(JPanel tagContainer, JLabel[] tagJugador) {
 		for (int i = 0; i < tagJugador.length; i++) {
 			tagJugador[i] = new JLabel(" ");
@@ -313,5 +313,5 @@ public class Recurso {
 		tagContainer.setVisible(true);
 		tagContainer.requestFocus();
 	}
-	
+
 }

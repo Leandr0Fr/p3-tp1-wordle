@@ -99,8 +99,9 @@ public class Game {
 		return e.getKeyChar() == 10 || e.getKeyChar() == 8 || e.getKeyChar() == 209 || e.getKeyChar() == 241
 				|| e.getKeyChar() >= 65 && e.getKeyChar() <= 90 || e.getKeyChar() >= 97 && e.getKeyChar() <= 122;
 	}
+
 	public boolean esLetraValida(char letra) {
-		return letra == 209 || letra == 241 || letra >= 65 && letra <= 90 || letra >= 97 && letra <= 122;  
+		return letra == 209 || letra == 241 || letra >= 65 && letra <= 90 || letra >= 97 && letra <= 122;
 	}
 
 	public char mayus(char letra) {
