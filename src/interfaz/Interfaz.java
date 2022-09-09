@@ -19,6 +19,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class Interfaz {
@@ -90,11 +91,7 @@ public class Interfaz {
 
 		// title
 
-		JLabel contador = new JLabel("00:00");
-		contador.setFont(new Font("Lucida Console", Font.PLAIN, 20));
-		contador.setHorizontalAlignment(SwingConstants.CENTER);
-		contador.setBounds(184, 511, 80, 25);
-		frame.getContentPane().add(contador);
+		
 
 		// title
 		limpiarPantalla();
@@ -228,7 +225,7 @@ public class Interfaz {
 
 		if (game.terminarIntento(palabraEnviada)) {
 			JOptionPane.showMessageDialog(null, "¡GANASTE!");
-			pedirNombreJugador();
+			System.out.println(pedirNombreJugador());
 			return;
 		}
 
@@ -242,8 +239,12 @@ public class Interfaz {
 	}
 
 	private String pedirNombreJugador() {
-		String nombre = JOptionPane.showInputDialog("INGRESE SU TAG");
-		return nombre;
+		JOptionPane texto = new JOptionPane();
+		String nombre = texto.showInputDialog("INGRESA TU TAG DE 3 CARACTERES");
+		while(!(nombre.length() == 3)) {
+			nombre = texto.showInputDialog("RECUERDA: SOLO 3 CARACTERES");
+		}
+		return nombre.toUpperCase();
 	}
 
 	private void colocarLetra(KeyEvent e) {
