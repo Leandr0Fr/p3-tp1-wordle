@@ -119,8 +119,8 @@ public class Interfaz {
 
 	private void crearTagContainer() {
 		tagContainer = new JPanel();
-		lblIngreseTag = new JLabel(isEnglish ? "Enter your TAG: " : "Ingrese su TAG: ");
-		lblEnviarTag = new JLabel(isEnglish ? "SUBMIT" : "ENVIAR");
+		lblIngreseTag = new JLabel();
+		lblEnviarTag = new JLabel();
 		recurso.crearTagContainer(frame, tagContainer, lblIngreseTag, lblEnviarTag);
 
 		lblEnviarTag.addMouseListener(new MouseAdapter() {
@@ -134,11 +134,11 @@ public class Interfaz {
 
 	private void menuIdioma() {
 		limpiarPantalla();
-		btnEsp = new JButton();
-		recurso.crearBtnEsp(mainContainer, btnEsp);
 		posLetra = 0;
 		posFila = 0;
 
+		btnEsp = new JButton();
+		recurso.crearBtnEsp(mainContainer, btnEsp);
 		btnEsp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isEnglish = false;
@@ -301,6 +301,8 @@ public class Interfaz {
 
 	private void mostrarTagContainer() {
 		tagJugador = new JLabel[3];
+		lblIngreseTag.setText(isEnglish ? "Enter your TAG: " : "Ingrese su TAG: ");
+		lblEnviarTag.setText(isEnglish ? "SUBMIT" : "ENVIAR");
 		recurso.mostrarTagContainer(tagContainer, tagJugador);
 		updateFrame();
 	}

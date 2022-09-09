@@ -311,7 +311,7 @@ public class Recurso {
 			tagJugador[i].setVerticalAlignment(SwingConstants.TOP);
 			tagJugador[i].setFont(fuenteBig);
 			tagJugador[i].setBackground(Color.WHITE);
-			tagJugador[i].setBounds(10 + i * 72, 24, 64, 64);
+			tagJugador[i].setBounds(10 + i * 72, 34, 64, 64);
 			tagContainer.add(tagJugador[i]);
 		}
 
