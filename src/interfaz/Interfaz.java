@@ -21,13 +21,21 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
+import java.awt.Cursor;
+import javax.swing.border.LineBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Interfaz {
 
 	private Recurso recurso;
 	private JFrame frame;
+	private JPanel mainContainer;
 	private JLabel[] titulo;
 	private JLabel[][] tablero;
 	private int posLetra = 0;
@@ -52,6 +60,11 @@ public class Interfaz {
 	private Ranking rkNormal;
 	private Ranking rkDificil;
 
+	private JPanel tagContainer;
+	private JLabel lblIngreseTag;
+	private JLabel[] tagJugador;
+	private JLabel lblEnviarTag;
+
 	/**
 	 * Launch the application.
 	 */
@@ -60,7 +73,7 @@ public class Interfaz {
 			public void run() {
 				try {
 					Interfaz window = new Interfaz();
-					window.frame.setVisible(true);
+					window.mainContainer.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -83,7 +96,7 @@ public class Interfaz {
 		LEN_PALABRA = 5;
 		recurso = new Recurso();
 		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.WHITE);
+		mainContainer = new JPanel();
 		frame.setResizable(false);
 		frame.setTitle("w-UNGS-dle");
 		miPantalla = Toolkit.getDefaultToolkit();
@@ -95,13 +108,48 @@ public class Interfaz {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		// title
+		tagContainer = new JPanel();
+		tagContainer.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		tagContainer.setBounds(93, 181, 233, 160);
+		tagContainer.setLayout(null);
+		tagContainer.setVisible(false);
+		frame.getContentPane().add(tagContainer);
 
-		JLabel contador = new JLabel("00:00");
-		contador.setFont(new Font("Lucida Console", Font.PLAIN, 20));
-		contador.setHorizontalAlignment(SwingConstants.CENTER);
-		contador.setBounds(184, 511, 80, 25);
-		frame.getContentPane().add(contador);
+		lblIngreseTag = new JLabel(isEnglish ? "Enter your TAG: " : "Ingrese su TAG: ");
+		lblIngreseTag.setBounds(10, 11, 227, 14);
+		tagContainer.add(lblIngreseTag);
+
+		lblEnviarTag = new JLabel(isEnglish ? "SUBMIT" : "ENVIAR");
+		lblEnviarTag.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (game.getDificultad() == Dificultad.facil) {
+					rkFacil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
+
+				} else if (game.getDificultad() == Dificultad.normal) {
+					rkNormal.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
+
+				} else
+					rkDificil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
+
+				tagContainer.setVisible(false);
+			}
+		});
+
+		lblEnviarTag.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEnviarTag.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblEnviarTag.setBackground(Color.WHITE);
+		lblEnviarTag.setOpaque(true);
+		lblEnviarTag.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		lblEnviarTag.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblEnviarTag.setBounds(73, 116, 76, 33);
+		lblEnviarTag.setEnabled(false);
+		tagContainer.add(lblEnviarTag);
+
+		mainContainer.setBounds(0, 0, 456, 593);
+		frame.getContentPane().add(mainContainer);
+		mainContainer.setLayout(null);
+		mainContainer.setBackground(Color.WHITE);
 
 		// title
 		limpiarPantalla();
@@ -114,7 +162,7 @@ public class Interfaz {
 
 	private void menuIdioma() {
 		btnEsp = new JButton("C A S T E L L A N O");
-		recurso.crearBtnEsp(frame, btnEsp);
+		recurso.crearBtnEsp(mainContainer, btnEsp);
 		btnEsp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isEnglish = false;
@@ -124,7 +172,7 @@ public class Interfaz {
 		});
 
 		btnEng = new JButton("     E N G L I S H");
-		recurso.crearBtnEng(frame, btnEng);
+		recurso.crearBtnEng(mainContainer, btnEng);
 		btnEng.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isEnglish = true;
@@ -138,6 +186,11 @@ public class Interfaz {
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
+				System.out.println("" + e.getKeyChar());
+				if (tagJugador != null && tagContainer.isVisible() && game.esLetraValida(e.getKeyChar())) {
+					colocarLetraEnTag(e);
+				}
+
 				if (tablero == null || game.getIsOver())
 					return;
 
@@ -195,7 +248,7 @@ public class Interfaz {
 				limpiarPantalla();
 				game = new Game(LEN_PALABRA, isEnglish);
 				tablero = new JLabel[6][LEN_PALABRA];
-				recurso.crearTablero(frame, LEN_PALABRA, tablero);
+				recurso.crearTablero(mainContainer, LEN_PALABRA, tablero);
 			}
 		});
 	}
@@ -205,20 +258,20 @@ public class Interfaz {
 		btnPlayNormal = new JButton("Normal");
 		btnPlayDificil = new JButton(isEnglish ? "Hard" : "Dificil");
 		btnJugar = new JButton(isEnglish ? "Play on ----" : "Jugar en ----");
-		recurso.crearBtnFacil(frame, btnPlayFacil);
-		recurso.crearBtnNormal(frame, btnPlayNormal);
-		recurso.crearBtnDificil(frame, btnPlayDificil);
-		recurso.crearBtnJugar(frame, btnJugar);
+		recurso.crearBtnFacil(mainContainer, btnPlayFacil);
+		recurso.crearBtnNormal(mainContainer, btnPlayNormal);
+		recurso.crearBtnDificil(mainContainer, btnPlayDificil);
+		recurso.crearBtnJugar(mainContainer, btnJugar);
 		addEventosDeBtn();
 		crearRankings();
 		updateFrame();
 	}
 
 	private void limpiarPantalla() {
-		frame.getContentPane().removeAll();
-		recurso.crearTitulo(frame, titulo);
-		recurso.crearAnio(frame);
-		recurso.crearLogo(frame);
+		mainContainer.removeAll();
+		recurso.crearTitulo(mainContainer, titulo);
+		recurso.crearAnio(mainContainer);
+		recurso.crearLogo(mainContainer);
 		updateFrame();
 	}
 
@@ -226,7 +279,7 @@ public class Interfaz {
 		rkFacil = new Ranking("Facil");
 		rkNormal = new Ranking("Normal");
 		rkDificil = new Ranking("Dificil");
-		recurso.crearRankings(frame, rkFacil, rkNormal, rkDificil);
+		recurso.crearRankings(mainContainer, rkFacil, rkNormal, rkDificil);
 	}
 
 	private void borrarLetra() {
@@ -257,16 +310,7 @@ public class Interfaz {
 
 		if (game.terminarIntento(palabraEnviada)) {
 			JOptionPane.showMessageDialog(null, isEnglish ? "¡WINNER!" : "¡GANASTE!");
-			if (game.getDificultad() == Dificultad.facil) {
-				rkFacil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
-				return;
-			}
-			if (game.getDificultad() == Dificultad.normal) {
-				rkNormal.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
-				return;
-			}
-			rkDificil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
-			return;
+			mostrarTagContainer();
 		}
 
 		if (posFila == 5) {
@@ -278,24 +322,44 @@ public class Interfaz {
 		posLetra = 0;
 	}
 
-	private String pedirNombreJugador() {
-		String nombre = "";
-		while (true) {
-			nombre = JOptionPane.showInputDialog("INGRESE SU TAG DE 3 LETRAS");
-			if (nombre.length() == 3 && tagValido(nombre)) {
-				return nombre;
-			}
-			JOptionPane.showMessageDialog(null, "TAG NO VALIDO");
+	private void mostrarTagContainer() {
+		tagJugador = new JLabel[3];
+		for (int i = 0; i < tagJugador.length; i++) {
+			tagJugador[i] = new JLabel(" ");
+			tagJugador[i].setOpaque(true);
+			tagJugador[i].setHorizontalAlignment(SwingConstants.CENTER);
+			tagJugador[i].setFont(new Font("Consolas", Font.PLAIN, 60));
+			tagJugador[i].setBackground(Color.WHITE);
+			tagJugador[i].setBounds(10 + i * 72, 24, 64, 64);
+			tagContainer.add(tagJugador[i]);
 		}
+
+		tagContainer.setVisible(true);
+		tagContainer.requestFocus();
+		updateFrame();
 	}
 
-	private boolean tagValido(String tag) {
-		for (int i = 0; i < 3; i++) {
-			if (!game.esLetraValida(tag.charAt(i))) {
-				return false;
+	private void colocarLetraEnTag(KeyEvent e) {
+		for (int i = 0; i < tagJugador.length; i++) {
+
+			if (i == tagJugador.length - 1)
+				lblEnviarTag.setEnabled(true);
+
+			if (tagJugador[i].getText() == " ") {
+				char letraMayus = game.mayus(e.getKeyChar());
+				tagJugador[i].setText("" + letraMayus);
+				break;
 			}
 		}
-		return true;
+
+	}
+
+	private String pedirNombreJugador() {
+		StringBuilder sb = new StringBuilder();
+		for (JLabel c : tagJugador)
+			sb.append(c.getText());
+
+		return sb.toString();
 	}
 
 	private void colocarLetra(KeyEvent e) {
