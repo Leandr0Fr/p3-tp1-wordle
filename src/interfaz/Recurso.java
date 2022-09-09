@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -26,7 +27,7 @@ public class Recurso {
 	private Color GRIS = new Color(120, 124, 126);
 	private Color BORDER_COLOUR = new Color(120, 120, 120);
 
-	protected void crearBtnFacil(JFrame frame, JButton btnPlayFacil) {
+	protected void crearBtnFacil(JPanel mainContainer, JButton btnPlayFacil) {
 		btnPlayFacil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPlayFacil.setFont(fuenteSourceCodeSmall);
 		btnPlayFacil.setBorderPainted(true);
@@ -34,10 +35,10 @@ public class Recurso {
 		btnPlayFacil.setContentAreaFilled(true);
 		btnPlayFacil.setBackground(Color.WHITE);
 		btnPlayFacil.setBounds(20, 133, 126, 37);
-		frame.getContentPane().add(btnPlayFacil);
+		mainContainer.add(btnPlayFacil);
 	}
 
-	protected void crearBtnNormal(JFrame frame, JButton btnPlayNormal) {
+	protected void crearBtnNormal(JPanel mainContainer, JButton btnPlayNormal) {
 		btnPlayNormal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPlayNormal.setFont(fuenteSourceCodeSmall);
 		btnPlayNormal.setBorderPainted(true);
@@ -45,10 +46,10 @@ public class Recurso {
 		btnPlayNormal.setContentAreaFilled(true);
 		btnPlayNormal.setBackground(Color.WHITE);
 		btnPlayNormal.setBounds(164, 133, 126, 37);
-		frame.getContentPane().add(btnPlayNormal);
+		mainContainer.add(btnPlayNormal);
 	}
 
-	protected void crearBtnDificil(JFrame frame, JButton btnPlayDificil) {
+	protected void crearBtnDificil(JPanel mainContainer, JButton btnPlayDificil) {
 		btnPlayDificil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPlayDificil.setFont(fuenteSourceCodeSmall);
 		btnPlayDificil.setBorderPainted(true);
@@ -56,10 +57,10 @@ public class Recurso {
 		btnPlayDificil.setContentAreaFilled(true);
 		btnPlayDificil.setBackground(Color.WHITE);
 		btnPlayDificil.setBounds(306, 133, 126, 37);
-		frame.getContentPane().add(btnPlayDificil);
+		mainContainer.add(btnPlayDificil);
 	}
 
-	protected void crearBtnJugar(JFrame frame, JButton btnJugar) {
+	protected void crearBtnJugar(JPanel mainContainer, JButton btnJugar) {
 		btnJugar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnJugar.setFont(fuenteSourceCodeSmall);
 		btnJugar.setBorderPainted(true);
@@ -68,10 +69,10 @@ public class Recurso {
 		btnJugar.setBackground(Color.WHITE);
 		btnJugar.setEnabled(false);
 		btnJugar.setBounds(124, 429, 209, 37);
-		frame.getContentPane().add(btnJugar);
+		mainContainer.add(btnJugar);
 	}
 
-	protected void crearTablero(JFrame frame, int LEN_PALABRA, JLabel[][] tablero) {
+	protected void crearTablero(JPanel mainContainer, int LEN_PALABRA, JLabel[][] tablero) {
 		int x = 16 + 36 * (6 % LEN_PALABRA);
 		int y = 72;
 		int CENTER = 0;
@@ -85,7 +86,7 @@ public class Recurso {
 				tablero[f][c].setHorizontalAlignment(CENTER);
 				tablero[f][c].setBorder(new LineBorder(BORDER_COLOUR, 1));
 				tablero[f][c].setBounds(x, y, 64, 64);
-				frame.getContentPane().add(tablero[f][c]);
+				mainContainer.add(tablero[f][c]);
 				x += 72;
 			}
 			y += 72;
@@ -93,14 +94,14 @@ public class Recurso {
 		}
 	}
 
-	protected void crearAnio(JFrame frame) {
+	protected void crearAnio(JPanel mainContainer) {
 		JLabel lblAnio = new JLabel("2022");
 		lblAnio.setFont(new Font("Source Code Pro", Font.PLAIN, 11));
 		lblAnio.setBounds(415, 568, 31, 14);
-		frame.getContentPane().add(lblAnio);
+		mainContainer.add(lblAnio);
 	}
 
-	protected void crearLogo(JFrame frame) {
+	protected void crearLogo(JPanel mainContainer) {
 		JEditorPane ungsLogo = new JEditorPane();
 		ungsLogo.setEditable(false);
 		ungsLogo.setForeground(new Color(0, 128, 128));
@@ -145,10 +146,10 @@ public class Recurso {
 						+ "                                          ~~~          ~~                                           \n"
 						+ "");
 		ungsLogo.setBounds(0, 511, 111, 82);
-		frame.getContentPane().add(ungsLogo);
+		mainContainer.add(ungsLogo);
 	}
 
-	protected void crearTitulo(JFrame frame, JLabel[] titulo) {
+	protected void crearTitulo(JPanel mainContainer, JLabel[] titulo) {
 		int x = 88;
 		int y = 12;
 		int CENTER = 0;
@@ -167,13 +168,13 @@ public class Recurso {
 			titulo[i].setBounds(x, y, 32, 32);
 			titulo[i].setText("" + gameTitleChars[i]);
 			titulo[i].setBorder(new LineBorder(BORDER_COLOUR, 1));
-			frame.getContentPane().add(titulo[i]);
+			mainContainer.add(titulo[i]);
 			x += 36;
 		}
 
 	}
 
-	protected void crearRankings(JFrame frame, Ranking rkFacil, Ranking rkNormal, Ranking rkDificil) {
+	protected void crearRankings(JPanel mainContainer, Ranking rkFacil, Ranking rkNormal, Ranking rkDificil) {
 		JTextPane recordsFacil = new JTextPane();
 		recordsFacil.setEditable(false);
 		recordsFacil.setFont(new Font("Consolas", Font.BOLD, 18));
@@ -190,7 +191,7 @@ public class Recurso {
 		}
 		sb.append(rkFacilString[rkFacilString.length - 1]);
 		recordsFacil.setText(sb.toString());
-		frame.getContentPane().add(recordsFacil);
+		mainContainer.add(recordsFacil);
 
 		JTextPane recordsNormal = new JTextPane();
 		recordsNormal.setEditable(false);
@@ -208,7 +209,7 @@ public class Recurso {
 		}
 		sb.append(rkNormalString[rkNormalString.length - 1]);
 		recordsNormal.setText(sb.toString());
-		frame.getContentPane().add(recordsNormal);
+		mainContainer.add(recordsNormal);
 
 		JTextPane recordsDificil = new JTextPane();
 		recordsDificil.setEditable(false);
@@ -227,7 +228,7 @@ public class Recurso {
 		sb.append(rkDificilString[rkDificilString.length - 1]);
 		recordsDificil.setText(sb.toString());
 
-		frame.getContentPane().add(recordsDificil);
+		mainContainer.add(recordsDificil);
 	}
 
 	protected void colorearVerde(JLabel celda) {
@@ -249,7 +250,7 @@ public class Recurso {
 		celda.setForeground(Color.WHITE);
 	}
 
-	protected void crearBtnEsp(JFrame frame, JButton btnEsp) {
+	protected void crearBtnEsp(JPanel mainContainer, JButton btnEsp) {
 		btnEsp.setIcon(new ImageIcon(Interfaz.class.getResource("/interfaz/ar.png")));
 		btnEsp.setIconTextGap(20);
 		btnEsp.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -260,11 +261,11 @@ public class Recurso {
 		btnEsp.setContentAreaFilled(true);
 		btnEsp.setBackground(Color.WHITE);
 		btnEsp.setBounds(119, 153, 200, 60);
-		frame.getContentPane().add(btnEsp);
+		mainContainer.add(btnEsp);
 
 	}
 
-	public void crearBtnEng(JFrame frame, JButton btnEng) {
+	public void crearBtnEng(JPanel mainContainer, JButton btnEng) {
 		btnEng.setIcon(new ImageIcon(Interfaz.class.getResource("/interfaz/gb.png")));
 		btnEng.setIconTextGap(20);
 		btnEng.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -275,6 +276,6 @@ public class Recurso {
 		btnEng.setContentAreaFilled(true);
 		btnEng.setBackground(Color.WHITE);
 		btnEng.setBounds(119, 324, 200, 60);
-		frame.getContentPane().add(btnEng);
+		mainContainer.add(btnEng);
 	}
 }
