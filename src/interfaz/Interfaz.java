@@ -194,7 +194,7 @@ public class Interfaz {
 		btnJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarPantalla();
-				game = new Game(LEN_PALABRA);
+				game = new Game(LEN_PALABRA, isEnglish);
 				tablero = new JLabel[6][LEN_PALABRA];
 				recurso.crearTablero(frame, LEN_PALABRA, tablero);
 			}

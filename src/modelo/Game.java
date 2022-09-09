@@ -34,10 +34,10 @@ public class Game {
 		facil, normal, dificil
 	};
 
-	public Game(int tamanoPalabra) {
+	public Game(int tamanoPalabra, boolean isEnglish) {
 		this.listadoDePalabras = new LinkedList<String>();
 		cualDificultad(tamanoPalabra);
-		obtenerConjuntoDePalabras(dificultad, false);
+		obtenerConjuntoDePalabras(dificultad, isEnglish);
 		seleccionarPalabra();
 		setearLetraYCantidad();
 		setearResultadosLetras();
