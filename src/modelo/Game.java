@@ -17,7 +17,7 @@ public class Game {
 	private String palabraEnJuego = "";
 	private Map<Character, Integer> letraYcantidad;
 	private List<String> listadoDePalabras;
-	private EstadoCasillero[] resultadoLetras;
+	private EstadoCasillero[] aciertosJugador;
 	private boolean isOver;
 	private Dificultad dificultad;
 	private Timer tiempo;
@@ -51,7 +51,7 @@ public class Game {
 	}
 
 	public boolean terminarIntento(char[] palabra) {
-		for (EstadoCasillero estLet : resultadoLetras) {
+		for (EstadoCasillero estLet : aciertosJugador) {
 			if (estLet != EstadoCasillero.verde) {
 				setearLetraYCantidad();
 				setearResultadosLetras();
@@ -68,7 +68,7 @@ public class Game {
 		// prioridad verde
 		for (int i = 0; i < palabraEnJuego.length(); i++) {
 			if (palabraIntento[i] == palabraEnJuego.charAt(i)) {
-				resultadoLetras[i] = EstadoCasillero.verde;
+				aciertosJugador[i] = EstadoCasillero.verde;
 				letraYcantidad.put(palabraIntento[i], letraYcantidad.get(palabraIntento[i]) - 1);
 			}
 		}
@@ -76,14 +76,14 @@ public class Game {
 		for (int i = 0; i < palabraEnJuego.length(); i++) {
 			if (palabraIntento[i] != palabraEnJuego.charAt(i) && letraYcantidad.containsKey(palabraIntento[i])
 					&& letraYcantidad.get(palabraIntento[i]) > 0) {
-				resultadoLetras[i] = EstadoCasillero.amarillo;
+				aciertosJugador[i] = EstadoCasillero.amarillo;
 				letraYcantidad.put(palabraIntento[i], letraYcantidad.get(palabraIntento[i]) - 1);
 			} else if (palabraIntento[i] != palabraEnJuego.charAt(i) && !letraYcantidad.containsKey(palabraIntento[i])
 					|| (palabraIntento[i] != palabraEnJuego.charAt(i) && letraYcantidad.get(palabraIntento[i]) == 0)) {
-				resultadoLetras[i] = EstadoCasillero.gris;
+				aciertosJugador[i] = EstadoCasillero.gris;
 			}
 		}
-		return this.resultadoLetras;
+		return this.aciertosJugador;
 	}
 
 	public boolean perteneceAlListado(char[] palabra) {
@@ -170,9 +170,9 @@ public class Game {
 	}
 
 	private void setearResultadosLetras() {
-		this.resultadoLetras = new EstadoCasillero[palabraEnJuego.length()];
-		for (int i = 0; i < resultadoLetras.length; i++) {
-			resultadoLetras[i] = EstadoCasillero.vacio;
+		this.aciertosJugador = new EstadoCasillero[palabraEnJuego.length()];
+		for (int i = 0; i < aciertosJugador.length; i++) {
+			aciertosJugador[i] = EstadoCasillero.vacio;
 		}
 	}
 
