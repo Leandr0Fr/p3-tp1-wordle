@@ -282,7 +282,7 @@ public class Interfaz {
 			return;
 		}
 
-		EstadoCasillero[] resultado = game.aciertosJugador(palabraEnviada);
+		EstadoCasillero[] resultado = game.obtenerAciertos(palabraEnviada);
 		colorearLetras(resultado);
 
 		if (game.terminarIntento(palabraEnviada)) {

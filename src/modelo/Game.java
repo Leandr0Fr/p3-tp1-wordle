@@ -64,7 +64,7 @@ public class Game {
 		return true;
 	}
 
-	public EstadoCasillero[] aciertosJugador(char[] palabraIntento) {
+	public EstadoCasillero[] obtenerAciertos(char[] palabraIntento) {
 		// prioridad verde
 		for (int i = 0; i < palabraEnJuego.length(); i++) {
 			if (palabraIntento[i] == palabraEnJuego.charAt(i)) {
