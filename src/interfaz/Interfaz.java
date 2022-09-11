@@ -178,7 +178,7 @@ public class Interfaz {
 		if (tablero[posFila][posLetra].getText() != " ")
 			return;
 
-		char letra = game.mayus(e.getKeyChar());
+		char letra = game.toMayus(e.getKeyChar());
 		tablero[posFila][posLetra].setText("" + letra);
 		posLetra += posLetra != tablero[0].length - 1 ? 1 : 0;
 	}
@@ -257,7 +257,7 @@ public class Interfaz {
 				lblEnviarTag.setEnabled(true);
 
 			if (tagJugador[i].getText() == " ") {
-				char letraMayus = game.mayus(e.getKeyChar());
+				char letraMayus = game.toMayus(e.getKeyChar());
 				tagJugador[i].setText("" + letraMayus);
 				break;
 			}

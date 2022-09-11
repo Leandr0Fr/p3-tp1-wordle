@@ -104,7 +104,7 @@ public class Game {
 		return letra == 209 || letra == 241 || letra >= 65 && letra <= 90 || letra >= 97 && letra <= 122;
 	}
 
-	public char mayus(char letra) {
+	public char toMayus(char letra) {
 		if (letra >= 97 && letra <= 122 || letra == 241)
 			letra = (char) (letra - 32);
 		return letra;
