@@ -160,6 +160,150 @@ public class Interfaz {
 		});
 	}
 
+	private void menuPrincipal() {
+		btnPlayFacil = new JButton(isEnglish ? "Easy" : "Facil");
+		btnPlayNormal = new JButton("Normal");
+		btnPlayDificil = new JButton(isEnglish ? "Hard" : "Dificil");
+		btnJugar = new JButton(isEnglish ? "Play on ----" : "Jugar en ----");
+		recurso.crearBtnFacil(mainContainer, btnPlayFacil);
+		recurso.crearBtnNormal(mainContainer, btnPlayNormal);
+		recurso.crearBtnDificil(mainContainer, btnPlayDificil);
+		recurso.crearBtnJugar(mainContainer, btnJugar);
+		addEventosDeBtn();
+		crearRankings();
+		updateFrame();
+	}
+
+	private void mostrarBandera() {
+		JLabel lblBanderaIdioma = new JLabel("");
+		StringBuilder path = new StringBuilder();
+		path.append("/interfaz/");
+		path.append(isEnglish ? "gb" : "ar");
+		path.append(".png");
+		lblBanderaIdioma.setIcon(new ImageIcon(Interfaz.class.getResource(path.toString())));
+		lblBanderaIdioma.setBounds(209, 539, 32, 32);
+		mainContainer.add(lblBanderaIdioma);
+	}
+	
+	private void crearRankings() {
+		rkFacil = new Ranking("Facil");
+		rkNormal = new Ranking("Normal");
+		rkDificil = new Ranking("Dificil");
+		recurso.crearRankings(mainContainer, rkFacil, rkNormal, rkDificil);
+	}
+
+	private void colocarLetra(KeyEvent e) {
+		if (tablero[posFila][posLetra].getText() != " ")
+			return;
+
+		char letra = game.mayus(e.getKeyChar());
+		tablero[posFila][posLetra].setText("" + letra);
+		posLetra += posLetra != tablero[0].length - 1 ? 1 : 0;
+	}
+
+	private void borrarLetra() {
+		if (posLetra > LEN_PALABRA) {
+			posLetra = LEN_PALABRA - 1;
+		}
+
+		if (posLetra != 0 && tablero[posFila][posLetra].getText() == " ") {
+			posLetra--;
+		}
+
+		tablero[posFila][posLetra].setText(" ");
+	}
+
+	private void enviarPalabra() {
+		char[] palabraEnviada = new char[LEN_PALABRA];
+		for (int i = 0; i < tablero[posFila].length; i++) {
+			palabraEnviada[i] = tablero[posFila][i].getText().charAt(0);
+		}
+
+		if (!game.perteneceAlListado(palabraEnviada)) {
+			JOptionPane.showMessageDialog(null, isEnglish ? "Word does not exists" : "No existe la palabra");
+			return;
+		}
+
+		EstadoCasillero[] resultado = game.obtenerAciertos(palabraEnviada);
+		colorearLetras(resultado);
+
+		if (game.terminarIntento()) {
+			JOptionPane.showMessageDialog(null, isEnglish ? "WINNER!" : "¡GANASTE!");
+			mostrarTagContainer();
+		}
+
+		if (posFila == 5) {
+			game.setIsOver();
+			JOptionPane.showMessageDialog(null, isEnglish ? "YOU LOST!" : "¡PERDISTE!");
+			return;
+		}
+		posFila++;
+		posLetra = 0;
+	}
+
+	private void colorearLetras(EstadoCasillero[] resultados) {
+		for (int i = 0; i < tablero[0].length; i++) {
+			if (resultados[i] == EstadoCasillero.verde)
+				recurso.colorearVerde(tablero[posFila][i]);
+
+			else if (resultados[i] == EstadoCasillero.amarillo)
+				recurso.colorearAmarillo(tablero[posFila][i]);
+
+			else if (resultados[i] == EstadoCasillero.gris)
+				recurso.colorearGris(tablero[posFila][i]);
+		}
+	}
+	
+	private void mostrarTagContainer() {
+		tagJugador = new JLabel[3];
+		lblIngreseTag.setText(isEnglish ? "Enter your TAG: " : "Ingrese su TAG: ");
+		lblEnviarTag.setText(isEnglish ? "SUBMIT" : "ENVIAR");
+		recurso.mostrarTagContainer(tagContainer, tagJugador);
+		updateFrame();
+	}
+
+	private void colocarLetraEnTag(KeyEvent e) {
+		if (e.getKeyChar() == KeyEvent.VK_ENTER && lblEnviarTag.isEnabled())
+			enviarTag();
+
+		if (!game.esLetraValida(e.getKeyChar()))
+			return;
+
+		for (int i = 0; i < tagJugador.length; i++) {
+
+			if (i == tagJugador.length - 1)
+				lblEnviarTag.setEnabled(true);
+
+			if (tagJugador[i].getText() == " ") {
+				char letraMayus = game.mayus(e.getKeyChar());
+				tagJugador[i].setText("" + letraMayus);
+				break;
+			}
+		}
+	}
+
+	private void enviarTag() {
+		if (game.getDificultad() == Dificultad.facil) {
+			rkFacil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
+
+		} else if (game.getDificultad() == Dificultad.normal) {
+			rkNormal.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
+
+		} else
+			rkDificil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
+
+		tagContainer.setVisible(false);
+		menuIdioma();
+	}
+
+	private String pedirNombreJugador() {
+		StringBuilder sb = new StringBuilder();
+		for (JLabel c : tagJugador)
+			sb.append(c.getText());
+
+		return sb.toString();
+	}
+
 	private void addEventosDeTeclado() {
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
@@ -232,20 +376,6 @@ public class Interfaz {
 		});
 	}
 
-	private void menuPrincipal() {
-		btnPlayFacil = new JButton(isEnglish ? "Easy" : "Facil");
-		btnPlayNormal = new JButton("Normal");
-		btnPlayDificil = new JButton(isEnglish ? "Hard" : "Dificil");
-		btnJugar = new JButton(isEnglish ? "Play on ----" : "Jugar en ----");
-		recurso.crearBtnFacil(mainContainer, btnPlayFacil);
-		recurso.crearBtnNormal(mainContainer, btnPlayNormal);
-		recurso.crearBtnDificil(mainContainer, btnPlayDificil);
-		recurso.crearBtnJugar(mainContainer, btnJugar);
-		addEventosDeBtn();
-		crearRankings();
-		updateFrame();
-	}
-
 	private void limpiarPantalla() {
 		mainContainer.removeAll();
 		recurso.crearTitulo(mainContainer, titulo);
@@ -253,136 +383,6 @@ public class Interfaz {
 		recurso.crearLogo(mainContainer);
 		mostrarBandera();
 		updateFrame();
-	}
-
-	private void mostrarBandera() {
-		JLabel lblBanderaIdioma = new JLabel("");
-		StringBuilder path = new StringBuilder();
-		path.append("/interfaz/");
-		path.append(isEnglish ? "gb" : "ar");
-		path.append(".png");
-		lblBanderaIdioma.setIcon(new ImageIcon(Interfaz.class.getResource(path.toString())));
-		lblBanderaIdioma.setBounds(209, 539, 32, 32);
-		mainContainer.add(lblBanderaIdioma);
-	}
-	
-	private void crearRankings() {
-		rkFacil = new Ranking("Facil");
-		rkNormal = new Ranking("Normal");
-		rkDificil = new Ranking("Dificil");
-		recurso.crearRankings(mainContainer, rkFacil, rkNormal, rkDificil);
-	}
-
-	private void borrarLetra() {
-		if (posLetra > LEN_PALABRA) {
-			posLetra = LEN_PALABRA - 1;
-		}
-
-		if (posLetra != 0 && tablero[posFila][posLetra].getText() == " ") {
-			posLetra--;
-		}
-
-		tablero[posFila][posLetra].setText(" ");
-	}
-
-	private void enviarPalabra() {
-		char[] palabraEnviada = new char[LEN_PALABRA];
-		for (int i = 0; i < tablero[posFila].length; i++) {
-			palabraEnviada[i] = tablero[posFila][i].getText().charAt(0);
-		}
-
-		if (!game.perteneceAlListado(palabraEnviada)) {
-			JOptionPane.showMessageDialog(null, isEnglish ? "Word does not exists" : "No existe la palabra");
-			return;
-		}
-
-		EstadoCasillero[] resultado = game.obtenerAciertos(palabraEnviada);
-		colorearLetras(resultado);
-
-		if (game.terminarIntento()) {
-			JOptionPane.showMessageDialog(null, isEnglish ? "WINNER!" : "¡GANASTE!");
-			mostrarTagContainer();
-		}
-
-		if (posFila == 5) {
-			game.setIsOver();
-			JOptionPane.showMessageDialog(null, isEnglish ? "YOU LOST!" : "¡PERDISTE!");
-			return;
-		}
-		posFila++;
-		posLetra = 0;
-	}
-
-	private void mostrarTagContainer() {
-		tagJugador = new JLabel[3];
-		lblIngreseTag.setText(isEnglish ? "Enter your TAG: " : "Ingrese su TAG: ");
-		lblEnviarTag.setText(isEnglish ? "SUBMIT" : "ENVIAR");
-		recurso.mostrarTagContainer(tagContainer, tagJugador);
-		updateFrame();
-	}
-
-	private void colocarLetraEnTag(KeyEvent e) {
-		if (e.getKeyChar() == KeyEvent.VK_ENTER && lblEnviarTag.isEnabled())
-			enviarTag();
-
-		if (!game.esLetraValida(e.getKeyChar()))
-			return;
-
-		for (int i = 0; i < tagJugador.length; i++) {
-
-			if (i == tagJugador.length - 1)
-				lblEnviarTag.setEnabled(true);
-
-			if (tagJugador[i].getText() == " ") {
-				char letraMayus = game.mayus(e.getKeyChar());
-				tagJugador[i].setText("" + letraMayus);
-				break;
-			}
-		}
-	}
-
-	private void enviarTag() {
-		if (game.getDificultad() == Dificultad.facil) {
-			rkFacil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
-
-		} else if (game.getDificultad() == Dificultad.normal) {
-			rkNormal.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
-
-		} else
-			rkDificil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
-
-		tagContainer.setVisible(false);
-		menuIdioma();
-	}
-
-	private String pedirNombreJugador() {
-		StringBuilder sb = new StringBuilder();
-		for (JLabel c : tagJugador)
-			sb.append(c.getText());
-
-		return sb.toString();
-	}
-
-	private void colocarLetra(KeyEvent e) {
-		if (tablero[posFila][posLetra].getText() != " ")
-			return;
-
-		char letra = game.mayus(e.getKeyChar());
-		tablero[posFila][posLetra].setText("" + letra);
-		posLetra += posLetra != tablero[0].length - 1 ? 1 : 0;
-	}
-
-	private void colorearLetras(EstadoCasillero[] resultados) {
-		for (int i = 0; i < tablero[0].length; i++) {
-			if (resultados[i] == EstadoCasillero.verde)
-				recurso.colorearVerde(tablero[posFila][i]);
-
-			else if (resultados[i] == EstadoCasillero.amarillo)
-				recurso.colorearAmarillo(tablero[posFila][i]);
-
-			else if (resultados[i] == EstadoCasillero.gris)
-				recurso.colorearGris(tablero[posFila][i]);
-		}
 	}
 
 	private void updateFrame() {
