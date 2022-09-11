@@ -70,7 +70,7 @@ public class Recurso {
 		btnJugar.setContentAreaFilled(true);
 		btnJugar.setBackground(Color.WHITE);
 		btnJugar.setEnabled(false);
-		btnJugar.setBounds(124, 429, 209, 37);
+		btnJugar.setBounds(124, 380, 209, 37);
 		mainContainer.add(btnJugar);
 	}
 
