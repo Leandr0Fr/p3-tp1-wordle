@@ -212,9 +212,8 @@ public class Interfaz {
 		if (game.terminarIntento()) {
 			JOptionPane.showMessageDialog(null, isEnglish ? "WINNER!" : "¡GANASTE!");
 			mostrarTagContainer();
-		}
-
-		if (posFila == 5) {
+			
+		} else if (posFila == 5) {
 			game.setIsOver();
 			JOptionPane.showMessageDialog(null, isEnglish ? "YOU LOST!" : "¡PERDISTE!");
 			return;
@@ -275,7 +274,14 @@ public class Interfaz {
 			rkDificil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
 
 		tagContainer.setVisible(false);
+		resetearTag();
 		menuIdioma();
+	}
+
+	private void resetearTag() {
+		for (int i=0; i < tagJugador.length; i++)
+			tagJugador[i].setText(" ");
+		lblEnviarTag.setEnabled(false);
 	}
 
 	private String pedirNombreJugador() {
