@@ -181,7 +181,7 @@ public class Recurso {
 		recordsFacil.setEditable(false);
 		recordsFacil.setFont(fuenteRK);
 		recordsFacil.setBackground(new Color(204, 204, 204));
-		recordsFacil.setBounds(20, 181, 128, 220);
+		recordsFacil.setBounds(20, 181, 128, 126);
 
 		String[] rkFacilString = rkFacil.obtenerRanking();
 		StringBuilder sb = new StringBuilder();
@@ -199,7 +199,7 @@ public class Recurso {
 		recordsNormal.setEditable(false);
 		recordsNormal.setFont(fuenteRK);
 		recordsNormal.setBackground(new Color(204, 204, 204));
-		recordsNormal.setBounds(164, 183, 128, 220);
+		recordsNormal.setBounds(164, 183, 128, 126);
 
 		String[] rkNormalString = rkNormal.obtenerRanking();
 		sb = new StringBuilder();
@@ -217,7 +217,7 @@ public class Recurso {
 		recordsDificil.setEditable(false);
 		recordsDificil.setFont(fuenteRK);
 		recordsDificil.setBackground(new Color(204, 204, 204));
-		recordsDificil.setBounds(306, 181, 128, 220);
+		recordsDificil.setBounds(306, 181, 128, 126);
 
 		String[] rkDificilString = rkDificil.obtenerRanking();
 		sb = new StringBuilder();
