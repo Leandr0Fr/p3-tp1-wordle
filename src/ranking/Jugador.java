@@ -35,11 +35,11 @@ public class Jugador implements Comparable<Jugador> {
 
 	private String convertirTiempoAString(int t) {
 		StringBuilder tiempo = new StringBuilder();
-		tiempo.append(dosDigitos(t) ? "" + t : "0" + t);
+		tiempo.append(esDosDigitos(t) ? "" + t : "0" + t);
 		return tiempo.toString();
 	}
 
-	private boolean dosDigitos(int numero) {
+	private boolean esDosDigitos(int numero) {
 		return numero >= 10;
 	}
 
