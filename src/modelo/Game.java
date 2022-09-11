@@ -50,7 +50,7 @@ public class Game {
 		this.dificultad = (len == 4 ? Dificultad.facil : len == 5 ? Dificultad.normal : Dificultad.dificil);
 	}
 
-	public boolean terminarIntento(char[] palabra) {
+	public boolean terminarIntento() {
 		for (EstadoCasillero estLet : aciertosJugador) {
 			if (estLet != EstadoCasillero.verde) {
 				setearLetraYCantidad();

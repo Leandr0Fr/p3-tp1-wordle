@@ -285,7 +285,7 @@ public class Interfaz {
 		EstadoCasillero[] resultado = game.obtenerAciertos(palabraEnviada);
 		colorearLetras(resultado);
 
-		if (game.terminarIntento(palabraEnviada)) {
+		if (game.terminarIntento()) {
 			JOptionPane.showMessageDialog(null, isEnglish ? "WINNER!" : "¡GANASTE!");
 			mostrarTagContainer();
 		}
