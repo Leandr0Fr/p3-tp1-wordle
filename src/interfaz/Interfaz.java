@@ -108,7 +108,6 @@ public class Interfaz {
 		frame.getContentPane().add(mainContainer);
 		mainContainer.setLayout(null);
 		mainContainer.setBackground(Color.WHITE);
-		
 
 		// title
 		limpiarPantalla();
@@ -184,7 +183,7 @@ public class Interfaz {
 		lblBanderaIdioma.setBounds(209, 539, 32, 32);
 		mainContainer.add(lblBanderaIdioma);
 	}
-	
+
 	private void crearRankings() {
 		rkFacil = new Ranking("Facil");
 		rkNormal = new Ranking("Normal");
@@ -253,7 +252,7 @@ public class Interfaz {
 				recurso.colorearGris(tablero[posFila][i]);
 		}
 	}
-	
+
 	private void mostrarTagContainer() {
 		tagJugador = new JLabel[3];
 		lblIngreseTag.setText(isEnglish ? "Enter your TAG: " : "Ingrese su TAG: ");
