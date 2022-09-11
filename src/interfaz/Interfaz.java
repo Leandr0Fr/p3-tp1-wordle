@@ -59,9 +59,6 @@ public class Interfaz {
 	private JLabel[] tagJugador;
 	private JLabel lblEnviarTag;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -75,18 +72,11 @@ public class Interfaz {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public Interfaz() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
-		// Pantalla principal
 		LEN_PALABRA = 5;
 		recurso = new Recurso();
 		frame = new JFrame();
@@ -96,24 +86,17 @@ public class Interfaz {
 		miPantalla = Toolkit.getDefaultToolkit();
 		miIcono = miPantalla.getImage("src/interfaz/icono.png");
 		frame.setIconImage(miIcono);
-
 		frame.setBounds(0, 0, 472, 632);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
 		crearTagContainer();
-
 		mainContainer.setBounds(0, 0, 456, 593);
 		frame.getContentPane().add(mainContainer);
 		mainContainer.setLayout(null);
 		mainContainer.setBackground(Color.WHITE);
-
-		// title
 		limpiarPantalla();
 		menuIdioma();
-
-		// keyListener
 		addEventosDeTeclado();
 
 	}
@@ -389,6 +372,5 @@ public class Interfaz {
 		frame.setVisible(true);
 		frame.toFront();
 		frame.requestFocus();
-		// 7495769 Codigo seguimiento pami
 	}
 }
