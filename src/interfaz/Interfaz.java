@@ -290,11 +290,8 @@ public class Interfaz {
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				System.out.println("" + e.getKeyChar());
-				if (tagJugador != null && tagContainer.isVisible()) {
+				if (tagJugador != null && tagContainer.isVisible())
 					colocarLetraEnTag(e);
-
-				}
 
 				if (tablero == null || game.getIsOver())
 					return;
