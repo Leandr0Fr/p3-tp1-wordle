@@ -110,7 +110,8 @@ public class Interfaz {
 		lblEnviarTag.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				enviarTag();
+				if (lblEnviarTag.isEnabled())
+					enviarTag();
 			}
 
 		});
