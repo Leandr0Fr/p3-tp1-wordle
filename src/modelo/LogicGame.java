@@ -1,70 +1,72 @@
 package modelo;
 
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LogicGame{
-	private String palabra = "menua";
-	private Set<Character> conjuntoLetras; 
-	private char[] palabraIngresada;
-	private estadosLetra [] verificacionPalabra;
-	private int posicionCaracter = 0;
-	private enum estadosLetra{verde,amarillo,gris};
-	private int intentos = 6;
-	public LogicGame(int tamanoPalabra) {
-		this.palabraIngresada = new char[tamanoPalabra];
-		this.verificacionPalabra = new estadosLetra[tamanoPalabra];
-		for (int i = 0; i < palabra.length(); i++) {
-			conjuntoLetras.add(palabra.charAt(i));
-		}
-		resetearPalabra();
-	}
-	public void colocarLetra(char letra) {
-		//coloca la letra en la posicion y luego aumenta en uno posicionCaracter
-		palabraIngresada[posicionCaracter++] = letra;	
-	}
-	//backspace
-	public void eliminarLetra(){
-		palabraIngresada[posicionCaracter--] = ' ';
+	private String palabraEnJuego;
+	private Map<Character, Integer> letraYcantidad;
+	private estadosLetra [] resultadoLetras;
+	private enum estadosLetra{verde,amarillo,gris,vacio};
+
+	public LogicGame(int tamano,String palabraAJugar) {
+		this.palabraEnJuego = palabraAJugar;
+		setearLetraYCantidad();
+		setearResultadosLetras();
 	}
 	//enter
-	public boolean terminarIntento() {
-		//switch
-		for (int i = 0; i < palabraIngresada.length; i++) {
-			if(!(palabraIngresada[i] == palabra.charAt(i))) {
-				//no es todo verde
-				//blanquear
-				intentos--;
-				return false;	
+	public boolean terminarIntento(char[] palabra) {
+		for (estadosLetra estLet : resultadoLetras) {
+			if (estLet != estadosLetra.verde) {
+				setearLetraYCantidad();
+				setearResultadosLetras();
+				return false;
 			}
-		}	
-		//todo es verde
+		}
+		//acerto la palabra
 		return true;
+	}
+	private void aciertosJugador(char [] palabraIntento) {
+		//prioridad verde
+		for (int i = 0; i < palabraEnJuego.length(); i++) {
+			if (palabraIntento[i] == palabraEnJuego.charAt(i)) {
+				resultadoLetras[i] = estadosLetra.verde;
+				letraYcantidad.put(palabraIntento[i], letraYcantidad.get(palabraIntento[i])-1);
+			}
+		}
+		//amarillo y gris
+		for (int i = 0; i < palabraEnJuego.length(); i++) {
+			if (palabraIntento[i] != palabraEnJuego.charAt(i) && letraYcantidad.containsKey(palabraIntento[i]) && letraYcantidad.get(palabraIntento[i]) > 0 ) {
+				resultadoLetras[i] = estadosLetra.amarillo;
+				letraYcantidad.put(palabraIntento[i], letraYcantidad.get(palabraIntento[i])-1);
+			}
+			else if(palabraIntento[i] != palabraEnJuego.charAt(i) && !letraYcantidad.containsKey(palabraIntento[i]) ||(palabraIntento[i] != palabraEnJuego.charAt(i) && letraYcantidad.get(palabraIntento[i]) == 0) ){
+				resultadoLetras[i] = estadosLetra.gris;
+			}
+		}
+
 	}
 	
 	public estadosLetra[] getVerificacionPalabra() {
-		return verificacionPalabra;
+		return resultadoLetras;
+	}
+	
+	private void verificarPalabra() {
+		//verifica si es una palabra que esta dentro del conjunto
 	}
 
-	private void resetearPalabra() {
-		for (int i = 0; i < palabraIngresada.length; i++) {
-			palabraIngresada[i] = ' ';
+	private void setearLetraYCantidad() {
+		this.letraYcantidad = new HashMap<Character, Integer>();
+		for (Character c : palabraEnJuego.toCharArray()) {
+			int cantExistente = letraYcantidad.getOrDefault(c, 0);
+			letraYcantidad.put(c, cantExistente + 1);
 		}
-	}
-	private void verificarPalabra() {
-		for (int i = 0; i < palabraIngresada.length; i++) {
-			if (palabraIngresada[i] == palabra.charAt(i)) {
-				verificacionPalabra[i] = estadosLetra.verde;
-			}
-			else {
-				if(conjuntoLetras.contains(palabra.charAt(i))) {
-					verificacionPalabra[i] = estadosLetra.amarillo;
-				}
-				else {
-					verificacionPalabra[i] = estadosLetra.gris;
-				}
-			}
+	}	
+	private void setearResultadosLetras() {
+		this.resultadoLetras = new estadosLetra[palabraEnJuego.length()];
+		for (int i = 0; i < resultadoLetras.length; i++) {
+			resultadoLetras[i] = estadosLetra.vacio;
 		}
-		
 	}
 }
 	
