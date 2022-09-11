@@ -22,6 +22,17 @@ public class Ranking {
 		cargarRanking();
 	}
 
+	public String[] obtenerRanking() {
+		ordenarRanking();
+		return this.rankingOrdenado;
+	}
+
+	public void agregarPuntaje(String nombre, int min, int seg) {
+		ranking.add(new Jugador(nombre, min, seg));
+		ordenarRanking();
+		actualizarRanking();
+	}
+
 	private void cargarRanking() {
 		File archivoRanking = new File("Ranking" + dificultad + ".rk");
 		try {
@@ -57,11 +68,6 @@ public class Ranking {
 		ordenarRanking();
 	}
 
-	public String[] obtenerRanking() {
-		ordenarRanking();
-		return this.rankingOrdenado;
-	}
-
 	private void ordenarRanking() {
 		this.rankingOrdenado = new String[5];
 		Collections.sort(ranking);
@@ -76,12 +82,6 @@ public class Ranking {
 			}
 			rankingOrdenado[i] = ranking.get(i).getNombre() + "---" + ranking.get(i).obtenerTiempo();
 		}
-	}
-
-	public void agregarPuntaje(String nombre, int min, int seg) {
-		ranking.add(new Jugador(nombre, min, seg));
-		ordenarRanking();
-		actualizarRanking();
 	}
 
 	private void actualizarRanking() {
