@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 public class Interfaz {
 
@@ -107,6 +108,7 @@ public class Interfaz {
 		frame.getContentPane().add(mainContainer);
 		mainContainer.setLayout(null);
 		mainContainer.setBackground(Color.WHITE);
+		
 
 		// title
 		limpiarPantalla();
@@ -249,9 +251,21 @@ public class Interfaz {
 		recurso.crearTitulo(mainContainer, titulo);
 		recurso.crearAnio(mainContainer);
 		recurso.crearLogo(mainContainer);
+		mostrarBandera();
 		updateFrame();
 	}
 
+	private void mostrarBandera() {
+		JLabel lblBanderaIdioma = new JLabel("");
+		StringBuilder path = new StringBuilder();
+		path.append("/interfaz/");
+		path.append(isEnglish ? "gb" : "ar");
+		path.append(".png");
+		lblBanderaIdioma.setIcon(new ImageIcon(Interfaz.class.getResource(path.toString())));
+		lblBanderaIdioma.setBounds(209, 539, 32, 32);
+		mainContainer.add(lblBanderaIdioma);
+	}
+	
 	private void crearRankings() {
 		rkFacil = new Ranking("Facil");
 		rkNormal = new Ranking("Normal");
