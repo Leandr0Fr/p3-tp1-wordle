@@ -99,18 +99,4 @@ public class Ranking {
 			e.printStackTrace();
 		}
 	}
-
-	public static void main(String[] args) {
-		Ranking rankingNormal = new Ranking("Normal");
-		String[] r = rankingNormal.obtenerRanking();
-		for (String string : r) {
-			System.out.println(string);
-		}
-		System.out.println();
-		rankingNormal.agregarPuntaje("LEO", 0, 1);
-		String[] r2 = rankingNormal.obtenerRanking();
-		for (String string : r2) {
-			System.out.println(string);
-		}
-	}
 }
