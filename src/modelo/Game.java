@@ -46,10 +46,6 @@ public class Game {
 		iniciarTiempo();
 	}
 
-	private void cualDificultad(int len) {
-		this.dificultad = (len == 4 ? Dificultad.facil : len == 5 ? Dificultad.normal : Dificultad.dificil);
-	}
-
 	public boolean terminarIntento() {
 		for (EstadoCasillero estLet : aciertosJugador) {
 			if (estLet != EstadoCasillero.verde) {
@@ -174,6 +170,10 @@ public class Game {
 		for (int i = 0; i < aciertosJugador.length; i++) {
 			aciertosJugador[i] = EstadoCasillero.vacio;
 		}
+	}
+
+	private void cualDificultad(int len) {
+		this.dificultad = (len == 4 ? Dificultad.facil : len == 5 ? Dificultad.normal : Dificultad.dificil);
 	}
 
 	public boolean getIsOver() {
