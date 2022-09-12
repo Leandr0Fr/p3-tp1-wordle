@@ -227,7 +227,7 @@ public class Interfaz {
 			
 		} else if (posFila == 5) {
 			game.setIsOver();
-			JOptionPane.showMessageDialog(null, isEnglish ? "YOU LOST!" : "¡PERDISTE!");
+			JOptionPane.showMessageDialog(null, new JLabel(isEnglish ? "YOU LOST! \n Secret word: " + game.getPalabraEnJuego() : "¡PERDISTE! \n Palabra secreta: " + game.getPalabraEnJuego(), JLabel.CENTER));
 			return;
 		}
 		posFila++;

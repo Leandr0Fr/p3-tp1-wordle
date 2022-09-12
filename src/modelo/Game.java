@@ -196,4 +196,9 @@ public class Game {
 		return dificultad;
 	}
 
+	public String getPalabraEnJuego() {
+		return palabraEnJuego;
+	}
+	
+
 }
