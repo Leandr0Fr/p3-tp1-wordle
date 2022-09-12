@@ -29,7 +29,8 @@ public class Recurso {
 	private Color GRIS = new Color(120, 124, 126);
 	private Color BORDER_COLOUR = new Color(120, 120, 120);
 
-	protected void crearBtnFacil(JPanel mainContainer, JButton btnPlayFacil) {
+	protected JButton crearBtnFacil() {
+		JButton btnPlayFacil = new JButton();
 		btnPlayFacil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPlayFacil.setFont(fuenteSmall);
 		btnPlayFacil.setBorderPainted(true);
@@ -37,10 +38,11 @@ public class Recurso {
 		btnPlayFacil.setContentAreaFilled(true);
 		btnPlayFacil.setBackground(Color.WHITE);
 		btnPlayFacil.setBounds(20, 133, 126, 37);
-		mainContainer.add(btnPlayFacil);
+		return btnPlayFacil;
 	}
 
-	protected void crearBtnNormal(JPanel mainContainer, JButton btnPlayNormal) {
+	protected JButton crearBtnNormal() {
+		JButton btnPlayNormal = new JButton();
 		btnPlayNormal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPlayNormal.setFont(fuenteSmall);
 		btnPlayNormal.setBorderPainted(true);
@@ -48,10 +50,11 @@ public class Recurso {
 		btnPlayNormal.setContentAreaFilled(true);
 		btnPlayNormal.setBackground(Color.WHITE);
 		btnPlayNormal.setBounds(164, 133, 126, 37);
-		mainContainer.add(btnPlayNormal);
+		return btnPlayNormal;
 	}
 
-	protected void crearBtnDificil(JPanel mainContainer, JButton btnPlayDificil) {
+	protected JButton crearBtnDificil(){
+		JButton btnPlayDificil = new JButton();
 		btnPlayDificil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPlayDificil.setFont(fuenteSmall);
 		btnPlayDificil.setBorderPainted(true);
@@ -59,10 +62,11 @@ public class Recurso {
 		btnPlayDificil.setContentAreaFilled(true);
 		btnPlayDificil.setBackground(Color.WHITE);
 		btnPlayDificil.setBounds(306, 133, 126, 37);
-		mainContainer.add(btnPlayDificil);
+		return btnPlayDificil;
 	}
 
-	protected void crearBtnJugar(JPanel mainContainer, JButton btnJugar) {
+	protected JButton crearBtnJugar() {
+		JButton btnJugar= new JButton();
 		btnJugar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnJugar.setFont(fuenteSmall);
 		btnJugar.setBorderPainted(true);
@@ -71,10 +75,11 @@ public class Recurso {
 		btnJugar.setBackground(Color.WHITE);
 		btnJugar.setEnabled(false);
 		btnJugar.setBounds(124, 380, 209, 37);
-		mainContainer.add(btnJugar);
+		return btnJugar;
 	}
 
-	protected void crearTablero(JPanel mainContainer, int LEN_PALABRA, JLabel[][] tablero) {
+	protected JLabel[][] crearTablero(int LEN_PALABRA, JPanel mainContainer) {
+		JLabel[][] tablero = new JLabel[6][LEN_PALABRA];
 		int x = 16 + 36 * (6 % LEN_PALABRA);
 		int y = 72;
 		for (int f = 0; f < 6; f++) {
@@ -94,6 +99,7 @@ public class Recurso {
 			y += 72;
 			x = 16 + 36 * (6 % LEN_PALABRA);
 		}
+		return tablero;
 	}
 
 	protected void crearAnio(JPanel mainContainer) {
@@ -252,7 +258,8 @@ public class Recurso {
 		celda.setForeground(Color.WHITE);
 	}
 
-	protected void crearBtnEsp(JPanel mainContainer, JButton btnEsp) {
+	protected JButton crearBtnEsp() {
+		JButton btnEsp = new JButton();
 		btnEsp.setText("C A S T E L L A N O");
 		btnEsp.setFont(fuenteSmall);
 		btnEsp.setIcon(new ImageIcon(Interfaz.class.getResource("/interfaz/ar.png")));
@@ -265,11 +272,11 @@ public class Recurso {
 		btnEsp.setContentAreaFilled(true);
 		btnEsp.setBackground(Color.WHITE);
 		btnEsp.setBounds(115, 156, 230, 60);
-		mainContainer.add(btnEsp);
-
+		return btnEsp;
 	}
 
-	protected void crearBtnEng(JPanel mainContainer, JButton btnEng) {
+	protected JButton crearBtnEng() {
+		JButton btnEng = new JButton();
 		btnEng.setText("   E N G L I S H");
 		btnEng.setFont(fuenteSmall);
 		btnEng.setIcon(new ImageIcon(Interfaz.class.getResource("/interfaz/gb.png")));
@@ -282,15 +289,15 @@ public class Recurso {
 		btnEng.setContentAreaFilled(true);
 		btnEng.setBackground(Color.WHITE);
 		btnEng.setBounds(115, 320, 230, 60);
-		mainContainer.add(btnEng);
+		return btnEng;
 	}
 
-	protected void crearTagContainer(JFrame frame, JPanel tagContainer, JLabel lblIngreseTag, JLabel lblEnviarTag) {
+	protected JPanel crearTagContainer(JLabel lblIngreseTag, JLabel lblEnviarTag) {
+		JPanel tagContainer = new JPanel();
 		tagContainer.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		tagContainer.setBounds(93, 181, 233, 160);
 		tagContainer.setLayout(null);
 		tagContainer.setVisible(false);
-		frame.getContentPane().add(tagContainer);
 		lblIngreseTag.setBounds(10, 11, 227, 14);
 		tagContainer.add(lblIngreseTag);
 		lblEnviarTag.setHorizontalAlignment(SwingConstants.CENTER);
@@ -302,6 +309,7 @@ public class Recurso {
 		lblEnviarTag.setBounds(73, 116, 76, 33);
 		lblEnviarTag.setEnabled(false);
 		tagContainer.add(lblEnviarTag);
+		return tagContainer;
 	}
 
 	protected void mostrarTagContainer(JPanel tagContainer, JLabel[] tagJugador) {

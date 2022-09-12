@@ -102,10 +102,10 @@ public class Interfaz {
 	}
 
 	private void crearTagContainer() {
-		tagContainer = new JPanel();
 		lblIngreseTag = new JLabel();
 		lblEnviarTag = new JLabel();
-		recurso.crearTagContainer(frame, tagContainer, lblIngreseTag, lblEnviarTag);
+		tagContainer = recurso.crearTagContainer(lblIngreseTag, lblEnviarTag);
+		frame.getContentPane().add(tagContainer);
 
 		lblEnviarTag.addMouseListener(new MouseAdapter() {
 			@Override
@@ -122,8 +122,9 @@ public class Interfaz {
 		posLetra = 0;
 		posFila = 0;
 
-		btnEsp = new JButton();
-		recurso.crearBtnEsp(mainContainer, btnEsp);
+		btnEsp = recurso.crearBtnEsp();
+		mainContainer.add(btnEsp);
+		
 		btnEsp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isEnglish = false;
@@ -132,8 +133,8 @@ public class Interfaz {
 			}
 		});
 
-		btnEng = new JButton();
-		recurso.crearBtnEng(mainContainer, btnEng);
+		btnEng = recurso.crearBtnEng();
+		mainContainer.add(btnEng);
 		btnEng.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isEnglish = true;
@@ -141,17 +142,27 @@ public class Interfaz {
 				menuPrincipal();
 			}
 		});
+
 	}
 
 	private void menuPrincipal() {
-		btnPlayFacil = new JButton(isEnglish ? "Easy" : "Facil");
-		btnPlayNormal = new JButton("Normal");
-		btnPlayDificil = new JButton(isEnglish ? "Hard" : "Dificil");
-		btnJugar = new JButton(isEnglish ? "Play on ----" : "Jugar en ----");
-		recurso.crearBtnFacil(mainContainer, btnPlayFacil);
-		recurso.crearBtnNormal(mainContainer, btnPlayNormal);
-		recurso.crearBtnDificil(mainContainer, btnPlayDificil);
-		recurso.crearBtnJugar(mainContainer, btnJugar);
+		btnPlayFacil = recurso.crearBtnFacil();
+		btnPlayFacil.setText(isEnglish ? "Easy" : "Facil");
+
+		btnPlayNormal = recurso.crearBtnNormal();
+		btnPlayNormal.setText("Normal");
+
+		btnPlayDificil = recurso.crearBtnDificil();
+		btnPlayDificil.setText(isEnglish ? "Hard" : "Dificil");
+
+		btnJugar = recurso.crearBtnJugar();
+		btnJugar.setText(isEnglish ? "Play on ----" : "Jugar en ----");
+		
+		mainContainer.add(btnPlayFacil);
+		mainContainer.add(btnPlayNormal);
+		mainContainer.add(btnPlayDificil);
+		mainContainer.add(btnJugar);
+
 		addEventosDeBtn();
 		crearRankings();
 		updateFrame();
@@ -356,8 +367,7 @@ public class Interfaz {
 			public void actionPerformed(ActionEvent e) {
 				limpiarPantalla();
 				game = new Game(LEN_PALABRA, isEnglish);
-				tablero = new JLabel[6][LEN_PALABRA];
-				recurso.crearTablero(mainContainer, LEN_PALABRA, tablero);
+				tablero = recurso.crearTablero(LEN_PALABRA, mainContainer);
 			}
 		});
 	}
