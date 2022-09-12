@@ -42,7 +42,6 @@ public class Game {
 		setearLetraYCantidad();
 		setearResultadosLetras();
 		isOver = false;
-		System.out.println(palabraEnJuego);
 		iniciarTiempo();
 	}
 
