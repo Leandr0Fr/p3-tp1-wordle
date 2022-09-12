@@ -111,7 +111,7 @@ public class Interfaz {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (lblEnviarTag.isEnabled())
-					enviarTag();
+					enviarTagYTiempo();
 			}
 
 		});
@@ -246,7 +246,7 @@ public class Interfaz {
 
 	private void colocarLetraEnTag(KeyEvent e) {
 		if (e.getKeyChar() == KeyEvent.VK_ENTER && lblEnviarTag.isEnabled())
-			enviarTag();
+			enviarTagYTiempo();
 
 		if (!game.esLetraValida(e.getKeyChar()))
 			return;
@@ -264,7 +264,7 @@ public class Interfaz {
 		}
 	}
 
-	private void enviarTag() {
+	private void enviarTagYTiempo() {
 		if (game.getDificultad() == Dificultad.facil) {
 			rkFacil.agregarPuntaje(pedirNombreJugador(), game.getMinuto(), game.getSegundo());
 
