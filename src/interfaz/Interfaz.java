@@ -279,18 +279,18 @@ public class Interfaz {
 		menuIdioma();
 	}
 
-	private void resetearTag() {
-		for (int i=0; i < tagJugador.length; i++)
-			tagJugador[i].setText(" ");
-		lblEnviarTag.setEnabled(false);
-	}
-
 	private String pedirNombreJugador() {
 		StringBuilder sb = new StringBuilder();
 		for (JLabel c : tagJugador)
 			sb.append(c.getText());
 
 		return sb.toString();
+	}
+
+	private void resetearTag() {
+		for (int i=0; i < tagJugador.length; i++)
+			tagJugador[i].setText(" ");
+		lblEnviarTag.setEnabled(false);
 	}
 
 	private void addEventosDeTeclado() {
