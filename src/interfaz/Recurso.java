@@ -20,7 +20,7 @@ public class Recurso {
 
 	private Font fuenteSmall = new Font("Consolas", Font.PLAIN, 12);
 	private Font fuenteMedium = new Font("Consolas", Font.PLAIN, 28);
-	private Font fuenteBig = new Font("Consolas", Font.PLAIN, 60);
+	private Font fuenteBig = new Font("Arial", Font.PLAIN, 60);
 	private Font fuenteRK = new Font("Consolas", Font.BOLD, 20);
 
 	private Color VERDE = new Color(106, 170, 100);
