@@ -128,7 +128,7 @@ public class Game {
 	}
 
 	private void obtenerConjuntoDePalabras(Dificultad dificultad, boolean ingles) {
-		StringBuilder ruta = new StringBuilder(Game.class.getResource("").getPath());
+		StringBuilder ruta = new StringBuilder("");
 		ruta.append((ingles) ? "ingles" : "espanol");
 		if (dificultad == Dificultad.facil) {
 			ruta.append("Facil.wd");
